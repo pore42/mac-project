@@ -2,6 +2,8 @@ import React, {Component } from "react";
 import {FormGroup, FormControl, InputGroup, Navbar, Jumbotron, Grid, Col, Row, Popover, Image, OverlayTrigger, ControlLabel} from "react-bootstrap";
 import {Button} from "antd";
 import GoogleLogin from 'react-google-login';
+import logo from "../../assets/mondora.png";
+import logoGoogle from "../../assets/google.png";
 
 
 function FieldGroup({ id, label, help, ...props }) {
@@ -21,43 +23,36 @@ export default class UserLogin extends Component {
 
     render () {
         return (
-                <grid>
-                    <Row>
-                        <Col> 
-                            <div style={{textAlign: "center", marginTop: 40, fontSize: 24, fontWeight: "heavy", border: 7}}> Mac rentals summary </div>
-                        </Col>
+                <grid style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                    <Row className="show-grid" style={{marginTop: 15, marginBottom: 15}}>
+                        <Image src={logo} responsive />
+                    </Row>
+                    <Row style={{ fontSize: 24, fontWeight: "heavy", border: 7}}>
+                        {"Mac rentals summary"}
                     </Row>
                     <Row>
-                        <div style={{marginTop: 30, textAlign: "center"}}>
-                        <Col sm={6} smOffset={3} >
-                            <Jumbotron>
-                                <form>
-                                    <FieldGroup
-                                    id="formControlsText"
-                                    type="text"
-                                    label="Username"
-                                    />
-                                </form>
-                                <form>
-                                    <FieldGroup
-                                        id="formControlsPassword"
-                                        label="Password"
-                                        type="password"
-                                    />
-                                </form>
-                                <p><Button bsStyle="primary" >Login</Button></p>
-                                <div style ={{ fontSize: 10, fontWeight: "light"  }}>
-                                    ---------- or ---------- <br/> <br/>
-                                </div>
-                                    <GoogleLogin
-                                        clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-                                        buttonText="Login with Google"
-                                        onSuccess={responseGoogle}
-                                        onFailure={responseGoogle}
-                                    />
-                            </Jumbotron>
-                        </Col>
-                        </div>
+                        <Jumbotron style={{padding: 50}}>
+                            <grid>
+                                <Row>
+                                    <Col xs={3} style={{width: 45, height: 45, padding: 0, margin: 0}}>
+                                        <Image src={logoGoogle} responsive />
+                                    </Col>
+                                    <Col xs={9} style={{padding: 0, margin: 0}}>
+                                        <GoogleLogin
+                                            clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                                            buttonText="Login with Google"
+                                            onSuccess={responseGoogle}
+                                            onFailure={responseGoogle}
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Button onClick={ () => this.props.history.push("/input")}> Login senza password </Button>
+                                    </Col>
+                                </Row>
+                            </grid>
+                        </Jumbotron>
                     </Row>
                 </grid>
         );

@@ -1,6 +1,8 @@
 import React, {Component } from "react";
 import {FormGroup, Table, FormControl, InputGroup, Navbar, Jumbotron, Grid, Col, Row, Popover, Image, OverlayTrigger, ControlLabel} from "react-bootstrap";
 import {Button} from "antd";
+import logo from "../../assets/mondora.png";
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 export default class MacRentTable extends Component {
 
@@ -8,14 +10,14 @@ export default class MacRentTable extends Component {
         return (
             <form>
                 <grid>
-                    <Row>
-                        <Col sm={12}>
-                            <Image src={require("/Users/macbookadmin/Desktop/progetto-computer/mac-summary-project/src/assets/mondora.png")} responsive />
-                            </Col>
-                    </Row>
                     <Row className="show-grid">
-                        <div style = {{marginBottom: 5}}>
-                            <Col sm={5} smOffset={6} >
+                        <Col sm={2} xsHidden>
+                            <div style={{marginTop: 15, marginLeft: 25, marginBottom: 15}}>
+                                <Image src={logo} responsive />
+                            </div>
+                        </Col>
+                        <Col sm={5} smOffset={3} >
+                            <div style = {{marginBottom: 5, marginTop: 25}}>
                                 <FormGroup>
                                     <InputGroup>
                                             <FormControl 
@@ -25,8 +27,8 @@ export default class MacRentTable extends Component {
                                             <InputGroup.Addon><Button shape="circle" size = "small" icon="search" /></InputGroup.Addon>
                                     </InputGroup>
                                 </FormGroup>
-                            </Col>
-                        </div>
+                            </div>
+                        </Col>
                     </Row>
                     <Row>
                         <Col sm={11}>
@@ -39,7 +41,7 @@ export default class MacRentTable extends Component {
                                             <th>Codice contratto</th>
                                             <th>Data inizio</th>
                                             <th>Data termine</th>
-                                            <th>Modello</th>
+                                            <th>Numero di serie</th>
                                             <th>Owner</th>
                                             <th>Rata mensile</th>
                                             <th>Note</th>
@@ -52,7 +54,7 @@ export default class MacRentTable extends Component {
                                             <th>777754858934768</th>
                                             <th>16/10/2015</th>
                                             <th>16/12/2017</th>
-                                            <th>MacBook Pro 2015</th>
+                                            <th>milledue</th>
                                             <th>Bob</th>
                                             <th>617 $$</th>
                                             <th><OverlayTrigger trigger="click" placement="left" overlay={
@@ -65,7 +67,7 @@ export default class MacRentTable extends Component {
                                             </OverlayTrigger>
                                             </th>
                                             <th>  <Button size ="small" icon="delete"></Button> </th>
-                                            <th>  <Button size ="small" type="primary" icon="edit"></Button></th>
+                                            <th>  <Button size ="small" type="primary" icon="edit" onClick={() => this.props.history.push("/input")}></Button></th>
                                         </tr>
                                         <tr>
                                             <th>5</th>
@@ -73,7 +75,7 @@ export default class MacRentTable extends Component {
                                             <th>7fwhfhjfvVJKHDF</th>
                                             <th>16/10/2033</th>
                                             <th>16/12/2018</th>
-                                            <th>MacBook Pro 2015</th>
+                                            <th>fdffvghj</th>
                                             <th>Bob</th>
                                             <th>617 $$</th>
                                             <th><OverlayTrigger trigger="click" placement="left" overlay={
@@ -86,7 +88,7 @@ export default class MacRentTable extends Component {
                                             </OverlayTrigger>
                                             </th>
                                             <th>  <Button size ="small" icon="delete"></Button> </th>
-                                            <th>  <Button size ="small" type="primary" icon="edit"></Button></th>
+                                            <th>  <Button size ="small" type="primary" icon="edit" onClick={() => this.props.history.push("/input")}></Button></th>
                                         </tr>
                                     </tbody>
                                 </Table>
