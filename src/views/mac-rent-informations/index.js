@@ -12,6 +12,7 @@ export default class MacRentInformations extends Component {
   constructor(props) {
     super(props);
     this.state = {
+        value: false,
         dateFrom: '',
         dateTo: '',
         name: '',
@@ -19,8 +20,8 @@ export default class MacRentInformations extends Component {
         model: '',
         owner: '',
         fee:'',
-        dateFromOk: false,
-        dateToOk: false,
+        dateFromOk: 1,
+        dateToOk: true,
         nameOk: false,
         codeOk: false,
         modelOk: false,
@@ -35,6 +36,14 @@ export default class MacRentInformations extends Component {
     this.setState({ date });
   }
 
+    handleSaveButton(isSaveButtonClicked, dateFromOk){
+    this.setState({isSaveButtonClicked: true});
+    this.setState({dateFromOk: true})
+    console.log(dateFromOk);
+    if ((this.dateFromOk )){
+        this.props.history.push("/results");
+    };
+}
     static propTypes = {
         macModel: PropTypes.arrayOf(PropTypes.string)
     }
@@ -214,7 +223,7 @@ export default class MacRentInformations extends Component {
                                  </Col>
                             </div>
                             <Col sm={1} xs={1}>
-                                <Button type="primary" onClick={isSaveButtonClicked => this.setState({isSaveButtonClicked: true})}> Salva </Button>
+                                <Button type="primary" onClick={() =>this.handleSaveButton(this.isSaveButtonClicked, this.dateFromOk)}> Salva </Button>
                             </Col>
                         </Row>
                     </Grid>

@@ -44,6 +44,7 @@ export default class MacRentTable extends Component {
                                             <th>Numero di serie</th>
                                             <th>Owner</th>
                                             <th>Rata mensile</th>
+                                            <th>Ultima modifica</th>
                                             <th>Note</th>
                                         </tr>
                                     </thead>
@@ -57,6 +58,7 @@ export default class MacRentTable extends Component {
                                             <th>milledue</th>
                                             <th>Bob</th>
                                             <th>617 $$</th>
+                                            <th>@Bob</th>
                                             <th><OverlayTrigger trigger="click" placement="left" overlay={
                                                 <Popover id="popover-positioned-left" 
                                                     title="note">
@@ -78,6 +80,7 @@ export default class MacRentTable extends Component {
                                             <th>fdffvghj</th>
                                             <th>Bob</th>
                                             <th>617 $$</th>
+                                            <th> @bob </th>
                                             <th><OverlayTrigger trigger="click" placement="left" overlay={
                                                 <Popover id="popover-positioned-left" 
                                                     title="note">

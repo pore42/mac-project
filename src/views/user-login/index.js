@@ -1,6 +1,5 @@
-import React, {Component } from "react";
-import {FormGroup, FormControl, InputGroup, Navbar, Jumbotron, Grid, Col, Row, Popover, Image, OverlayTrigger, ControlLabel} from "react-bootstrap";
-import {Button} from "antd";
+import React , {Component} from "react";
+import {FormGroup, FormControl, InputGroup, Jumbotron, Grid, Col, Row, Image, ControlLabel} from "react-bootstrap";
 import GoogleLogin from 'react-google-login';
 import logo from "../../assets/mondora.png";
 import logoGoogle from "../../assets/google.png";
@@ -15,11 +14,26 @@ function FieldGroup({ id, label, help, ...props }) {
   );
 }
 
-const responseGoogle = (response) => {
-  console.log(response);
-}
-
 export default class UserLogin extends Component {
+    constructor(props) {
+    super(props);
+    this.state = {
+        email: '',
+        authorizedStatus: false,
+        address1: "scarinzis@gmail.com",
+        address2: "mailacaso@gmail.com",
+    };
+    }
+
+responseGoogle = (response) => {
+  if (response.profileObj.email == this.state.address1 || response.profileObj.email == this.state.address2){
+        this.setState({autorized: true});
+      this.props.history.push("/input")
+    }
+    else{
+      alert('email non autorizzata');
+}
+}
 
     render () {
         return (
@@ -41,14 +55,8 @@ export default class UserLogin extends Component {
                                         <GoogleLogin
                                             clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
                                             buttonText="Login with Google"
-                                            onSuccess={responseGoogle}
-                                            onFailure={responseGoogle}
+                                            onSuccess={this.responseGoogle}
                                         />
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col>
-                                        <Button onClick={ () => this.props.history.push("/input")}> Login senza password </Button>
                                     </Col>
                                 </Row>
                             </grid>
