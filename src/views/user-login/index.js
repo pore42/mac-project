@@ -1,18 +1,8 @@
 import React , {Component} from "react";
-import {FormGroup, FormControl, InputGroup, Jumbotron, Grid, Col, Row, Image, ControlLabel} from "react-bootstrap";
+import {Jumbotron, Col, Row, Image} from "react-bootstrap";
 import GoogleLogin from 'react-google-login';
 import logo from "../../assets/mondora.png";
 import logoGoogle from "../../assets/google.png";
-
-
-function FieldGroup({ id, label, help, ...props }) {
-  return (
-    <FormGroup controlId={id}>
-      <ControlLabel>{label}</ControlLabel>
-      <FormControl {...props} />
-    </FormGroup>
-  );
-}
 
 export default class UserLogin extends Component {
     constructor(props) {
@@ -26,8 +16,8 @@ export default class UserLogin extends Component {
     }
 
 responseGoogle = (response) => {
-  if (response.profileObj.email == this.state.address1 || response.profileObj.email == this.state.address2){
-        this.setState({autorized: true});
+  if (response.profileObj.email === this.state.address1 || response.profileObj.email === this.state.address2){
+        this.setState({authorizedStatus: true});
       this.props.history.push("/input")
     }
     else{
