@@ -1,63 +1,65 @@
-import React, {Component, Props} from "react";
+import React, {Component, PropTypes} from "react";
 import {Button} from "antd";
-import {FormGroup, Table, FormControl, InputGroup, Grid, Col, Row, Popover, OverlayTrigger} from "react-bootstrap";
+import {Popover, OverlayTrigger} from "react-bootstrap";
+import {withRouter} from "react-router-dom";
 
-export default class MacRentInfoRow extends Component {
+ export default withRouter( class MacRentInfoRow extends Component {
 
-        constructor () {
-        super();
-        this.state= {
-            data: [
-                 {
-                    name: "pippo",
-                    code: "ydhjkbbhjdf",
-                    dateFrom: "54-13-2017",
-                    dateTo: "22-12-2019",
-                    serial: "777",
-                    owner: "bob",
-                    fee: "617",
-                    lastMod: "bob",
-                    note: "ho sonno", },
-                 {
-                    name: "pippo2",
-                    code: "ydhjkbbhjdf",
-                    dateFrom: "54-13-2017",
-                    dateTo: "22-12-2019",
-                    serial: "777",
-                    owner: "bob",
-                    fee: "617",
-                    lastMod: "bob",
-                    note: "ho sonno", },
-            ]
-        };
-    };
+    static propTypes = {
+        name: PropTypes.string,
+        code: PropTypes.string,
+        dateFrom: PropTypes.string,
+        dateTo: PropTypes.string,
+        fee: PropTypes.string,
+        history: PropTypes.object.isRequired,
+        lastMod: PropTypes.string,
+        note: PropTypes.string,
+        owner: PropTypes.string,
+        serial: PropTypes.string
+    }
+
+    handleEditButton(value){
+        this.props.history.push('/input');
+    }
 
     render () {
-        var num = 0;
+        const {
+            name,
+            code,
+            dateFrom,
+            dateTo,
+            fee,
+            history,
+            lastMod,
+            location,
+            match,
+            note,
+            owner,
+            serial
+        } = this.props
         return (
             <tr>
-
-                <th>{this.props.value}</th>
-                <th>{this.state.data[this.props.value].name}</th>
-                <th>{this.state.data[this.props.value].code}</th>
-                <th>{this.state.data[this.props.value].dateFrom}</th>
-                <th>{this.state.data[this.props.value].dateTo}</th>
-                <th>{this.state.data[this.props.value].serial}</th>
-                <th>{this.state.data[this.props.value].owner}</th>
-                <th>{this.state.data[this.props.value].fee} €</th>
-                <th>@ {this.state.data[this.props.value].lastMod}</th>
+                <th>{name}</th>
+                <th>{code}</th>
+                <th>{dateFrom}</th>
+                <th>{dateTo}</th>
+                <th>{serial}</th>
+                <th>{owner}</th>
+                <th>{fee} €</th>
+                <th>@ {lastMod}</th>
                 <th><OverlayTrigger trigger="click" placement="left" overlay={
                     <Popover id="popover-positioned-left">
-                            {this.state.data[this.props.value].note} 
+                            {note} 
                     </Popover>
                     }>
                     <Button size ="small" shape="circle" icon="paper-clip" />
                 </OverlayTrigger>
                 </th>
                 <th>  <Button size ="small" icon="delete"></Button> </th>
-                <th>  <Button size ="small" type="primary" icon="edit" onClick={() => this.props.history.push("/input")}></Button></th>
+                <th>  <Button size ="small" type="primary" icon="edit" onClick={() => this.handleEditButton()}></Button></th>
         
             </tr>
         );
     }
 }
+ )

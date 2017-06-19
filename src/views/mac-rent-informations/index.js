@@ -6,47 +6,74 @@ import image from "../../assets/image.png";
 
 export default class MacRentInformations extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-        value: false,
-        dateFrom: '',
-        dateTo: '',
-        name: '',
-        code: '',
-        model: '',
-        owner: '',
-        fee:'',
-        dateFromOk: false,
-        dateToOk: false,
-        nameOk: true,
-        codeOk: false,
-        modelOk: false,
-        ownerOk: false,
-        feeOk: false,
-        isSaveButtonClicked: false
-    };
-  }
-
-  handleChange(date) {
-    message.info('Selected Date: ' + date.toString());
-    this.setState({ date });
-  }
-
-    handleSaveButton(isSaveButtonClicked, nameOk){
-    this.setState({isSaveButtonClicked: true});
-    //  this.setState({nameOk: true})
-    console.log(nameOk);
-    if ((this.nameOk )){
-        this.props.history.push("/results");
-    };
-}
-    static propTypes = {
-        macModel: PropTypes.arrayOf(PropTypes.string)
+    constructor(props) {
+        super(props);
+        this.state = {
+            // value: false,
+            dateFrom: '',
+            dateTo: '',
+            name: '',
+            code: '',
+            serial: '',
+            owner: '',
+            fee:'',
+            dateFromOk: false,
+            dateToOk: false,
+            nameOk: false,
+            codeOk: false,
+            serialOk: false,
+            ownerOk: false,
+            feeOk: false,
+            isSaveButtonClicked: false
+        };
     }
 
-    static defaultProps = {
-        macModel: []
+    handleChange(date) {
+        message.info('Selected Date: ' + date.toString());
+        this.setState({ date });
+    }
+
+    handleSaveButton(isSaveButtonClicked, nameOk){
+        this.setState({isSaveButtonClicked: true});
+        console.log(!this.state.dateFromOk + !this.state.dateToOk + !this.state.nameOk + !this.state.codeOk + !this.state.serialOk + !this.state.ownerOk + !this.state.feeOk);
+        if((!this.state.dateFromOk + !this.state.dateToOk + !this.state.nameOk + !this.state.codeOk + !this.state.serialOk + !this.state.ownerOk + !this.state.feeOk) == false){
+            this.props.history.push("/results");
+        };
+    }
+getInitialState() {
+    return {
+      value: ''
+    };
+  }
+
+    handleNameChange(e){
+        this.setState({ name: e.target.value });
+        if(this.state.name) { this.setState({nameOk: true})};
+    }
+    handleCodeChange(e){
+        this.setState({ code: e.target.value });
+        if(this.state.code) { this.setState({codeOk: true})};
+    }
+    handleDateFromChange(e){
+        this.setState({ dateFrom: e });
+        if(this.state.dateFrom){ this.setState({dateFromOk: true})};
+        console.log(this.state.dateFrom);
+    }
+    handleDateToChange(e){
+        this.setState({ dateTo: e._d });
+        if(this.state.dateTo) { this.setState({dateToOk: true})};
+    }
+    handleSerialChange(e){
+        this.setState({ serial: e.target.value });
+        if(this.state.serial) { this.setState({serialOk: true})};
+    }
+    handleOwnerChange(e){
+        this.setState({ owner: e.target.value });
+        if(this.state.owner) { this.setState({ownerOk: true})};
+    }
+    handleFeeChange(e){
+        this.setState({ fee: e.target.value });
+        if(this.state.fee) { this.setState({feeOk: true})};
     }
 
     render () {
@@ -68,9 +95,9 @@ export default class MacRentInformations extends Component {
                                 <Col sm={7}>
                                     <FormGroup controlId="formBasicText" >
                                         <FormControl type="text"
+                                            val
                                             placeholder="Enter name"
-                                            onChange={e => this.setState({name: e.target.value})}
-                                            value={this.state.name}
+                                            onChange={this.handleNameChange.bind(this)}
                                         />
                                         <FormControl.Feedback />
                                     </FormGroup>
@@ -87,7 +114,7 @@ export default class MacRentInformations extends Component {
                                     <FormGroup controlId="formBasicText">
                                         <FormControl type="text"
                                             placeholder="Enter code"
-                                            onChange={e => this.setState({code: e.target.value})}
+                                            onChange={this.handleCodeChange.bind(this)}
                                             value={this.state.code}
                                         />
                                         <FormControl.Feedback />
@@ -105,8 +132,7 @@ export default class MacRentInformations extends Component {
                                     <Col sm={7}>
                                         <DatePicker size={"large"}
                                         format={"DD-MM-YYYY"}
-                                        onChange={e => this.setState({dateFrom: e})}
-                                        value={this.state.dateFrom}
+                                        onChange={this.handleDateFromChange.bind(this)}
                                         /> 
                                         <br />
                                     </Col>
@@ -124,7 +150,7 @@ export default class MacRentInformations extends Component {
                                         <DatePicker 
                                             size={"large"}
                                             format={"DD-MM-YYYY"}
-                                            onChange={e => this.setState({dateTo: e})}
+                                            onChange={this.handleDateToChange.bind(this)}
                                             value={this.state.dateTo}
                                         />
                                     </Col>
@@ -133,7 +159,7 @@ export default class MacRentInformations extends Component {
                         </div>
 
                         <Row className="show-grid">
-                            <FormGroup validationState={!this.state.seriale && this.state.isSaveButtonClicked ? "error": null }>
+                            <FormGroup validationState={!this.state.serial && this.state.isSaveButtonClicked ? "error": null }>
                                 <div style = {{marginBottom: 5}}>
                                     <Col sm={4}>{"Numero di serie"}</Col>
                                 </div>
@@ -141,8 +167,7 @@ export default class MacRentInformations extends Component {
                                     <FormGroup controlId="formBasicText">
                                         <FormControl type="text"
                                                 placeholder="Enter serial"
-                                                onChange={e => this.setState({seriale: e.target.value})}
-                                                value={this.state.seriale}
+                                                onChange={this.handleSerialChange.bind(this)}
                                             />
                                             <FormControl.Feedback />
                                     </FormGroup>
@@ -159,7 +184,7 @@ export default class MacRentInformations extends Component {
                                     <FormGroup controlId="formBasicText" >
                                         <FormControl type="text"
                                                 placeholder="Enter name"
-                                                onChange={e => this.setState({fee: e.target.value})}
+                                                onChange={this.handleFeeChange.bind(this)}
                                                 value={this.state.fee}
                                             />
                                             <FormControl.Feedback />
@@ -190,7 +215,7 @@ export default class MacRentInformations extends Component {
                                             <FormControl 
                                                 placeholder="Enter $$$"
                                                 type="text"
-                                                onChange={e => this.setState({owner: e.target.value})}
+                                                onChange={this.handleOwnerChange.bind(this)}
                                                 value={this.state.owner}
                                                 />
                                                 <InputGroup.Addon>€</InputGroup.Addon>
@@ -219,9 +244,9 @@ export default class MacRentInformations extends Component {
                                     <Button onClick={() => this.props.history.push("/results")}>Annulla</Button>
                                  </Col>
                             </div>
-                            <Col sm={1} xs={1}>
-                                <Button type="primary" onClick={() =>this.handleSaveButton(this.isSaveButtonClicked, this.nameOk)}> Salva </Button>
-                            </Col>
+                                <Col sm={1} xs={1}>
+                                    <Button type="primary" onClick={() =>this.handleSaveButton(this.isSaveButtonClicked, this.nameOk)}> Salva </Button>
+                                </Col>
                         </Row>
                     </Grid>
                 </form>
