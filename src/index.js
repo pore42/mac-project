@@ -12,18 +12,14 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import MacRentInformations from './views/mac-rent-informations';
 import MacRentTable from './views/mac-rent-table';
 import UserLogin from './views/user-login';
-import PrivateRoute from "./views/PrivateRoute"
+import PrivateRoute from "./views/PrivateRoute";
 
 ReactDOM.render((
-  
-// <LocaleProvider locale={enUS}><MacRentInformations /></LocaleProvider>,
-// <MacRentTable />
-//  <UserLogin />,
-// <BasicExample/>,
-//  <AuthExample/>
+
  <Router>
    <LocaleProvider locale={enUS}>
     <Switch>
+        <PrivateRoute path="/input/:id" component={MacRentInformations} />      
         <PrivateRoute path="/input" component={MacRentInformations} />
         <PrivateRoute path="/results" component={MacRentTable} />
         <Route component={UserLogin} />

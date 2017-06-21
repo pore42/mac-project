@@ -6,6 +6,7 @@ import {withRouter} from "react-router-dom";
  export default withRouter( class MacRentInfoRow extends Component {
 
     static propTypes = {
+        id: PropTypes.number,
         name: PropTypes.string,
         code: PropTypes.string,
         dateFrom: PropTypes.string,
@@ -18,9 +19,14 @@ import {withRouter} from "react-router-dom";
         serial: PropTypes.string
     }
 
-    handleEditButton(value){
-        this.props.history.push('/input');
+    handleEditButton(){
+        this.props.history.push(`/input/${this.props.id}`);
     }
+    handleDeleteButton(){
+        var url = "http://localhost:3456/mac-rent-informations/" + this.props.id;
+        fetch(url, {
+            method: "DELETE"
+        }).then(response => response.json().then(json => {return json;})); }
 
     render () {
         const {
@@ -29,10 +35,7 @@ import {withRouter} from "react-router-dom";
             dateFrom,
             dateTo,
             fee,
-            history,
             lastMod,
-            location,
-            match,
             note,
             owner,
             serial
@@ -55,8 +58,8 @@ import {withRouter} from "react-router-dom";
                     <Button size ="small" shape="circle" icon="paper-clip" />
                 </OverlayTrigger>
                 </th>
-                <th>  <Button size ="small" icon="delete"></Button> </th>
-                <th>  <Button size ="small" type="primary" icon="edit" onClick={() => this.handleEditButton()}></Button></th>
+                <th>  <Button size ="small" icon="delete" onClick={this.handleDeleteButton.bind(this)}></Button> </th>
+                <th>  <Button size ="small" type="primary" icon="edit" onClick={this.handleEditButton.bind(this)}></Button></th>
         
             </tr>
         );

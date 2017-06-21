@@ -8,7 +8,7 @@ export default class UserLogin extends Component {
     constructor(props) {
     super(props);
     this.state = {
-        email: '',
+        userName: "",
         authorizedStatus: false,
         address1: "scarinzis@gmail.com",
         address2: "mailacaso@gmail.com",
@@ -16,8 +16,10 @@ export default class UserLogin extends Component {
     }
 
 responseGoogle = (response) => {
-  if (response.profileObj.email === this.state.address1 || response.profileObj.email === this.state.address2){
+    if (response.profileObj.email === this.state.address1 || response.profileObj.email === this.state.address2){
+        this.setState({userName: response.profileObj.givenName});
         this.setState({authorizedStatus: true});
+        console.log(this.state.userName);
       this.props.history.push("/input")
     }
     else{
@@ -26,7 +28,7 @@ responseGoogle = (response) => {
 }
 
     render () {
-        return (
+        return ( 
                 <grid style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                     <Row className="show-grid" style={{marginTop: 15, marginBottom: 15}}>
                         <Image src={logo} responsive />
@@ -55,4 +57,4 @@ responseGoogle = (response) => {
                 </grid>
         );
     }
-}
+};

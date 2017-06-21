@@ -7,11 +7,13 @@
     "bootstrap": "^3.3.7",
     "fixed-data-table": "^0.6.4",
     "moment": "^2.18.1",
+    "moment-timezone": "^0.5.13",
     "react": "^15.5.4",
     "react-bootstrap": "^0.31.0",
     "react-bootstrap-table": "^3.4.0",
     "react-datepicker": "^0.47.0",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-moment": "^0.2.4"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.2.1",
