@@ -1,15 +1,15 @@
-import React, {Component, PropTypes} from "react";
+import React, {Component} from "react";
 import {FormGroup, FormControl, InputGroup, Grid, Col, Row, Popover, Image, OverlayTrigger} from "react-bootstrap";
-import { DatePicker, message, Button} from "antd";
 import moment from 'moment';
+import PropTypes from "prop-types";
 
 import UserLogin from "../user-login";
 
-import image from "../../assets/image.png";
+import image from "../../assets/images/image.png";
 
-const { MonthPicker, RangePicker } = DatePicker;
-const dateFormat = 'DD/MM/YYYY';
-
+var Button = require("antd/lib/button");
+var DatePicker = require("antd/lib/date-picker");
+var message = require("antd/lib/message");
 
 export default class MacRentInformations extends Component {
 
@@ -43,6 +43,7 @@ export default class MacRentInformations extends Component {
             fetch(url)
                 .then(response => response.json())
                 .then(response => (
+                    // eslint-disable-next-line no-sequences
                     this.setState({id: response.id}),
                     this.setState({name: response.name }),
                     this.setState({code: response.code}),
@@ -52,7 +53,7 @@ export default class MacRentInformations extends Component {
                     this.setState({serial: response.serial }),
                     this.setState({note: response.note}),
                     this.setState({owner: response.owner})
-                    ));
+                    ))
         }
     }
 
@@ -63,7 +64,7 @@ export default class MacRentInformations extends Component {
 
     handleSaveButton(isSaveButtonClicked, userName){
         this.setState({isSaveButtonClicked: true});
-        if (this.state.name && this.state.code && this.state.dateFrom && this.state.dateTo && this.state.fee && this.state.serial && this.state.owner){
+        if (this.state.name && this.state.code && this.state.dateFromOk && this.state.dateToOk && this.state.fee && this.state.serial && this.state.owner){
             var PostData = JSON.stringify({
                             name: this.state.name,
                             code: this.state.code,

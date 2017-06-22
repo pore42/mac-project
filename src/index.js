@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {LocaleProvider} from "antd";
 import enUS from "antd/lib/locale-provider/en_US";
 import "antd/dist/antd.css";
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
@@ -13,6 +12,8 @@ import MacRentInformations from './views/mac-rent-informations';
 import MacRentTable from './views/mac-rent-table';
 import UserLogin from './views/user-login';
 import PrivateRoute from "./views/PrivateRoute";
+
+var LocaleProvider = require('antd/lib/locale-provider');
 
 ReactDOM.render((
 

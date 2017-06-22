@@ -1,7 +1,9 @@
-import React, {Component, PropTypes} from "react";
-import {Button} from "antd";
+import React, {Component} from "react";
 import {Popover, OverlayTrigger} from "react-bootstrap";
 import {withRouter} from "react-router-dom";
+import PropTypes from "prop-types";
+
+var Button = require('antd/lib/button');
 
  export default withRouter( class MacRentInfoRow extends Component {
 
@@ -51,16 +53,15 @@ import {withRouter} from "react-router-dom";
                 <th>{fee} €</th>
                 <th>@ {lastMod}</th>
                 <th><OverlayTrigger trigger="click" placement="left" overlay={
-                    <Popover id="popover-positioned-left">
+                        <Popover id="popover-positioned-left">
                             {note} 
-                    </Popover>
+                        </Popover>
                     }>
                     <Button size ="small" shape="circle" icon="paper-clip" />
                 </OverlayTrigger>
                 </th>
                 <th>  <Button size ="small" icon="delete" onClick={this.handleDeleteButton.bind(this)}></Button> </th>
                 <th>  <Button size ="small" type="primary" icon="edit" onClick={this.handleEditButton.bind(this)}></Button></th>
-        
             </tr>
         );
     }

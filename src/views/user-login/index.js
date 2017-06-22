@@ -1,8 +1,8 @@
 import React , {Component} from "react";
 import {Jumbotron, Col, Row, Image} from "react-bootstrap";
 import GoogleLogin from 'react-google-login';
-import logo from "../../assets/mondora.png";
-import logoGoogle from "../../assets/google.png";
+import logo from "../../assets/images/mondora.png";
+import logoGoogle from "../../assets/images/google.png";
 
 export default class UserLogin extends Component {
     constructor(props) {
@@ -11,15 +11,14 @@ export default class UserLogin extends Component {
         userName: "",
         authorizedStatus: false,
         address1: "scarinzis@gmail.com",
-        address2: "mailacaso@gmail.com",
+        address2: "@gmail.com",
     };
     }
 
 responseGoogle = (response) => {
-    if (response.profileObj.email === this.state.address1 || response.profileObj.email === this.state.address2){
+    if (response.profileObj.email === (this.state.address1 || this.state.address2)){
         this.setState({userName: response.profileObj.givenName});
         this.setState({authorizedStatus: true});
-        console.log(this.state.userName);
       this.props.history.push("/input")
     }
     else{

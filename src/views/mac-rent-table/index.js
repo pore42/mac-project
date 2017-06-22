@@ -3,9 +3,12 @@ import {FormGroup, Table, FormControl, InputGroup, Grid, Col, Row, Checkbox, Ima
 import changeCase from "change-case";
 import moment from 'moment';
 
-import logo from "../../assets/mondora.png";
+import logo from "../../assets/images/mondora.png";
 
 import MacRentInfoRow from "../../components/mac-rent-info-row";
+
+var Button = require('antd/lib/button');
+var _ = require('lodash');
 
 export default class MacRentTable extends Component {
     constructor () {
@@ -30,6 +33,11 @@ export default class MacRentTable extends Component {
         .then(response => this.setState({ macRentInformations: response }));
     }
 
+    handleOrderButtonPress(parameter, macRentInformations){
+        _.sortBy(this.state.macRentInformations, [function(o) { return o.name; }]);
+        this.setState({macRentInformations: _.sortBy(this.state.macRentInformations, [parameter, 'code'])});
+    }
+
     filterValues (macRentInformations, filterTerm) {
         var filterTermLowerCase = changeCase.lowerCase(filterTerm);
         return ((changeCase.lowerCase(macRentInformations.name).includes(filterTermLowerCase)&&this.state.nameChecked) ||
@@ -45,9 +53,9 @@ export default class MacRentTable extends Component {
 
     render () {
         return (
-            <Grid fluid={true} style = {{padding: 20, margin:0}}>
+            <Grid fluid={true} style={{padding: 20, margin:0}}>
                 <Row className="show-grid">
-                    <Col sm={2} xsHidden div style={{margin: 15}}>
+                    <Col sm={2} xsHidden style={{margin: 15}}>
                         <Image src={logo} responsive />
                     </Col>
                     <div style = {{marginBottom: 5, marginTop: 25, padding: 0}}>
@@ -94,24 +102,24 @@ export default class MacRentTable extends Component {
                 <Row>
                     <Col sm={12} xs={12} style={{margin: 5}}>
                         <Table style={{fontSize: 10}} striped bordered responsive>
-                            <thead>
+                            <thead key="thead">
                                 <tr>
-                                    <th>Nome</th>
-                                    <th>Codice</th>
-                                    <th>Data inizio</th>
-                                    <th>Data termine</th>
-                                    <th>Numero di serie</th>
-                                    <th>Owner</th>
-                                    <th>Rata mensile</th>
-                                    <th>Ultima modifica</th>
+                                    <th>Nome <Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("name", this.state.macRentInformations)}/></th>
+                                    <th>Codice <Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("code", this.state.macRentInformations)}/></th>
+                                    <th>Data inizio <Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("dateFrom", this.state.macRentInformations)}/></th>
+                                    <th>Data termine <Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("dateTo", this.state.macRentInformations)}/></th>
+                                    <th>Numero di serie <Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("serial", this.state.macRentInformations)}/></th>
+                                    <th>Owner <Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("owner", this.state.macRentInformations)}/></th>
+                                    <th>Rata mensile <Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("fee", this.state.macRentInformations)}/></th>
+                                    <th>Ultima modifica <Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("lastMod", this.state.macRentInformations)}/></th>
                                     <th>Note</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody key="tbody">
                                 {this.state.macRentInformations
                                     .filter(element => this.filterValues(element, this.state.filterTerm))
                                     .map(macRentInfo => 
-                                        <MacRentInfoRow
+                                        <MacRentInfoRow key={macRentInfo.id}
                                             id={macRentInfo.id}
                                             name={macRentInfo.name}
                                             code={macRentInfo.code}
@@ -125,7 +133,7 @@ export default class MacRentTable extends Component {
                                         />,
                                     )
                                 }
-                        </tbody>
+                            </tbody>
                         </Table>
                     </Col>
                 </Row>
