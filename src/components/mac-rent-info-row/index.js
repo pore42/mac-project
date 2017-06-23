@@ -32,6 +32,7 @@ var Button = require('antd/lib/button');
 
     render () {
         const {
+            id,
             name,
             code,
             dateFrom,
@@ -44,6 +45,7 @@ var Button = require('antd/lib/button');
         } = this.props
         return (
             <tr>
+                <th>{id}</th>
                 <th>{name}</th>
                 <th>{code}</th>
                 <th>{dateFrom}</th>

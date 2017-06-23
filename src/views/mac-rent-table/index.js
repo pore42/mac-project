@@ -31,6 +31,21 @@ export default class MacRentTable extends Component {
         fetch("http://localhost:3456/mac-rent-informations")
         .then(response => response.json())
         .then(response => this.setState({ macRentInformations: response }));
+
+
+        fetch("https://datastore.googleapis.com/v1/projects/mac-rent-informations:runQuery",
+            {
+                method: "POST",
+                
+                body: {
+                    query: {
+                        kind: [
+                            {name: 'mac-rent-information'}
+                        ]
+                    }
+                }
+            }
+        ).then(res => console.log('res', res));
     }
 
     handleOrderButtonPress(parameter, macRentInformations){
@@ -104,14 +119,15 @@ export default class MacRentTable extends Component {
                         <Table style={{fontSize: 10}} striped bordered responsive>
                             <thead key="thead">
                                 <tr>
-                                    <th>Nome <Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("name", this.state.macRentInformations)}/></th>
-                                    <th>Codice <Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("code", this.state.macRentInformations)}/></th>
-                                    <th>Data inizio <Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("dateFrom", this.state.macRentInformations)}/></th>
-                                    <th>Data termine <Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("dateTo", this.state.macRentInformations)}/></th>
-                                    <th>Numero di serie <Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("serial", this.state.macRentInformations)}/></th>
-                                    <th>Owner <Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("owner", this.state.macRentInformations)}/></th>
-                                    <th>Rata mensile <Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("fee", this.state.macRentInformations)}/></th>
-                                    <th>Ultima modifica <Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("lastMod", this.state.macRentInformations)}/></th>
+                                    <th>#<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("id", this.state.macRentInformations)}/></th>
+                                    <th>Nome<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("name", this.state.macRentInformations)}/></th>
+                                    <th>Codice<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("code", this.state.macRentInformations)}/></th>
+                                    <th>Data inizio<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("dateFrom", this.state.macRentInformations)}/></th>
+                                    <th>Data termine<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("dateTo", this.state.macRentInformations)}/></th>
+                                    <th>Numero di serie<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("serial", this.state.macRentInformations)}/></th>
+                                    <th>Owner<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("owner", this.state.macRentInformations)}/></th>
+                                    <th>Rata mensile<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("fee", this.state.macRentInformations)}/></th>
+                                    <th>Ultima modifica<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("lastMod", this.state.macRentInformations)}/></th>
                                     <th>Note</th>
                                 </tr>
                             </thead>
