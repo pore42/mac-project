@@ -20,9 +20,9 @@ ReactDOM.render((
  <Router>
    <LocaleProvider locale={enUS}>
     <Switch>
-        <PrivateRoute path="/input/:id" component={MacRentInformations} />      
+        <PrivateRoute path="/input/:user-:id" component={MacRentInformations} />      
         <PrivateRoute path="/input" component={MacRentInformations} />
-        <PrivateRoute path="/results" component={MacRentTable} />
+        <PrivateRoute path="/results/:user" component={MacRentTable} />
         <Route component={UserLogin} />
       </Switch>
     </LocaleProvider>

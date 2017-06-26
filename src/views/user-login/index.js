@@ -11,15 +11,16 @@ export default class UserLogin extends Component {
         userName: "",
         authorizedStatus: false,
         address1: "scarinzis@gmail.com",
-        address2: "@gmail.com",
+        address2: "francesco.barbera@mondora.com",
     };
     }
 
 responseGoogle = (response) => {
-    if (response.profileObj.email === (this.state.address1 || this.state.address2)){
-        this.setState({userName: response.profileObj.givenName});
+    if ((response.profileObj.email === this.state.address1) || ( response.profileObj.email === this.state.address2)){
+        this.setState({userName: response.profileObj.name});
         this.setState({authorizedStatus: true});
-      this.props.history.push("/input")
+        console.log(response);
+      this.props.history.push(`/input/${this.state.userName}-0`)
     }
     else{
       alert('email non autorizzata');
@@ -32,7 +33,7 @@ responseGoogle = (response) => {
                     <Row className="show-grid" style={{marginTop: 15, marginBottom: 15}}>
                         <Image src={logo} responsive />
                     </Row>
-                    <Row style={{ fontSize: 24, fontWeight: "heavy", border: 7}}>
+                    <Row style={{ fontSize: 30, fontWeight: "heavy", border: 7, marginBottom: 10}}>
                         {"Mac rentals summary"}
                     </Row>
                     <Row>
@@ -42,7 +43,7 @@ responseGoogle = (response) => {
                                     <Col xs={3} style={{width: 45, height: 45, padding: 0, margin: 0}}>
                                         <Image src={logoGoogle} responsive />
                                     </Col>
-                                    <Col xs={9} style={{padding: 0, margin: 0}}>
+                                    <Col xs={9} style={{padding: 0}}>
                                         <GoogleLogin
                                             clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
                                             buttonText="Login with Google"

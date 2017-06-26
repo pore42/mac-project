@@ -1,7 +1,8 @@
-import React, {Component } from "react";
+import React, {Component} from "react";
 import {FormGroup, Table, FormControl, InputGroup, Grid, Col, Row, Checkbox, Image} from "react-bootstrap";
 import changeCase from "change-case";
 import moment from 'moment';
+import{PropTypes} from "prop-types";
 
 import logo from "../../assets/images/mondora.png";
 
@@ -11,8 +12,8 @@ var Button = require('antd/lib/button');
 var _ = require('lodash');
 
 export default class MacRentTable extends Component {
-    constructor () {
-        super();
+    constructor (props) {
+        super(props);
         this.state= {
             nameChecked: true,
             codeChecked: true,
@@ -23,9 +24,13 @@ export default class MacRentTable extends Component {
             feeChecked: true,
             lastModChecked: true,
             filterTerm: '',
-            macRentInformations: []
+            macRentInformations: [],
+            userName: this.props.match.params.user
         }
     };
+    static PropTypes = {
+        match: PropTypes.object
+        }
 
     componentDidMount () {
         fetch("http://localhost:3456/mac-rent-informations")
@@ -33,19 +38,9 @@ export default class MacRentTable extends Component {
         .then(response => this.setState({ macRentInformations: response }));
 
 
-        fetch("https://datastore.googleapis.com/v1/projects/mac-rent-informations:runQuery",
-            {
-                method: "POST",
-                
-                body: {
-                    query: {
-                        kind: [
-                            {name: 'mac-rent-information'}
-                        ]
-                    }
-                }
-            }
-        ).then(res => console.log('res', res));
+        fetch("https://datastore.googleapis.com/v1/projects/mac-rent-informations:runQuery", {
+            method: "POST"
+        }).then(res => console.log('res', res));
     }
 
     handleOrderButtonPress(parameter, macRentInformations){
@@ -75,7 +70,7 @@ export default class MacRentTable extends Component {
                     </Col>
                     <div style = {{marginBottom: 5, marginTop: 25, padding: 0}}>
                         <Col sm={4} xs={6} style={{marginRight: 5}}>
-                            <InputGroup>
+                            <InputGroup style={{display: "inline"}}>
                                 <FormControl 
                                     onChange={e => this.setState({filterTerm: e.target.value})}
                                     placeholder="search" 
@@ -116,18 +111,18 @@ export default class MacRentTable extends Component {
                 </Row>
                 <Row>
                     <Col sm={12} xs={12} style={{margin: 5}}>
-                        <Table style={{fontSize: 10}} striped bordered responsive>
+                        <Table style={{fontSize: 13}} striped bordered responsive>
                             <thead key="thead">
                                 <tr>
-                                    <th>#<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("id", this.state.macRentInformations)}/></th>
-                                    <th>Nome<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("name", this.state.macRentInformations)}/></th>
-                                    <th>Codice<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("code", this.state.macRentInformations)}/></th>
-                                    <th>Data inizio<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("dateFrom", this.state.macRentInformations)}/></th>
-                                    <th>Data termine<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("dateTo", this.state.macRentInformations)}/></th>
-                                    <th>Numero di serie<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("serial", this.state.macRentInformations)}/></th>
-                                    <th>Owner<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("owner", this.state.macRentInformations)}/></th>
-                                    <th>Rata mensile<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("fee", this.state.macRentInformations)}/></th>
-                                    <th>Ultima modifica<br/><Button shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("lastMod", this.state.macRentInformations)}/></th>
+                                    <th>#<br/><Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("id", this.state.macRentInformations)}/></th>
+                                    <th>Nome<br/><Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("name", this.state.macRentInformations)}/></th>
+                                    <th>Codice<br/><Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("code", this.state.macRentInformations)}/></th>
+                                    <th>Data inizio<br/><Button style={{margin: 3}}  shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("dateFrom", this.state.macRentInformations)}/></th>
+                                    <th>Data termine<br/><Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("dateTo", this.state.macRentInformations)}/></th>
+                                    <th>Numero di serie<br/><Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("serial", this.state.macRentInformations)}/></th>
+                                    <th>Owner<br/><Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("owner", this.state.macRentInformations)}/></th>
+                                    <th>Rata mensile<br/><Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("fee", this.state.macRentInformations)}/></th>
+                                    <th>Ultima modifica<br/><Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("lastMod", this.state.macRentInformations)}/></th>
                                     <th>Note</th>
                                 </tr>
                             </thead>
@@ -146,6 +141,7 @@ export default class MacRentTable extends Component {
                                             note={macRentInfo.note}
                                             owner={macRentInfo.owner}
                                             serial={macRentInfo.serial}
+                                            userName={this.state.userName}
                                         />,
                                     )
                                 }

@@ -3,8 +3,6 @@ import {FormGroup, FormControl, InputGroup, Grid, Col, Row, Popover, Image, Over
 import moment from 'moment';
 import PropTypes from "prop-types";
 
-import UserLogin from "../user-login";
-
 import image from "../../assets/images/image.png";
 
 var Button = require("antd/lib/button");
@@ -26,21 +24,18 @@ export default class MacRentInformations extends Component {
             owner: '',
             fee:'',
             isSaveButtonClicked: false,
-            userName: UserLogin.userName,
+            userName: this.props.match.params.user,
             macRentInformations: [],
         };
     }
 
         static PropTypes = {
-            history: PropTypes.object,
-            location: PropTypes.object,
             match: PropTypes.object,
         }
 
     componentDidMount (){
-        if (this.props.match.params.id) {
-            var url = "http://localhost:3456/mac-rent-informations/" + this.props.match.params.id;
-            fetch(url)
+        if (this.props.match.params.id && (this.props.match.params.id !== "0")){
+            fetch(`http://localhost:3456/mac-rent-informations/${this.props.match.params.id}`)
                 .then(response => response.json())
                 .then(response => (
                     // eslint-disable-next-line no-sequences
@@ -52,7 +47,9 @@ export default class MacRentInformations extends Component {
                     this.setState({fee: response.fee }),
                     this.setState({serial: response.serial }),
                     this.setState({note: response.note}),
-                    this.setState({owner: response.owner})
+                    this.setState({owner: response.owner}),
+                    this.setState({dateFromOk: true}),
+                    this.setState({dateToOk: true})
                     ))
         }
     }
@@ -73,22 +70,19 @@ export default class MacRentInformations extends Component {
                             serial: this.state.serial,
                             owner: this.state.owner,
                             fee: this.state.fee,
-                            lastMod: this.state.lastMod,
                             note: this.state.note,
-                            userName: this.state.userName,
+                            lastMod: this.state.userName,
                         })
             if(this.state.id === 0){
                 fetch('http://localhost:3456/mac-rent-informations', {
                     method: "POST", 
                     body: PostData
-                    }).then(() => this.props.history.push("/results"));
+                    }).then(() => this.props.history.push(`/results/${this.state.userName}`));
             } else {
                 fetch(`http://localhost:3456/mac-rent-informations/${this.state.id}`, {
-                    credentials: "same-origin",
-                    method: "put", 
-                    headers: { "Access-Control-Allow-Methods" : "*"},
+                    method: "POST", 
                     body: PostData,
-                }).then(() => this.props.history.push("/results"));
+                }).then(() => this.props.history.push(`/results/${this.state.userName}`));
         }
         };
     }
@@ -116,10 +110,10 @@ export default class MacRentInformations extends Component {
 
     render () {
         return (
-            <form style={{marginBottom: 20}}>
+            <form style={{marginBottom: 20, padding: 50}}>
                 <Grid>
                     <Row>
-                        <Col xs={12} md={12}>
+                        <Col xs={12} md={12} style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                             <Image src={image} responsive />
                             </Col>
                     </Row>
@@ -127,7 +121,7 @@ export default class MacRentInformations extends Component {
                     <Row className="show-grid">
                         <FormGroup validationState={!this.state.name && this.state.isSaveButtonClicked ? "error": null}>
                             <Col sm={4} style = {{marginBottom: 5}}>{"Nome"}</Col>
-                            <Col sm={7}>
+                            <Col sm={8}>
                                 <FormGroup controlId="formBasicText" >
                                     <FormControl type="text"
                                         placeholder="Enter name"
@@ -143,7 +137,7 @@ export default class MacRentInformations extends Component {
                     <Row className="show-grid">
                         <FormGroup validationState={!this.state.code && this.state.isSaveButtonClicked ? "error": null }>
                             <Col sm={4}style = {{marginBottom: 5}}>{"Codice Contratto"}</Col>
-                            <Col sm={7}>
+                            <Col sm={8}>
                                 <FormGroup controlId="formBasicText">
                                     <FormControl type="text"
                                         placeholder="Enter code"
@@ -156,9 +150,9 @@ export default class MacRentInformations extends Component {
                     </Row>
 
                     <Row className="show-grid" style ={{marginBottom: 15}}>
-                        <FormGroup validationState={!this.state.dateFrom && this.state.isSaveButtonClicked ? "error": null }>
+                        <FormGroup validationState={!this.state.dateFromOk && this.state.isSaveButtonClicked ? "error": null }>
                             <Col sm={4} style = {{marginBottom: 5}}>{"Data inizio contratto"}</Col>
-                            <Col sm={7}>
+                            <Col sm={8}>
                                 <DatePicker size={"large"}
                                 format={"DD/MM/YYYY"}
                                 onChange={this.handleDateFromChange.bind(this)}
@@ -169,9 +163,9 @@ export default class MacRentInformations extends Component {
                     </Row>
 
                     <Row className="show-grid" style ={{marginBottom: 15}}>
-                        <FormGroup validationState={!this.state.dateTo && this.state.isSaveButtonClicked ? "error": null }>
+                        <FormGroup validationState={!this.state.dateToOk && this.state.isSaveButtonClicked ? "error": null }>
                             <Col style = {{marginBottom: 5}} sm={4}>{"Data termine contratto"}</Col>
-                            <Col sm={7}>
+                            <Col sm={8}>
                                 <DatePicker 
                                     size={"large"}
                                     format={"DD/MM/YYYY"}
@@ -185,7 +179,7 @@ export default class MacRentInformations extends Component {
                     <Row className="show-grid">
                         <FormGroup validationState={!this.state.serial && this.state.isSaveButtonClicked ? "error": null }>
                             <Col sm={4} style = {{marginBottom: 5}}>{"Numero di serie"}</Col>
-                            <Col sm={7}>
+                            <Col sm={8}>
                                 <FormGroup controlId="formBasicText">
                                     <FormControl type="text"
                                             placeholder="Enter serial"
@@ -201,7 +195,7 @@ export default class MacRentInformations extends Component {
                     <Row className="show-grid">
                         <FormGroup validationState={!this.state.owner && this.state.isSaveButtonClicked ? "error": null }>
                             <Col sm={4} style = {{marginBottom: 5}}>{"Owner"}</Col>
-                            <Col sm = {6} xs={10}>
+                            <Col sm = {7} xs={10}>
                                 <FormGroup controlId="formBasicText" >
                                     <FormControl type="text"
                                             placeholder="Enter name"
@@ -214,7 +208,7 @@ export default class MacRentInformations extends Component {
                             <Col sm = {1} xs={1}>
                                 <OverlayTrigger trigger="click" placement="top" overlay={
                                     <Popover id="popover-positioned-right" title="info">
-                                            Persona a cui è affidato il Mac 
+                                            {"Persona a cui è affidato il Mac"}
                                     </Popover>
                                     }>
                                     <Button shape="circle" icon="info" />
@@ -226,11 +220,11 @@ export default class MacRentInformations extends Component {
                     <Row className="show-grid">
                         <FormGroup validationState={!this.state.fee && this.state.isSaveButtonClicked ? "error": null }>
                             <Col sm={4} style = {{marginBottom: 5}}>{"Rata mensile"}</Col>
-                            <Col sm={7}>
+                            <Col sm={8}>
                                 <FormGroup>
                                     <InputGroup>
                                         <FormControl 
-                                            placeholder="Enter $$$"
+                                            placeholder="Enter fee"
                                             type="text"
                                             onChange={e => this.setState({ fee: e.target.value })}
                                             value={this.state.fee}
@@ -245,7 +239,7 @@ export default class MacRentInformations extends Component {
                     <Row className="show-grid">
                         <FormGroup>
                             <Col sm={4} style = {{marginBottom: 5}}>{"Note"}</Col>
-                            <Col sm={7}>
+                            <Col sm={8}>
                                 <FormGroup controlId="formControlsTextarea">
                                     <FormControl componentClass="textarea"
                                         placeholder="Insert note here"
@@ -258,7 +252,7 @@ export default class MacRentInformations extends Component {
 
                     <Row className="show-grid">
                             <Col sm={2} smOffset={5} xs={4} xsOffset={1} style = {{marginBottom: 5}}>
-                                <Button onClick={() => this.props.history.push("/results")}>Annulla</Button>
+                                <Button onClick={() => this.props.history.push(`/results/${this.state.userName}`)}>Annulla</Button>
                             </Col>
                             <Col sm={1} xs={1}>
                                 <Button type="primary" onClick={() =>this.handleSaveButton(this.isSaveButtonClicked, this.userName)}> Salva </Button>

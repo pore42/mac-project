@@ -18,15 +18,14 @@ var Button = require('antd/lib/button');
         lastMod: PropTypes.string,
         note: PropTypes.string,
         owner: PropTypes.string,
-        serial: PropTypes.string
+        serial: PropTypes.string,
     }
 
     handleEditButton(){
-        this.props.history.push(`/input/${this.props.id}`);
+        this.props.history.push(`/input/${this.props.userName}-${this.props.id}`);
     }
     handleDeleteButton(){
-        var url = "http://localhost:3456/mac-rent-informations/" + this.props.id;
-        fetch(url, {
+        fetch(`http://localhost:3456/mac-rent-informations/${this.props.id}`, {
             method: "DELETE"
         }).then(response => response.json().then(json => {return json;})); }
 
