@@ -1,4 +1,4 @@
-var Chance = require('chance');
+var Chance = require("chance");
 
 const chance = new Chance();
 
@@ -10,8 +10,8 @@ module.exports = (req, res) => {
             id: i+1,
             name: chance.name(),
             code: chance.word({length: 15}),
-            dateFrom: chance.date({american: false}),
-            dateTo: chance.date({american: false}),
+            dateFrom: chance.date({american: false, year: 2017}),
+            dateTo: chance.date({american: false, year: 2017}),
             serial: chance.word({length: 15}),
             owner: chance.name(),
             fee: chance.integer({min: 0, max: 200}),

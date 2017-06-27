@@ -1,15 +1,15 @@
 import React, {Component} from "react";
 import {FormGroup, Table, FormControl, InputGroup, Grid, Col, Row, Checkbox, Image} from "react-bootstrap";
 import changeCase from "change-case";
-import moment from 'moment';
+import moment from "moment";
 import{PropTypes} from "prop-types";
 
 import logo from "../../assets/images/mondora.png";
 
 import MacRentInfoRow from "../../components/mac-rent-info-row";
 
-var Button = require('antd/lib/button');
-var _ = require('lodash');
+var Button = require("antd/lib/button");
+var _ = require("lodash");
 
 export default class MacRentTable extends Component {
     constructor (props) {
@@ -23,41 +23,45 @@ export default class MacRentTable extends Component {
             ownerChecked: true,
             feeChecked: true,
             lastModChecked: true,
-            filterTerm: '',
+            filterTerm: "",
             macRentInformations: [],
             userName: this.props.match.params.user
         }
     };
     static PropTypes = {
-        match: PropTypes.object
+        match: PropTypes.object,
         }
 
     componentDidMount () {
-        fetch("http://localhost:3456/mac-rent-informations")
+        fetch("http://192.168.0.108:3456/mac-rent-informations")
         .then(response => response.json())
         .then(response => this.setState({ macRentInformations: response }));
 
 
         fetch("https://datastore.googleapis.com/v1/projects/mac-rent-informations:runQuery", {
             method: "POST"
-        }).then(res => console.log('res', res));
+        }).then(res => console.log(res));
     }
 
-    handleOrderButtonPress(parameter, macRentInformations){
+    handleOrderDownButtonPress(parameter, macRentInformations){
         _.sortBy(this.state.macRentInformations, [function(o) { return o.name; }]);
-        this.setState({macRentInformations: _.sortBy(this.state.macRentInformations, [parameter, 'code'])});
+        this.setState({macRentInformations: _.sortBy(this.state.macRentInformations, [parameter, "code"])});
+    }
+    handleOrderUpButtonPress(parameter, macRentInformations){
+        _.sortBy(this.state.macRentInformations, [function(o) { return o.name; }]);
+        this.setState({macRentInformations: _.sortBy(this.state.macRentInformations, [parameter, "code"]).reverse()});
     }
 
     filterValues (macRentInformations, filterTerm) {
         var filterTermLowerCase = changeCase.lowerCase(filterTerm);
-        return ((changeCase.lowerCase(macRentInformations.name).includes(filterTermLowerCase)&&this.state.nameChecked) ||
-            (changeCase.lowerCase(macRentInformations.code).includes(filterTermLowerCase)&&this.state.codeChecked) ||
-            (changeCase.lowerCase(macRentInformations.dateFrom).includes(filterTermLowerCase)&&this.state.dateFromChecked) ||
-            (changeCase.lowerCase(macRentInformations.dateTo).includes(filterTermLowerCase)&&this.state.dateToChecked) ||
-            (changeCase.lowerCase(macRentInformations.serial).includes(filterTermLowerCase)&&this.state.serialChecked) ||
-            (changeCase.lowerCase(macRentInformations.owner).includes(filterTermLowerCase)&&this.state.ownerChecked) ||
-            (String(macRentInformations.fee).includes(filterTerm)&&this.state.feeChecked) ||
-            (changeCase.lowerCase(macRentInformations.lastMod).includes(filterTermLowerCase)&&this.state.lastModChecked)
+        return((changeCase.lowerCase(macRentInformations.name).includes(filterTermLowerCase)&&this.state.nameChecked) ||
+              (changeCase.lowerCase(macRentInformations.code).includes(filterTermLowerCase)&&this.state.codeChecked) ||
+              (changeCase.lowerCase(macRentInformations.dateFrom).includes(filterTermLowerCase)&&this.state.dateFromChecked) ||
+              (changeCase.lowerCase(macRentInformations.dateTo).includes(filterTermLowerCase)&&this.state.dateToChecked) ||
+              (changeCase.lowerCase(macRentInformations.serial).includes(filterTermLowerCase)&&this.state.serialChecked) ||
+              (changeCase.lowerCase(macRentInformations.owner).includes(filterTermLowerCase)&&this.state.ownerChecked) ||
+              (changeCase.lowerCase(macRentInformations.lastMod).includes(filterTermLowerCase)&&this.state.lastModChecked) ||
+              (String(macRentInformations.fee).includes(filterTerm)&&this.state.feeChecked)
         );
     }
 
@@ -114,16 +118,43 @@ export default class MacRentTable extends Component {
                         <Table style={{fontSize: 13}} striped bordered responsive>
                             <thead key="thead">
                                 <tr>
-                                    <th>#<br/><Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("id", this.state.macRentInformations)}/></th>
-                                    <th>Nome<br/><Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("name", this.state.macRentInformations)}/></th>
-                                    <th>Codice<br/><Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("code", this.state.macRentInformations)}/></th>
-                                    <th>Data inizio<br/><Button style={{margin: 3}}  shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("dateFrom", this.state.macRentInformations)}/></th>
-                                    <th>Data termine<br/><Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("dateTo", this.state.macRentInformations)}/></th>
-                                    <th>Numero di serie<br/><Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("serial", this.state.macRentInformations)}/></th>
-                                    <th>Owner<br/><Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("owner", this.state.macRentInformations)}/></th>
-                                    <th>Rata mensile<br/><Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("fee", this.state.macRentInformations)}/></th>
-                                    <th>Ultima modifica<br/><Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderButtonPress("lastMod", this.state.macRentInformations)}/></th>
-                                    <th>Note</th>
+                                    <th>{" #"}<br/>
+                                        <Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("id", this.state.macRentInformations)}/>
+                                        <Button style={{margin: 3}} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("id", this.state.macRentInformations)}/>
+                                    </th>
+                                    <th>{"Nome"}<br/>
+                                        <Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("name", this.state.macRentInformations)}/>
+                                        <Button style={{margin: 3}} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("name", this.state.macRentInformations)}/>
+                                    </th>
+                                    <th>{"Codice"}<br/>
+                                        <Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("code", this.state.macRentInformations)}/>
+                                        <Button style={{margin: 3}} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("code", this.state.macRentInformations)}/>
+                                    </th>
+                                    <th>{"Data inizio"}<br/>
+                                        <Button style={{margin: 3}}  shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("dateFrom", this.state.macRentInformations)}/>
+                                        <Button style={{margin: 3}} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("dateFrom", this.state.macRentInformations)}/>
+                                    </th>
+                                    <th>{"Data termine"}<br/>
+                                        <Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("dateTo", this.state.macRentInformations)}/>
+                                        <Button style={{margin: 3}} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("dateTo", this.state.macRentInformations)}/>
+                                    </th>
+                                    <th>{"Numero di serie"}<br/>
+                                        <Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("serial", this.state.macRentInformations)}/>
+                                        <Button style={{margin: 3}} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("serial", this.state.macRentInformations)}/>
+                                    </th>
+                                    <th>{"Owner"}<br/>
+                                        <Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("owner", this.state.macRentInformations)}/>
+                                        <Button style={{margin: 3}} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("owner", this.state.macRentInformations)}/>
+                                    </th>
+                                    <th>{"Rata mensile"}<br/>
+                                        <Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("fee", this.state.macRentInformations)}/>
+                                        <Button style={{margin: 3}} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("fee", this.state.macRentInformations)}/>
+                                    </th>
+                                    <th>{"Ultima modifica"}<br/>
+                                        <Button style={{margin: 3}} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("lastMod", this.state.macRentInformations)}/>
+                                        <Button style={{margin: 3}} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("lastMod", this.state.macRentInformations)}/>
+                                    </th>
+                                    <th>{"Note"}<br/><br/></th>
                                 </tr>
                             </thead>
                             <tbody key="tbody">

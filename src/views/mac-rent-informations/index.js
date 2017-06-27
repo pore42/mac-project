@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {FormGroup, FormControl, InputGroup, Grid, Col, Row, Popover, Image, OverlayTrigger} from "react-bootstrap";
-import moment from 'moment';
+import moment from "moment";
 import PropTypes from "prop-types";
 
 import image from "../../assets/images/image.png";
@@ -18,11 +18,11 @@ export default class MacRentInformations extends Component {
             id: 0,
             dateFrom: moment(),
             dateTo: moment(),
-            name: '',
-            code: '',
-            serial: '',
-            owner: '',
-            fee:'',
+            name: "",
+            code: "",
+            serial: "",
+            owner: "",
+            fee:"",
             isSaveButtonClicked: false,
             userName: this.props.match.params.user,
             macRentInformations: [],
@@ -55,7 +55,7 @@ export default class MacRentInformations extends Component {
     }
 
     handleChange(date) {
-        message.info('Selected Date: ' + date.toString());
+        message.info("Selected Date: " + date.toString());
         this.setState({ date });
     }
 
@@ -74,7 +74,7 @@ export default class MacRentInformations extends Component {
                             lastMod: this.state.userName,
                         })
             if(this.state.id === 0){
-                fetch('http://localhost:3456/mac-rent-informations', {
+                fetch("http://localhost:3456/mac-rent-informations", {
                     method: "POST", 
                     body: PostData
                     }).then(() => this.props.history.push(`/results/${this.state.userName}`));
@@ -89,7 +89,7 @@ export default class MacRentInformations extends Component {
 
     getInitialState() {
         return {
-            value: ''
+            value: ""
         };
     }
 
