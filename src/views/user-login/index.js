@@ -27,7 +27,7 @@ export default class UserLogin extends Component {
 
     // Parameters to pass to OAuth 2.0 endpoint.
     var params = {client_id: '524088644940-rlsefunif94pvmlhla81d71vcogtvdiq.apps.googleusercontent.com',
-        redirect_uri: 'http://localhost:3000',
+        redirect_uri: window.location.href,
         response_type: 'token',
         scope: 'https://www.googleapis.com/auth/datastore',
         include_granted_scopes: 'true',
@@ -84,6 +84,7 @@ export default class UserLogin extends Component {
                                         response_type= 'token'
                                         scope="https://www.googleapis.com/auth/datastore"
                                         buttonText="Login with Google"
+                                        autoLoad={false}
                                     />
                                 </Col>
                             </Row>
