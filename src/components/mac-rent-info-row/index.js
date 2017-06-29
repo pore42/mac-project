@@ -30,7 +30,7 @@ import { Button } from "antd";
     }
 
     handleEditButton(){
-        this.props.history.push(`/input/${this.props.userName}-${this.props.id}`);
+        this.props.history.push(`/input/${this.props.id}`);
     }
     handleDeleteButton(){
         confirmAlert({

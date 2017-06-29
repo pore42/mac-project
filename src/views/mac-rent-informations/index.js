@@ -24,7 +24,7 @@ export default class MacRentInformations extends Component {
             owner: "",
             fee:"",
             isSaveButtonClicked: false,
-            userName: this.props.match.params.user,
+            userName: localStorage.getItem("userName"),
             macRentInformations: [],
         };
     }
@@ -52,9 +52,20 @@ export default class MacRentInformations extends Component {
                     this.setState({dateToOk: true})
                     ))
         }
+        console.log("get token");
+        fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:runQuery?access_token=${localStorage.getItem("googleAccessToken")}`, {
+        method: "POST",
+        body: JSON.stringify({query: {
+                kind: [
+                    {
+                        name: "mac-rent-information"
+                    }
+                ]
+        }
+        })}).then(res => console.log(res));
     }
 
-    handleChange(date) {
+    handleChange(date){
         message.info("Selected Date: " + date.toString());
         this.setState({ date });
     }
@@ -84,7 +95,7 @@ export default class MacRentInformations extends Component {
                     body: PostData,
                 }).then(() => this.props.history.push(`/results/${this.state.userName}`));
         }
-        };
+    }
     }
 
     getInitialState() {
@@ -252,7 +263,7 @@ export default class MacRentInformations extends Component {
 
                     <Row className="show-grid">
                             <Col sm={2} smOffset={5} xs={4} xsOffset={1} style = {{marginBottom: 5}}>
-                                <Button onClick={() => this.props.history.push(`/results/${this.state.userName}`)}>Annulla</Button>
+                                <Button onClick={() => this.props.history.push("/results/")}>Annulla</Button>
                             </Col>
                             <Col sm={1} xs={1}>
                                 <Button type="primary" onClick={() =>this.handleSaveButton(this.isSaveButtonClicked, this.userName)}> Salva </Button>

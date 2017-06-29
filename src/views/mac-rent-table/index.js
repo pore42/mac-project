@@ -25,7 +25,7 @@ export default class MacRentTable extends Component {
             lastModChecked: true,
             filterTerm: "",
             macRentInformations: [],
-            userName: this.props.match.params.user
+            userName: "",
         }
     };
     static PropTypes = {
@@ -33,7 +33,7 @@ export default class MacRentTable extends Component {
         }
 
     componentDidMount () {
-        fetch("http://192.168.0.108:3456/mac-rent-informations")
+        fetch("http://localhost:3456/mac-rent-informations")
         .then(response => response.json())
         .then(response => this.setState({ macRentInformations: response }));
 

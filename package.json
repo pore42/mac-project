@@ -5,6 +5,7 @@
   "dependencies": {
     "antd": "^2.11.0",
     "bootstrap": "^3.3.7",
+    "change-case": "^3.0.1",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
@@ -13,7 +14,10 @@
     "react-bootstrap": "^0.31.0",
     "react-confirm-alert": "^1.0.5",
     "react-dom": "^15.5.4",
-    "react-google-login": "^2.9.2"
+    "react-google-login": "^2.9.2",
+    "react-google-login-component": "^0.7.0",
+    "react-localstorage": "^0.3.1",
+    "react-router-dom": "^4.1.1"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.2.1",
