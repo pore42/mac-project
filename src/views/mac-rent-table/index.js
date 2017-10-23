@@ -6,6 +6,9 @@ import{PropTypes} from "prop-types";
 
 import logo from "../../assets/images/mondora.png";
 
+
+
+
 import MacRentInfoRow from "../../components/mac-rent-info-row";
 
 var Button = require("antd/lib/button");
@@ -27,7 +30,7 @@ export default class MacRentTable extends Component {
             macRentInformations: [],
             userName: "",
         }
-    };
+  };
     static PropTypes = {
         match: PropTypes.object,
         }
@@ -37,10 +40,25 @@ export default class MacRentTable extends Component {
         .then(response => response.json())
         .then(response => this.setState({ macRentInformations: response }));
 
-
-        fetch("https://datastore.googleapis.com/v1/projects/mac-rent-informations:runQuery", {
-            method: "POST"
-        }).then(res => console.log(res));
+    
+        fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:runQuery?access_token=${localStorage.getItem("googleAccessToken")}`, {
+            method: "POST",
+            body: JSON.stringify({
+                query: {
+                    kind: [
+                        {
+                            name: "mac-rent-information"
+                        }
+                    ]
+                }
+                
+            })
+        }).then(/*res => console.log(res.body.getReader())*/
+        res =>
+            { return res.json() }     
+        ).then(data => {
+            console.log(data);
+        });
     }
 
     handleOrderDownButtonPress(parameter, macRentInformations){
