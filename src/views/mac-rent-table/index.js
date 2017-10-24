@@ -53,11 +53,11 @@ export default class MacRentTable extends Component {
                 }
                 
             })
-        }).then(/*res => console.log(res.body.getReader())*/
+        }).then(
         res =>
             { return res.json() }     
         ).then(data => {
-            console.log(data);
+            console.log(data.batch.entityResults);
         });
     }
 

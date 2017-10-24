@@ -3,11 +3,13 @@ import {FormGroup, FormControl, InputGroup, Grid, Col, Row, Popover, Image, Over
 import moment from "moment";
 import PropTypes from "prop-types";
 
+
 import image from "../../assets/images/image.png";
 
 var Button = require("antd/lib/button");
 var DatePicker = require("antd/lib/date-picker");
 var message = require("antd/lib/message");
+
 
 export default class MacRentInformations extends Component {
 
@@ -22,47 +24,117 @@ export default class MacRentInformations extends Component {
             code: "",
             serial: "",
             owner: "",
-            fee:"",
+            fee: "",
             isSaveButtonClicked: false,
             userName: localStorage.getItem("userName"),
             macRentInformations: [],
         };
     }
 
-        static PropTypes = {
-            match: PropTypes.object,
-        }
+    static PropTypes = {
+        match: PropTypes.object,
+    }
 
-    componentDidMount (){
-        if (this.props.match.params.id && (this.props.match.params.id !== "0")){
-            fetch(`http://localhost:3456/mac-rent-informations/${this.props.match.params.id}`)
-                .then(response => response.json())
-                .then(response => (
-                    // eslint-disable-next-line no-sequences
-                    this.setState({id: response.id}),
-                    this.setState({name: response.name }),
-                    this.setState({code: response.code}),
-                    this.setState({dateFrom: response.dateFrom}),
-                    this.setState({dateTo: response.dateTo }),
-                    this.setState({fee: response.fee }),
-                    this.setState({serial: response.serial }),
-                    this.setState({note: response.note}),
-                    this.setState({owner: response.owner}),
-                    this.setState({dateFromOk: true}),
-                    this.setState({dateToOk: true})
-                    ))
-        }
-        console.log("get token");
+    componentDidMount() {
+        console.log("get token from google");
         fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:runQuery?access_token=${localStorage.getItem("googleAccessToken")}`, {
-        method: "POST",
-        body: JSON.stringify({query: {
-                kind: [
+            method: "POST",
+            body: JSON.stringify({
+                query: {
+                    kind: [
+                        {
+                            name: "mac-rent-information"
+                        }
+                    ]
+                }
+            })
+        }).then(res => res.json()
+            ).then(data => {
+                console.log(data.batch.entityResults[0].entity.properties);
+
+               
+                //setstatus from response
+                var r = data.batch.entityResults[0].entity.properties;
+                    this.setState({
+                        name: r.name.stringValue,
+                        code: r.code.stringValue,
+                        dateFrom: moment(r.dateFrom.timestampValue),
+                        dateTo: moment(r.dateTo.timestampValue),
+                        fee: r.fee.integerValue,
+                        serial: r.serial.stringValue,
+                        note: r.note.stringValue,
+                        owner: r.owner.stringValue,
+                        dateFromOk: true,
+                        dateToOk: true,
+                    });
+
+            });
+       /* fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
+            method: "POST",
+            body: JSON.stringify({
+                "transaction": null,
+                "mode": "NON_TRANSACTIONAL",
+                "mutations": [
                     {
-                        name: "mac-rent-information"
+                        "upsert": {
+                            "key": {
+                                "partitionId": {
+                                    "projectId": "mac-rent-informations"
+                                },
+                                "path": [
+                                    {
+                                        "kind": "mac-rent-information"
+                                    }
+                                ]
+                            },
+                            "properties": {
+                                "name": {
+                                    "stringValue": "car"
+                                },
+                                "code": {
+                                    "stringValue": "123prova"
+                                },
+                                "dateFrom": {
+                                    "timestampValue": new Date()
+                                },
+                                "dateTo": {
+                                    "timestampValue": new Date()
+                                },
+                                "fee": {
+                                    "integerValue": "123"
+                                },
+                                "serial": {
+                                    "stringValue": "serialeserio"
+                                },
+                                "note": {
+                                    "stringValue": "eventualinote"
+                                },
+                                "owner": {
+                                    "stringValue": "proprietario remoto"
+                                },
+                                "name": {
+                                    "stringValue": "react-app"
+                                }
+                            }
+                        }
                     }
                 ]
-        }
-        })}).then(res => console.log(res));
+            })
+        }).then(res => {
+            if (!res.ok)
+                throw new Error("errore in fase di salvataggio");
+            else {
+                alert("Salvataggio effettuato con successo");
+
+            }
+            }
+        ).catch((error) => {
+            alert("salvataggio andato male male");
+            console.error(error);
+            //window.location = "/";
+        });*/
+
+        
     }
 
     handleChange(date){
