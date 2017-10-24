@@ -36,11 +36,8 @@ export default class MacRentTable extends Component {
         }
 
     componentDidMount () {
-        fetch("http://localhost:3456/mac-rent-informations")
-        .then(response => response.json())
-        .then(response => this.setState({ macRentInformations: response }));
-
-    
+ 
+        console.log("get data from google");
         fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:runQuery?access_token=${localStorage.getItem("googleAccessToken")}`, {
             method: "POST",
             body: JSON.stringify({
@@ -51,14 +48,41 @@ export default class MacRentTable extends Component {
                         }
                     ]
                 }
-                
             })
-        }).then(
-        res =>
-            { return res.json() }     
-        ).then(data => {
-            console.log(data.batch.entityResults);
-        });
+        }).then(res => res.json()
+            ).then(data => {
+                var elements = data.batch.entityResults;
+                this.setState({ macRentInformations: this.deserializedMacRentInformation(elements) });
+
+
+            });
+    
+
+    }
+
+
+
+    deserializedMacRentInformation(rowElements) { 
+        
+
+        const elements = rowElements.map((el, i) =>
+            ({
+                id: i,
+                name: el.entity.properties.name.stringValue,
+                code: el.entity.properties.code.stringValue,
+                dateFrom: moment(el.entity.properties.dateFrom.timestampValue),
+                dateTo: moment(el.entity.properties.dateTo.timestampValue),
+                serial: el.entity.properties.serial.stringValue,
+                owner: el.entity.properties.owner.stringValue,
+                fee: el.entity.properties.fee.integerValue,
+                lastMod: "io",
+                note: el.entity.properties.note.stringValue,
+            }));
+           
+
+
+        return  elements ;
+
     }
 
     handleOrderDownButtonPress(parameter, macRentInformations){
