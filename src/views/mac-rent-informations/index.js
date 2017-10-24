@@ -69,7 +69,22 @@ export default class MacRentInformations extends Component {
                     });
 
             });
-       /* fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
+
+        
+    }
+
+    handleChange(date){
+        message.info("Selected Date: " + date.toString());
+        this.setState({ date });
+    }
+
+    handleSaveButton(isSaveButtonClicked, userName){
+        this.setState({isSaveButtonClicked: true});
+    
+    
+    
+    
+           fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
             method: "POST",
             body: JSON.stringify({
                 "transaction": null,
@@ -89,32 +104,29 @@ export default class MacRentInformations extends Component {
                             },
                             "properties": {
                                 "name": {
-                                    "stringValue": "car"
+                                    "stringValue": this.state.name
                                 },
                                 "code": {
-                                    "stringValue": "123prova"
+                                    "stringValue": this.state.code
                                 },
                                 "dateFrom": {
-                                    "timestampValue": new Date()
+                                    "timestampValue":moment(this.state.dateFrom)
                                 },
                                 "dateTo": {
-                                    "timestampValue": new Date()
+                                    "timestampValue": moment(this.state.dateTo)
                                 },
                                 "fee": {
-                                    "integerValue": "123"
+                                    "integerValue": this.state.fee
                                 },
                                 "serial": {
-                                    "stringValue": "serialeserio"
+                                    "stringValue": this.state.serial
                                 },
                                 "note": {
-                                    "stringValue": "eventualinote"
+                                    "stringValue": this.state.note
                                 },
                                 "owner": {
-                                    "stringValue": "proprietario remoto"
+                                    "stringValue": this.state.owner
                                 },
-                                "name": {
-                                    "stringValue": "react-app"
-                                }
                             }
                         }
                     }
@@ -125,49 +137,17 @@ export default class MacRentInformations extends Component {
                 throw new Error("errore in fase di salvataggio");
             else {
                 alert("Salvataggio effettuato con successo");
-
+                this.props.history.push(`/results/${this.state.userName}`);
             }
             }
         ).catch((error) => {
             alert("salvataggio andato male male");
             console.error(error);
-            //window.location = "/";
-        });*/
+            
+        });
 
+    
         
-    }
-
-    handleChange(date){
-        message.info("Selected Date: " + date.toString());
-        this.setState({ date });
-    }
-
-    handleSaveButton(isSaveButtonClicked, userName){
-        this.setState({isSaveButtonClicked: true});
-        if (this.state.name && this.state.code && this.state.dateFromOk && this.state.dateToOk && this.state.fee && this.state.serial && this.state.owner){
-            var PostData = JSON.stringify({
-                            name: this.state.name,
-                            code: this.state.code,
-                            dateFrom: this.state.dateFrom,
-                            dateTo: this.state.dateTo,
-                            serial: this.state.serial,
-                            owner: this.state.owner,
-                            fee: this.state.fee,
-                            note: this.state.note,
-                            lastMod: this.state.userName,
-                        })
-            if(this.state.id === 0){
-                fetch("http://localhost:3456/mac-rent-informations", {
-                    method: "POST", 
-                    body: PostData
-                    }).then(() => this.props.history.push(`/results/${this.state.userName}`));
-            } else {
-                fetch(`http://localhost:3456/mac-rent-informations/${this.state.id}`, {
-                    method: "POST", 
-                    body: PostData,
-                }).then(() => this.props.history.push(`/results/${this.state.userName}`));
-        }
-    }
     }
 
     getInitialState() {
