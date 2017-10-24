@@ -1,5 +1,5 @@
 import React , {Component} from "react";
-import {Jumbotron, Col, Row, Button, Image} from "react-bootstrap";
+import {Jumbotron, Col, Row, Image} from "react-bootstrap";
 import GoogleLogin from "react-google-login";
 import logo from "../../assets/images/mondora.png";
 import logoGoogle from "../../assets/images/google.png";
