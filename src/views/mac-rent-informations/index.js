@@ -38,7 +38,7 @@ export default class MacRentInformations extends Component {
     componentDidMount() {
         
         var id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-        console.log("lookup entities with key", window.location.href.substring(window.location.href.lastIndexOf('/') + 1)> 0);
+        console.log("lookup entities with key", window.location.href.substring(window.location.href.lastIndexOf('/') + 1));
 
         //lookup serve proprio a richiedere entità per chiave(id qui)
         if (id > 0) {

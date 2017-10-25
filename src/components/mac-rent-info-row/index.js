@@ -17,6 +17,7 @@ import { Button } from "antd";
 
     static propTypes = {
         id: PropTypes.number,
+        realId: PropTypes.number,
         name: PropTypes.string,
         code: PropTypes.string,
         dateFrom: PropTypes.string,
@@ -30,7 +31,7 @@ import { Button } from "antd";
     }
 
     handleEditButton(){
-        this.props.history.push(`/input/${this.props.id}`);
+        this.props.history.push(`/input/${this.props.realId}`);
     }
     handleDeleteButton(){
         confirmAlert({

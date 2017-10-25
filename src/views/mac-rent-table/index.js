@@ -68,6 +68,7 @@ export default class MacRentTable extends Component {
         const elements = rowElements.map((el, i) =>
             ({
                 id: i,
+                realId: Number(el.entity.key.path[0].id),
                 name: el.entity.properties.name.stringValue,
                 code: el.entity.properties.code.stringValue,
                 dateFrom: moment(el.entity.properties.dateFrom.timestampValue),
@@ -204,6 +205,7 @@ export default class MacRentTable extends Component {
                                     .filter(element => this.filterValues(element, this.state.filterTerm))
                                     .map(macRentInfo => 
                                         <MacRentInfoRow key={macRentInfo.id}
+                                            realId={macRentInfo.realId}    
                                             id={macRentInfo.id}
                                             name={macRentInfo.name}
                                             code={macRentInfo.code}
