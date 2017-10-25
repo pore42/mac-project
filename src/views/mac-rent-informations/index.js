@@ -57,10 +57,14 @@ export default class MacRentInformations extends Component {
                             }
                         ]
                     })
-            }).then(
-                res => res.json()
-            ).then(data => {
-                    
+            }).then((res) => {
+                if (!res.ok) {
+                    throw new Error("errore in fase di salvataggio");
+                }
+                
+                return res.json();
+            }).then(data => {
+                                  
                     //setstatus from response
                     var r = data.found[0].entity.properties;
                     this.setState({
@@ -76,6 +80,10 @@ export default class MacRentInformations extends Component {
                         dateFromOk: true,
                         dateToOk: true,
                     });
+
+                }).catch((error) => {
+                    alert("recupero informazioni id: ", id);
+                    console.error(error);
 
                 });
         }
@@ -100,7 +108,6 @@ export default class MacRentInformations extends Component {
                         kind:"mac-rent-information"
                     }    
             ;
-            console.log(modifyElement);
     
             fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
                 method: "POST",
@@ -149,7 +156,7 @@ export default class MacRentInformations extends Component {
                     ]
                 })
             }).then(res => {
-                console.log(res);
+
                 if (!res.ok)
                     throw new Error("errore in fase di salvataggio");
                 else {
