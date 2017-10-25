@@ -36,40 +36,49 @@ export default class MacRentInformations extends Component {
     }
 
     componentDidMount() {
-        console.log("get token from google");
-        fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:runQuery?access_token=${localStorage.getItem("googleAccessToken")}`, {
-            method: "POST",
-            body: JSON.stringify({
-                query: {
-                    kind: [
-                        {
-                            name: "mac-rent-information"
-                        }
-                    ]
-                }
-            })
-        }).then(res => res.json()
-            ).then(data => {
-                console.log(data.batch.entityResults[0].entity.properties);
+        
+        var id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+        console.log("lookup entities with key", window.location.href.substring(window.location.href.lastIndexOf('/') + 1)> 0);
 
-               
-                //setstatus from response
-                var r = data.batch.entityResults[0].entity.properties;
+        //lookup serve proprio a richiedere entità per chiave(id qui)
+        if (id > 0) {
+            fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:lookup?access_token=${localStorage.getItem("googleAccessToken")}`, {
+                method: "POST",
+                body: JSON.stringify(
+                    {
+                        "keys": [
+                            {
+                                "path": [
+                                    {
+                                        "id": id !== 0 ? id : 0,
+                                        "kind": "mac-rent-information"
+                                    }
+                                ]
+                            }
+                        ]
+                    })
+            }).then(
+                res => res.json()
+            ).then(data => {
+                    
+                    //setstatus from response
+                    var r = data.found[0].entity.properties;
                     this.setState({
-                        name: r.name.stringValue,
-                        code: r.code.stringValue,
-                        dateFrom: moment(r.dateFrom.timestampValue),
-                        dateTo: moment(r.dateTo.timestampValue),
-                        fee: r.fee.integerValue,
-                        serial: r.serial.stringValue,
-                        note: r.note.stringValue,
-                        owner: r.owner.stringValue,
+                        id: id,
+                        name: (r.name) ? r.name.stringValue : "",
+                        code: (r.code) ? r.code.stringValue : "",
+                        dateFrom: (r.dateFrom) ? moment(r.dateFrom.timestampValue) : moment(),
+                        dateTo: (r.dateTo) ? moment(r.dateTo.timestampValue) : moment(),
+                        fee: (r.fee) ? r.fee.integerValue : "",
+                        serial: (r.serial) ? r.serial.stringValue : "",
+                        note: (r.note) ? r.note.stringValue : "",
+                        owner: (r.owner) ? r.owner.stringValue : "",
                         dateFromOk: true,
                         dateToOk: true,
                     });
 
-            });
-
+                });
+        }
         
     }
 
@@ -81,71 +90,79 @@ export default class MacRentInformations extends Component {
     handleSaveButton(isSaveButtonClicked, userName){
         this.setState({isSaveButtonClicked: true});
     
-    
-    
-    
-           fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
-            method: "POST",
-            body: JSON.stringify({
-                "transaction": null,
-                "mode": "NON_TRANSACTIONAL",
-                "mutations": [
+        if (this.state.name && this.state.code && this.state.dateFromOk && this.state.dateToOk && this.state.fee && this.state.serial && this.state.owner) {
+            var modifyElement =
+                this.state.id !== 0 ? {
+                    kind: "mac-rent-information",
+                    id: this.state.id
+                } :
                     {
-                        "upsert": {
-                            "key": {
-                                "partitionId": {
-                                    "projectId": "mac-rent-informations"
+                        kind:"mac-rent-information"
+                    }    
+            ;
+            console.log(modifyElement);
+    
+            fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
+                method: "POST",
+                body: JSON.stringify({
+                    "mode": "NON_TRANSACTIONAL",
+                    "mutations": [
+                        {
+                            "upsert": {
+                                "key": {
+                                    "partitionId": {
+                                        "projectId": "mac-rent-informations"
+                                    },
+                                    "path": [
+                                        modifyElement
+                                    ]
                                 },
-                                "path": [
-                                    {
-                                        "kind": "mac-rent-information"
-                                    }
-                                ]
-                            },
-                            "properties": {
-                                "name": {
-                                    "stringValue": this.state.name
-                                },
-                                "code": {
-                                    "stringValue": this.state.code
-                                },
-                                "dateFrom": {
-                                    "timestampValue":moment(this.state.dateFrom)
-                                },
-                                "dateTo": {
-                                    "timestampValue": moment(this.state.dateTo)
-                                },
-                                "fee": {
-                                    "integerValue": this.state.fee
-                                },
-                                "serial": {
-                                    "stringValue": this.state.serial
-                                },
-                                "note": {
-                                    "stringValue": this.state.note
-                                },
-                                "owner": {
-                                    "stringValue": this.state.owner
-                                },
+                                "properties": {
+
+                                    "name": {
+                                        "stringValue": this.state.name
+                                    },
+                                    "code": {
+                                        "stringValue": this.state.code
+                                    },
+                                    "dateFrom": {
+                                        "timestampValue": this.state.dateFrom
+                                    },
+                                    "dateTo": {
+                                        "timestampValue": this.state.dateTo
+                                    },
+                                    "fee": {
+                                        "integerValue": this.state.fee
+                                    },
+                                    "serial": {
+                                        "stringValue": this.state.serial
+                                    },
+                                    "note": {
+                                        "stringValue": this.state.note
+                                    },
+                                    "owner": {
+                                        "stringValue": this.state.owner
+                                    },
+                                }
                             }
                         }
-                    }
-                ]
-            })
-        }).then(res => {
-            if (!res.ok)
-                throw new Error("errore in fase di salvataggio");
-            else {
-                alert("Salvataggio effettuato con successo");
-                this.props.history.push(`/results/${this.state.userName}`);
+                    ]
+                })
+            }).then(res => {
+                console.log(res);
+                if (!res.ok)
+                    throw new Error("errore in fase di salvataggio");
+                else {
+                    alert("Salvataggio effettuato con successo");
+                    this.props.history.push(`/results/${this.state.userName}`);
+                }
             }
-            }
-        ).catch((error) => {
-            alert("salvataggio andato male male");
-            console.error(error);
+                ).catch((error) => {
+                    alert("salvataggio andato male male");
+                    console.error(error);
             
-        });
-
+                });
+        }
     
         
     }
