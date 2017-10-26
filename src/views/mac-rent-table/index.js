@@ -226,12 +226,14 @@ export default class MacRentTable extends Component {
                                 </Checkbox>
                             </FormGroup>
                         </Col>
-                        <Col sm={2} xsHidden style={{ margin: 15 }}>
+                        <Col sm={9} xsHidden style={{ margin: 0 }}>
+                            <div style={{position: "absolute", right: "0px"}}>
                             <GoogleLogout
                                 clientId="524088644940-rlsefunif94pvmlhla81d71vcogtvdiq.apps.googleusercontent.com"
                                 buttonText="Logout"
                                 onLogoutSuccess={(res) => console.log(res)}
-                                onSuccess={this.logout}/>
+                                onSuccess={this.logout} />
+                            </div>
                         </Col>
                     </div>
                 </Row>
