@@ -79,17 +79,20 @@ export default withRouter(class MacRentInfoRow extends Component {
             displayFee,
             displayLastMod,
         } = this.props
-        var b = moment(dateFrom, "dd/mm/yyyy");
-        var c = moment(dateTo, "dd/mm/yyyy")
-        var a = moment(moment().format("DD/MM/YYYY"), "dd/mm/yyyy");
+        var momentFrom = moment(dateFrom, "DD/MM/YYYY");
+        var momentTo = moment(dateTo, "DD/MM/YYYY");
+        var momentActual = moment(moment(), "DD/MM/YYYY" );
+
+        var diffFrom = momentActual.diff(momentFrom);
+        var diffTo = momentActual.diff(momentTo);
 
         return (
             <tr>
                 <th>{id}</th>
                 {displayName &&  <th>{name}</th>}
                 {displayCode && <th>{code}</th>}
-                {displayDateFrom && <th style={{ backgroundColor: (moment(b).isBefore(a) ? "" : "#99ff99") }}>{dateFrom}</th>}
-                {displayDateTo && <th style={{ backgroundColor: (moment(c).isBefore(a) ? "#ff5555" : "") }}>{dateTo}</th>}
+                {displayDateFrom && <th style={{ backgroundColor: (diffFrom <0 ? "" : "#99ff99") }}>{dateFrom}</th>}
+                {displayDateTo && <th style={{ backgroundColor: (diffTo > 0  ? "#ff5555" : "") }}>{dateTo}</th>}
                 {displaySerial && <th>{serial}</th>}
                 {displayOwner && <th>{owner}</th>}
                 {displayFee && <th>{fee} €</th>}
