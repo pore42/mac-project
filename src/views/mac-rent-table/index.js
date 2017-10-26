@@ -81,10 +81,89 @@ export default class MacRentTable extends Component {
             }));
            
 
-
         return  elements ;
 
     }
+
+    deleteMacRentInformation(iden) {
+
+        var removeIndex = this.state.macRentInformations.findIndex((el) => el.realId === iden);
+        var copy = this.state.macRentInformations;
+        copy.splice(removeIndex, 1);
+
+        
+
+        fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:beginTransaction?access_token=${localStorage.getItem("googleAccessToken")}`, {
+            method: "POST",
+            body: JSON.stringify(
+                {
+                    "transactionOptions": {
+                        "readWrite": {}
+                    }
+                })
+
+        }).then((res) => {
+            if (!res.ok) {
+                throw new Error("errore in fase di salvataggio");
+            }
+
+            return res.json();
+        }).then(data => {
+            console.log(data.transaction);
+
+            fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
+                method: "POST",
+                body: JSON.stringify(
+                    {
+                        "mode": "MODE_UNSPECIFIED",
+                        "mutations": [
+                            {
+                                "delete": {
+                                    "path": [
+                                        {
+                                            "kind": "mac-rent-information",
+                                            "id": iden,
+                                        }
+                                    ]
+                                }
+                            }
+                        ],
+                        "transaction": data.transaction
+                    })
+            }).then((res) => {
+                if (!res.ok) {
+                    throw new Error("errore in fase di salvataggio");
+                }
+
+                return res.json();
+            }).then(data => {
+                console.log(data);
+                this.setState({ macRentInformations: copy });
+
+            }).catch((error) => {
+                alert("cancellazione elemento scelto fallita");
+                console.error(error);
+            });
+
+
+
+
+        }).catch((error) => {
+            alert("niente transaction");
+            console.error(error);
+        });
+
+
+
+
+
+
+
+
+
+
+
+     }
 
     handleOrderDownButtonPress(parameter, macRentInformations){
         _.sortBy(this.state.macRentInformations, [function(o) { return o.name; }]);
@@ -205,6 +284,7 @@ export default class MacRentTable extends Component {
                                     .filter(element => this.filterValues(element, this.state.filterTerm))
                                     .map(macRentInfo => 
                                         <MacRentInfoRow key={macRentInfo.id}
+                                            delete={this.deleteMacRentInformation.bind(this)}    
                                             realId={macRentInfo.realId}    
                                             id={macRentInfo.id}
                                             name={macRentInfo.name}

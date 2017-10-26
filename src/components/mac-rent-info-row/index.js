@@ -28,6 +28,7 @@ import { Button } from "antd";
         note: PropTypes.string,
         owner: PropTypes.string,
         serial: PropTypes.string,
+        delete: PropTypes.func,
     }
 
     handleEditButton(){
@@ -35,78 +36,15 @@ import { Button } from "antd";
     }
     handleDeleteButton() {
         
-       // var { delete } = this.props;
+        var  deleteElement  = this.props.delete;
         
-        /*confirmAlert({
+        confirmAlert({
             title: "Eliminare?",
             message: "",
             confirmLabel: "OK",
             cancelLabel: "Annulla",
-            onConfirm: () => fetch(`http://localhost:3456/mac-rent-informations/${this.props.id}`, {
-                method: "DELETE"
-            }).then(response => response.json().then(json => {return json;})),
-        })*/
-
-        fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:beginTransaction?access_token=${localStorage.getItem("googleAccessToken")}`, {
-            method: "POST",
-            body: JSON.stringify(
-                {
-                    "transactionOptions": {
-                        "readWrite": {}
-                    }
-                })
-
-        }).then((res) => {
-            if (!res.ok) {
-                throw new Error("errore in fase di salvataggio");
-            }
-
-            return res.json();
-            }).then(data => {
-                console.log(data.transaction);
-
-                fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
-                    method: "POST",
-                    body: JSON.stringify(
-                        {
-                            "mode": "MODE_UNSPECIFIED",
-                            "mutations": [
-                                {
-                                    "delete": {
-                                        "path": [
-                                            {
-                                                "kind": "mac-rent-information",
-                                                "id": this.props.realId
-                                            }
-                                        ]
-                                    }
-                                }
-                            ],
-                            "transaction": data.transaction
-                        })
-                }).then((res) => {
-                    if (!res.ok) {
-                        throw new Error("errore in fase di salvataggio");
-                    }
-
-                    return res.json();
-                }).then(data => {
-                    console.log(data);
-
-                }).catch((error) => {
-                    alert("niente transaction");
-                    console.error(error);
-                });
-
-
-                    
-                        
-          }).catch((error) => {
-           alert("niente transaction");
-        console.error(error);
-    });
-
-
+            onConfirm: () => deleteElement(this.props.realId),
+        });
 
     }
 
