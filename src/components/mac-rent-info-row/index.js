@@ -30,7 +30,7 @@ export default withRouter(class MacRentInfoRow extends Component {
         serial: PropTypes.string,
         delete: PropTypes.func,
         nameChecked: PropTypes.bool,
-        userName: PropTypes.bool,
+        userName: PropTypes.string,
         displayName: PropTypes.bool,
         displayCode: PropTypes.bool,
         displayDateFrom: PropTypes.bool,
