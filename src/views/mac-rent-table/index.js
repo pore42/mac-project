@@ -56,6 +56,7 @@ export default class MacRentTable extends Component {
                 this.setState({ macRentInformations: this.deserializedMacRentInformation(elements) });
 
             });
+        
     }
 
 
@@ -74,7 +75,7 @@ export default class MacRentTable extends Component {
                 serial: el.entity.properties.serial.stringValue,
                 owner: el.entity.properties.owner.stringValue,
                 fee: el.entity.properties.fee.integerValue,
-                lastMod: "io",
+                lastMod: el.entity.properties.lastMod.stringValue,
                 note: el.entity.properties.note.stringValue,
             }));
 

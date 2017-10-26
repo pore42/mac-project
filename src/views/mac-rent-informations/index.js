@@ -150,6 +150,9 @@ export default class MacRentInformations extends Component {
                                     "owner": {
                                         "stringValue": this.state.owner
                                     },
+                                    "lastMod": {
+                                        "stringValue": localStorage.getItem("userName")
+                                    },
                                 }
                             }
                         }
