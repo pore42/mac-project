@@ -1,16 +1,16 @@
-import React, {Component} from "react";
-import {Popover, OverlayTrigger} from "react-bootstrap";
-import {withRouter} from "react-router-dom";
+import React, { Component } from "react";
+import { Popover, OverlayTrigger } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import moment from "moment";
-import {confirmAlert} from "react-confirm-alert";
+import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { Button } from "antd";
 
- export default withRouter( class MacRentInfoRow extends Component {
-   constructor () {
+export default withRouter(class MacRentInfoRow extends Component {
+    constructor() {
         super();
-        this.state= {
+        this.state = {
             todayDate: moment().format("DD/MM/YYYY")
         }
     };
@@ -29,15 +29,25 @@ import { Button } from "antd";
         owner: PropTypes.string,
         serial: PropTypes.string,
         delete: PropTypes.func,
+        nameChecked: PropTypes.bool,
+        userName: PropTypes.bool,
+        displayName: PropTypes.bool,
+        displayCode: PropTypes.bool,
+        displayDateFrom: PropTypes.bool,
+        displayDateTo: PropTypes.bool,
+        displaySerial: PropTypes.bool,
+        displayOwner: PropTypes.bool,
+        displayFee: PropTypes.bool,
+        displayLastMod: PropTypes.bool,
     }
 
-    handleEditButton(){
+    handleEditButton() {
         this.props.history.push(`/input/${this.props.realId}`);
     }
     handleDeleteButton() {
-        
-        var  deleteElement  = this.props.delete;
-        
+
+        var deleteElement = this.props.delete;
+
         confirmAlert({
             title: "Eliminare?",
             message: "",
@@ -48,7 +58,7 @@ import { Button } from "antd";
 
     }
 
-    render () {
+    render() {
         const {
             id,
             name,
@@ -59,7 +69,15 @@ import { Button } from "antd";
             lastMod,
             note,
             owner,
-            serial
+            serial,
+            displayName,
+            displayCode,
+            displayDateFrom,
+            displayDateTo,
+            displaySerial,
+            displayOwner,
+            displayFee,
+            displayLastMod,
         } = this.props
         var b = moment(dateFrom, "dd/mm/yyyy");
         var c = moment(dateTo, "dd/mm/yyyy")
@@ -68,26 +86,26 @@ import { Button } from "antd";
         return (
             <tr>
                 <th>{id}</th>
-                <th>{name}</th>
-                <th>{code}</th>
-                <th style={{backgroundColor:(moment(b).isBefore(a)? "": "#99ff99")}}>{dateFrom}</th>
-                <th style={{backgroundColor:(moment(c).isBefore(a)? "#ff5555": "")}}>{dateTo}</th>
-                <th>{serial}</th>
-                <th>{owner}</th>
-                <th>{fee} €</th>
-                <th>@ {lastMod}</th>
+                {displayName &&  <th>{name}</th>}
+                {displayCode && <th>{code}</th>}
+                {displayDateFrom && <th style={{ backgroundColor: (moment(b).isBefore(a) ? "" : "#99ff99") }}>{dateFrom}</th>}
+                {displayDateTo && <th style={{ backgroundColor: (moment(c).isBefore(a) ? "#ff5555" : "") }}>{dateTo}</th>}
+                {displaySerial && <th>{serial}</th>}
+                {displayOwner && <th>{owner}</th>}
+                {displayFee && <th>{fee} €</th>}
+                {displayLastMod && <th>@ {lastMod}</th>}
                 <th><OverlayTrigger trigger="click" placement="left" overlay={
-                        <Popover id="popover-positioned-left">
-                            {note} 
-                        </Popover>
-                    }>
-                    <Button size ="small" shape="circle" icon="paper-clip" />
+                    <Popover id="popover-positioned-left">
+                        {note}
+                    </Popover>
+                }>
+                    <Button size="small" shape="circle" icon="paper-clip" />
                 </OverlayTrigger>
                 </th>
-                <th>  <Button size ="small" icon="delete" onClick={this.handleDeleteButton.bind(this)}></Button> </th>
-                <th>  <Button size ="small" type="primary" icon="edit" onClick={this.handleEditButton.bind(this)}></Button></th>
+                <th>  <Button size="small" icon="delete" onClick={this.handleDeleteButton.bind(this)}></Button> </th>
+                <th>  <Button size="small" type="primary" icon="edit" onClick={this.handleEditButton.bind(this)}></Button></th>
             </tr>
         );
     }
 }
- )
+)
