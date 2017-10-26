@@ -56,8 +56,6 @@ export default class MacRentTable extends Component {
 
 
             });
-    
-
     }
 
 

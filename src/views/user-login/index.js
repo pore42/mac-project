@@ -11,9 +11,6 @@ export default class UserLogin extends Component {
     this.state = {
         accessToken: "",
         authorizedStatus: false,
-        address1: "scarinzis@gmail.com",
-        address2: "francesco.barbera@mondora.com",
-        address3: "carlo.porelli@mondora.com",
     };
 }
 
@@ -50,7 +47,7 @@ export default class UserLogin extends Component {
 
     responseGoogle = (response) => {
         console.log(response)
-        if((response.profileObj.email === this.state.address1) || ( response.profileObj.email === this.state.address2 || response.profileObj.email === this.state.address3)){
+        if(response.profileObj.email.includes("@mondora.com")){
             console.log("save token");
             localStorage.setItem("googleAccessToken", response.accessToken);
             localStorage.setItem("userName", response.profileObj.name)
