@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { FormGroup, Table, FormControl, InputGroup, Grid, Col, Row, Checkbox, Image } from "react-bootstrap";
 import changeCase from "change-case";
+import GoogleLogout from "react-google-login";
 import moment from "moment";
 import { PropTypes } from "prop-types";
 
@@ -108,42 +109,39 @@ export default class MacRentTable extends Component {
         }).then(data => {
             console.log(data.transaction);
 
-            fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
-                method: "POST",
-                body: JSON.stringify(
-                    {
-                        "mode": "MODE_UNSPECIFIED",
-                        "mutations": [
-                            {
-                                "delete": {
-                                    "path": [
-                                        {
-                                            "kind": "mac-rent-information",
-                                            "id": iden,
-                                        }
-                                    ]
+                fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
+                    method: "POST",
+                    body: JSON.stringify(
+                        {
+                            "mode": "MODE_UNSPECIFIED",
+                            "mutations": [
+                                {
+                                    "delete": {
+                                        "path": [
+                                            {
+                                                "kind": "mac-rent-information",
+                                                "id": iden,
+                                            }
+                                        ]
+                                    }
                                 }
-                            }
-                        ],
-                        "transaction": data.transaction
-                    })
-            }).then((res) => {
-                if (!res.ok) {
-                    throw new Error("errore in fase di salvataggio");
-                }
+                            ],
+                            "transaction": data.transaction
+                        })
+                }).then((res) => {
+                    if (!res.ok) {
+                        throw new Error("errore in fase di salvataggio");
+                    }
 
-                return res.json();
-            }).then(data => {
-                console.log(data);
-                this.setState({ macRentInformations: copy });
+                    return res.json();
+                }).then(data => {
+                    console.log(data);
+                    this.setState({ macRentInformations: copy });
 
-            }).catch((error) => {
-                alert("cancellazione elemento scelto fallita");
-                console.error(error);
-            });
-
-
-
+                }).catch((error) => {
+                    alert("cancellazione elemento scelto fallita");
+                    console.error(error);
+                });
 
         }).catch((error) => {
             alert("niente transaction");
@@ -151,8 +149,13 @@ export default class MacRentTable extends Component {
         });
 
 
+    }
 
-
+    logout(response) {
+        localStorage.setItem("googleAccessToken", "no-token");
+        localStorage.setItem("userName", "loggedOutUser");
+        console.log(response);
+        window.location = "/";
     }
 
     handleOrderDownButtonPress(parameter, macRentInformations) {
@@ -222,6 +225,13 @@ export default class MacRentTable extends Component {
                                     {"Ultima modifica"}
                                 </Checkbox>
                             </FormGroup>
+                        </Col>
+                        <Col sm={2} xsHidden style={{ margin: 15 }}>
+                            <GoogleLogout
+                                clientId="524088644940-rlsefunif94pvmlhla81d71vcogtvdiq.apps.googleusercontent.com"
+                                buttonText="Logout"
+                                onLogoutSuccess={(res) => console.log(res)}
+                                onSuccess={this.logout}/>
                         </Col>
                     </div>
                 </Row>
