@@ -274,7 +274,9 @@ export default class MacRentTable extends Component {
                                         <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("lastMod", this.state.macRentInformations)} />
                                         <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("lastMod", this.state.macRentInformations)} />
                                     </th>}
-                                    <th>{"Note"}<br /><br /></th>
+                                    <th>Note<br /><br /></th>
+                                    <th>Delete<br /><br /></th>
+                                    <th>Edit<br /><br /></th>
                                 </tr>
                             </thead>
                             <tbody key="tbody">
