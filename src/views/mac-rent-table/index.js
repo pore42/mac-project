@@ -50,12 +50,18 @@ export default class MacRentTable extends Component {
                     ]
                 }
             })
-        }).then(res => res.json()
-            ).then(data => {
+        }).then((res) => {
+            if (!res.ok) { throw new Error("errore in fase di salvataggio") }
+            return res.json();
+        }
+        ).then(data => {
                 var elements = data.batch.entityResults;
                 this.setState({ macRentInformations: this.deserializedMacRentInformation(elements) });
 
-            });
+        }).catch((error) => {
+            alert("fallito recupero informazioni riguardo l'affitto dei mac");
+            console.error(error);
+        });
         
     }
 
