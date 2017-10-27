@@ -164,7 +164,8 @@ export default class MacRentInformations extends Component {
                     throw new Error("errore in fase di salvataggio");
                 else {
                     alert("Salvataggio effettuato con successo");
-                    this.props.history.push(`/results/${this.state.userName}`);
+                    this.props.history.push(`/results/`);
+                    //this.props.history.push(`/results/${this.state.userName}`);
                 }
             }
                 ).catch((error) => {
