@@ -38,8 +38,6 @@ export default class MacRentInformations extends Component {
     componentDidMount() {
         
         var id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-        console.log("lookup entities with key", window.location.href.substring(window.location.href.lastIndexOf('/') + 1));
-
         //lookup serve proprio a richiedere entità per chiave(id qui)
         if (id > 0) {
             fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:lookup?access_token=${localStorage.getItem("googleAccessToken")}`, {
@@ -165,7 +163,6 @@ export default class MacRentInformations extends Component {
                 else {
                     alert("Salvataggio effettuato con successo");
                     this.props.history.push(`/results/`);
-                    //this.props.history.push(`/results/${this.state.userName}`);
                 }
             }
                 ).catch((error) => {
@@ -176,12 +173,6 @@ export default class MacRentInformations extends Component {
         }
     
         
-    }
-
-    getInitialState() {
-        return {
-            value: ""
-        };
     }
 
     handleDateFromChange(date, dateString){
