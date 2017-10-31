@@ -109,12 +109,12 @@ export default class MacRentTable extends Component {
 
         }).then((res) => {
             if (!res.ok) {
-                throw new Error("errore in fase di salvataggio");
+                throw new Error("errore in fase di richiesta inizio transazione");
             }
 
             return res.json();
         }).then(data => {
-            console.log(data.transaction);
+            console.log("iniziata transazione numero:", data.transaction, " correttamente");
 
                 fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
                     method: "POST",
@@ -137,7 +137,7 @@ export default class MacRentTable extends Component {
                         })
                 }).then((res) => {
                     if (!res.ok) {
-                        throw new Error("errore in fase di salvataggio");
+                        throw new Error("errore in fase di cancellazione");
                     }
 
                     return res.json();
@@ -151,7 +151,7 @@ export default class MacRentTable extends Component {
                 });
 
         }).catch((error) => {
-            alert("niente transaction");
+            alert("transazione fallita");
             console.error(error);
         });
 
