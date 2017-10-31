@@ -166,11 +166,9 @@ export default class MacRentTable extends Component {
     }
 
     handleOrderDownButtonPress(parameter, macRentInformations) {
-        _.sortBy(this.state.macRentInformations, [function (o) { return o.name; }]);
         this.setState({ macRentInformations: _.sortBy(this.state.macRentInformations, [parameter, "code"]) });
     }
     handleOrderUpButtonPress(parameter, macRentInformations) {
-        _.sortBy(this.state.macRentInformations, [function (o) { return o.name; }]);
         this.setState({ macRentInformations: _.sortBy(this.state.macRentInformations, [parameter, "code"]).reverse() });
     }
 
