@@ -13,5 +13,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     )
   )}/>
 )
+//dovrai sostituire true con la condizione che checkka se sei loggato
 
 export default PrivateRoute;

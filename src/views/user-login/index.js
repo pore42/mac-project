@@ -51,8 +51,9 @@ export default class UserLogin extends Component {
             console.log("save token");
             localStorage.setItem("googleAccessToken", response.accessToken);
             localStorage.setItem("userName", response.profileObj.name)
-            this.setState({authorizedStatus: true});
-            this.props.history.push(`/input/`)
+            this.setState({ authorizedStatus: true });
+            console.log("risposto bene: ", this.props.history);
+            this.props.history.push(`/input/`, "statonuovo");
         }else{
             alert("email non autorizzata");
         }        
