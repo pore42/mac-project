@@ -244,7 +244,7 @@ export default class MacRentTable extends Component {
                 </Row>
                 <Row>
                     <Col sm={12} xs={12} style={{ margin: 5 }}>
-                        <Table style={{ fontSize: 13 }} striped bordered responsive>
+                        <Table id="resTable"style={{ fontSize: 13 }} striped bordered responsive>
                             <thead key="thead">
                                 <tr>
                                     <th>{" #"}<br />

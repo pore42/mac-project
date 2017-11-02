@@ -88,25 +88,28 @@ export default withRouter(class MacRentInfoRow extends Component {
 
         return (
             <tr>
-                <th>{id}</th>
-                {displayName &&  <th>{name}</th>}
-                {displayCode && <th>{code}</th>}
-                {displayDateFrom && <th style={{ backgroundColor: (diffFrom > 0 ? "" : "#99ff99") }}>{dateFrom}</th>}
-                {displayDateTo && <th style={{ backgroundColor: (diffTo > 0  ? "#ff5555" : "") }}>{dateTo}</th>}
-                {displaySerial && <th>{serial}</th>}
-                {displayOwner && <th>{owner}</th>}
-                {displayFee && <th>{fee} €</th>}
-                {displayLastMod && <th>{lastMod}</th>}
-                <th><OverlayTrigger trigger="click" placement="left" overlay={
+                <td><span className="rowData">{id}</span></td>
+                {displayName && <td><span className="rowData">{name}</span></td>}
+                {displayCode && <td><span className="rowData">{code}</span></td>}
+                {displayDateFrom && <td style={{ backgroundColor: (diffFrom > 0 ? "" : "#99ff99") }}><span className="rowData">{dateFrom}</span></td>}
+                {displayDateTo && <td style={{ backgroundColor: (diffTo > 0 ? "#ff5555" : "") }}><span className="rowData">{dateTo}</span></td>}
+                {displaySerial && <td><span className="rowData">{serial}</span></td>}
+                {displayOwner && <td><span className="rowData">{owner}</span></td>}
+                {displayFee && <td><span className="rowData">{fee} €</span></td>}
+                {displayLastMod && <td><span className="rowData">{lastMod}</span></td>}
+                <td>
+                
+                    <OverlayTrigger trigger="click" placement="left" overlay={
                     <Popover id="popover-positioned-left">
-                        {note}
+                            {note} 
                     </Popover>
                 }>
-                    <Button size="small" shape="circle" icon="paper-clip" />
-                </OverlayTrigger>
-                </th>
-                <th>  <Button size="small" icon="delete" onClick={this.handleDeleteButton.bind(this)}></Button> </th>
-                <th>  <Button size="small" type="primary" icon="edit" onClick={this.handleEditButton.bind(this)}></Button></th>
+                        <span className="rowData"><Button size="small" shape="circle" icon="paper-clip" /> </span>
+                    </OverlayTrigger>
+                  
+                </td>
+                <td><span className="rowData">  <Button size="small" icon="delete" onClick={this.handleDeleteButton.bind(this)}></Button></span></td>
+                <td><span className="rowData">  <Button size="small" type="primary" icon="edit" onClick={this.handleEditButton.bind(this)}></Button></span></td>
             </tr>
         );
     }

@@ -6,3 +6,98 @@ body {
 ol, ul {
   padding-left: 40px;
 }
+
+
+
+
+@media screen and (max-width: 650px) {
+
+
+
+  table, thead, tbody, th, td, tr, span { 
+		display: block; 
+	}
+
+	.tableData{
+		position: absolute;
+	}
+
+	tbody{
+		border: 0px solid white;
+	}
+
+	#resTable{
+		border: 0px solid white!important;
+	}
+	.table-responsive{
+		border: 0px solid white!important;
+	}
+
+	.container
+	{
+			border: 0px solid white!important;
+	}
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+  }
+  
+
+  tr { border: 1px solid #ccc; }
+
+
+  td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+  }
+  
+
+
+  td:before { 
+		/* Now like a table header */
+		position: relative;
+		/* Top/left values mimic padding */
+		top: 0px;
+		width: 45%; 
+		white-space: nowrap;
+		margin:0px;
+	}
+
+	.rowData
+	{
+		position: absolute;
+		right: 10px;
+		top: 7px;
+	}
+
+
+
+  td:nth-of-type(1):before { content: "#: "; font-weight: bold;}
+	td:nth-of-type(2):before { content: "Nome: "; font-weight: bold;}
+	td:nth-of-type(3):before { content: "Codice: "; font-weight: bold;}
+	td:nth-of-type(4):before { content: "Data inizio: "; font-weight: bold;}
+	td:nth-of-type(5):before { content: "Data termine: "; font-weight: bold;}
+	td:nth-of-type(6):before { content: "Numero di serie: "; font-weight: bold;}
+	td:nth-of-type(7):before { content: "Owner: "; font-weight: bold;}
+	td:nth-of-type(8):before { content: "Rata mensile: "; font-weight: bold;}
+	td:nth-of-type(9):before { content: "Ultima modifica: "; font-weight: bold;}
+	td:nth-of-type(10):before { content: "Note: "; font-weight: bold;}
+  td:nth-of-type(11):before { content: "Delete: "; font-weight: bold;}
+  td:nth-of-type(12):before { content: "Edit: "; font-weight: bold;}
+
+
+	tr{
+		margin-bottom:0px;
+		padding-bottom: 20px;
+
+	}
+
+
+
+}
