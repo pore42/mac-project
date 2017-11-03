@@ -187,14 +187,32 @@ export default class MacRentTable extends Component {
 
     render() {
         return (
-            <Grid fluid={true} style={{ padding: 20, margin: 0 }}>
+            <Grid fluid={true} style={{ marginTop: 20, margin: 0 }}>
                 <Row className="show-grid">
-                    <Col sm={2} xsHidden style={{ margin: 15 }}>
-                        <Image src={logo} responsive />
+                    <Col lg={3} sm={6} xs={6} style={{ marginTop: 15, marginLeft: 30 }}>
+                        <Image src={logo} bsSize="small" rounded/>
                     </Col>
-                    <div style={{ marginBottom: 5, marginTop: 25, padding: 0 }}>
-                        <Col sm={4} xs={6} style={{ marginRight: 5 }}>
-                            <InputGroup style={{ display: "inline" }}>
+                    <Col lg={5}>
+                        <h1 id="tableTitle">
+                        Tabella affitto MacBook
+                        </h1>
+                    </Col>
+                    <Col lg={3} sm={6} xs={6} id="logoutButton" >
+                        <div className="floatRight">
+                            <div style={{ right: "0px", margin: "40px" }}>
+                                <GoogleLogout
+                                    clientId="524088644940-rlsefunif94pvmlhla81d71vcogtvdiq.apps.googleusercontent.com"
+                                    buttonText="Logout"
+                                    onLogoutSuccess={(res) => console.log(res)}
+                                    onSuccess={this.logout} />
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+                <hr></hr>
+                <Row style={{ marginTop: 20, marginBottom: 30 }}>
+                    <Col lgOffset={1} lg={5} sm={3} xs={3} style={{ margin: 20 }}>
+                        <InputGroup style={{ width: 380 }}>
                                 <FormControl
                                     onChange={e => this.setState({ filterTerm: e.target.value })}
                                     placeholder="search"
@@ -203,8 +221,9 @@ export default class MacRentTable extends Component {
                                 />
                             </InputGroup>
                         </Col>
-                        <Col sm={5} xs={5} style={{ fontSize: 10 }}>
+                        <Col lg={4} sm={6} xs={6} style={{ fontSize: 10, margin: 25 }}>
                             <FormGroup>
+                                <Col lg={5} sm={3} xs={3}>
                                 <Checkbox style={{ marginLeft: 10 }} onClick={() => this.setState({ nameChecked: !this.state.nameChecked })} defaultChecked inline>
                                     {"Nome"}
                                 </Checkbox>
@@ -214,11 +233,13 @@ export default class MacRentTable extends Component {
                                 <Checkbox onClick={() => this.setState({ dateFromChecked: !this.state.dateFromChecked })} defaultChecked inline>
                                     {"Inizio"}
                                 </Checkbox>
-                                <Checkbox onClick={() => this.setState({ dateToChecked: !this.state.dateToChecked })} defaultChecked inline>
+                                <Checkbox style={{ marginLeft: 14 }} onClick={() => this.setState({ dateToChecked: !this.state.dateToChecked })} defaultChecked inline>
                                     {"Termine"}
-                                </Checkbox>
-                                <Checkbox onClick={() => this.setState({ serialChecked: !this.state.serialChecked })} defaultChecked inline>
-                                    {"N° serie"}
+                                    </Checkbox>
+                                </Col>
+                                <Col lg={7} sm={3} xs={3}>
+                                <Checkbox style={{ marginLeft: 10 }} onClick={() => this.setState({ serialChecked: !this.state.serialChecked })} defaultChecked inline>
+                                    {"N°serie"}
                                 </Checkbox>
                                 <Checkbox onClick={() => this.setState({ ownerChecked: !this.state.ownerChecked })} defaultChecked inline>
                                     {"Owner"}
@@ -228,22 +249,13 @@ export default class MacRentTable extends Component {
                                 </Checkbox>
                                 <Checkbox onClick={() => this.setState({ lastModChecked: !this.state.lastModChecked })} defaultChecked inline>
                                     {"Ultima modifica"}
-                                </Checkbox>
+                                    </Checkbox>
+                                </Col>    
                             </FormGroup>
                         </Col>
-                        <Col sm={9} xsHidden style={{ margin: 0 }}>
-                            <div style={{position: "absolute", right: "0px"}}>
-                            <GoogleLogout
-                                clientId="524088644940-rlsefunif94pvmlhla81d71vcogtvdiq.apps.googleusercontent.com"
-                                buttonText="Logout"
-                                onLogoutSuccess={(res) => console.log(res)}
-                                onSuccess={this.logout} />
-                            </div>
-                        </Col>
-                    </div>
-                </Row>
+                    </Row>
                 <Row>
-                    <Col sm={12} xs={12} style={{ margin: 5 }}>
+                    <Col sm={12} xs={12} style={{ marginLeft: 10, margin: 5 }}>
                         <Table id="resTable"style={{ fontSize: 13 }} striped bordered responsive>
                             <thead key="thead">
                                 <tr>

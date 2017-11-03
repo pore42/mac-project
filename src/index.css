@@ -7,12 +7,29 @@ ol, ul {
   padding-left: 40px;
 }
 
+.floatRight{
+  float: right;
+  font-weight: bold;
+}
 
+
+@font-face {
+    font-family: oldMacFont;
+    src: url(./assets/font/HelveticaNeue.ttf);
+}
+
+#tableTitle{
+	font-family: oldMacFont;
+		margin-top: 45px;
+}
 
 
 @media screen and (max-width: 650px) {
 
 
+	#logoutButton{
+		margin-top: 40px;
+	}
 
   table, thead, tbody, th, td, tr, span { 
 		display: block; 
@@ -46,13 +63,23 @@ ol, ul {
   }
   
 
-  tr { border: 1px solid #ccc; }
+	tr {
+		border: 0px;
+		margin-bottom:0px;
+		margin-bottom: 20px;
+	 }
 
+  td:first-child{
+		border-left: 1px solid #ddd !important;
+	}
 
+  td:last-child{
+		border-right: 1px solid #ddd !important;
+	}
   td { 
 		/* Behave  like a "row" */
 		border: none;
-		border-bottom: 1px solid #eee; 
+		border-bottom: 0px; 
 		position: relative;
 		padding-left: 50%; 
   }
@@ -92,11 +119,7 @@ ol, ul {
   td:nth-of-type(12):before { content: "Edit: "; font-weight: bold;}
 
 
-	tr{
-		margin-bottom:0px;
-		padding-bottom: 20px;
-
-	}
+	
 
 
 
