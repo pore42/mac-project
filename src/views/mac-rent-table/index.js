@@ -6,6 +6,7 @@ import moment from "moment";
 import { PropTypes } from "prop-types";
 
 import logo from "../../assets/images/mondora.png";
+import showMoreIcon from "../../assets/images/showMore.png";
 
 
 
@@ -27,6 +28,7 @@ export default class MacRentTable extends Component {
             ownerChecked: true,
             feeChecked: true,
             lastModChecked: true,
+            showCheckColumns: false,
             filterTerm: "",
             macRentInformations: []/*this.deserializedMacRentInformation(this.props.elements)*/,
             userName: "",
@@ -156,8 +158,14 @@ export default class MacRentTable extends Component {
             console.error(error);
         });
 
-
     }
+
+
+    showCheck(){
+        this.setState({showCheckColumns: true});
+    }
+
+
 
     logout(response) {
         localStorage.setItem("googleAccessToken", "no-token");
@@ -214,17 +222,18 @@ export default class MacRentTable extends Component {
                 <hr></hr>
                 <Row style={{ marginTop: 20, marginBottom: 30 }}>
                     <Col lgOffset={1} lg={5} sm={3} xs={12} style={{ margin: 20 }}>
-                        <InputGroup style={{ width: 380 }}>
+                        <InputGroup style={{ width: 340}}>
                                 <FormControl
                                     onChange={e => this.setState({ filterTerm: e.target.value })}
                                     placeholder="search"
                                     value={this.state.filterTerm}
                                     type="text"
                                 />
-                            </InputGroup>
-                        </Col>
-                        <Col lg={6} sm={6} xs={12} style={{ fontSize: 10, marginTop: 32 }}>
-                            <FormGroup>
+                        </InputGroup>   
+                    </Col>
+                    <Col lg={6} sm={6} xs={12}  id="checkCol">
+                        <Image hidden={this.state.showCheckColumns} id="showMoreIcon" src={showMoreIcon} onClick={this.showCheck.bind(this)} /> 
+                            <FormGroup hidden={!this.state.showCheckColumns}>
                                 <Checkbox onClick={() => this.setState({ nameChecked: !this.state.nameChecked })} defaultChecked inline>
                                     {"Nome"}
                                 </Checkbox>

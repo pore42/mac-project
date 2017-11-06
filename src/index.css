@@ -12,6 +12,20 @@ ol, ul {
   font-weight: bold;
 }
 
+	#showMoreIcon{
+		width: 40px;
+		height: 40px;
+		margin-top: -16px;
+		cursor: pointer;
+	}
+
+
+
+	#checkCol{
+		font-size: 10px;
+		margin-top: 32px;
+	}
+
 
 @font-face {
     font-family: oldMacFont;
@@ -49,10 +63,24 @@ ol, ul {
 	}
 
 
+
 	#logoutCol{
 		margin-top: 24px;
 		margin-left: 10px;
 	}
+
+
+		#checkCol{
+		font-size: 10px;
+		margin-top: 12px;
+	}
+
+	#showMoreIcon{
+		font-size: 10px;
+		margin-top: 0px;
+		margin-left: 200px;
+	}
+
 
   table, thead, tbody, th, td, tr, span { 
 		display: block; 
@@ -141,10 +169,6 @@ ol, ul {
 	td:nth-of-type(10):before { content: "Note: "; font-weight: bold;}
   td:nth-of-type(11):before { content: "Delete: "; font-weight: bold;}
   td:nth-of-type(12):before { content: "Edit: "; font-weight: bold;}
-
-
-	
-
 
 
 }
