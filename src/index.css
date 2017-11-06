@@ -27,8 +27,31 @@ ol, ul {
 @media screen and (max-width: 650px) {
 
 
-	#logoutButton{
-		margin-top: 40px;
+	#tableTitle{
+			display: none;
+	}
+
+	logoutButton{
+		width: 80px!important;
+		height: 80px!important;
+	}
+
+	.checkbox-inline:first-child{
+		margin-left: 10px!important;
+	}
+
+	.checkbox-inline{
+		width: 65px!important;
+	}
+
+	.checkbox-inline:last-child{
+		width: 125px!important;
+	}
+
+
+	#logoutCol{
+		margin-top: 24px;
+		margin-left: 10px;
 	}
 
   table, thead, tbody, th, td, tr, span { 
@@ -75,6 +98,7 @@ ol, ul {
 
   td:last-child{
 		border-right: 1px solid #ddd !important;
+		border-bottom: 1px solid #ddd !important;
 	}
   td { 
 		/* Behave  like a "row" */
