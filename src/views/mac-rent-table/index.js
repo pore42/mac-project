@@ -222,7 +222,7 @@ export default class MacRentTable extends Component {
                 </Row>
                 <hr></hr>
                 <Row style={{ marginTop: 20, marginBottom: 30 }}>
-                    <Col lgOffset={1} lg={5} sm={3} xs={12} style={{ margin: 20 }}>
+                    <Col lgOffset={1} lg={4} sm={3} xs={12} style={{ margin: 20 }}>
                         <InputGroup style={{ width: 340}}>
                                 <FormControl
                                     onChange={e => this.setState({ filterTerm: e.target.value })}
@@ -232,10 +232,10 @@ export default class MacRentTable extends Component {
                                 />
                         </InputGroup>   
                     </Col>
-                    <Col lg={6} sm={6} xs={12}  id="checkCol">
+                    <Col lg={7} sm={6} xs={12}  id="checkCol">
                         <Image hidden={this.state.showCheckColumns} id="showMoreIcon" src={showMoreIcon} onClick={this.showCheck.bind(this)} title={"Clicca per mostrare altri dettagli"}/> 
                         <Image id="addDocIcon" src={addIcon} onClick={() => this.props.history.push(`/input/`)} title={"Clicca per aggiungere i tuoi dati"}/>
-                        <FormGroup hidden={!this.state.showCheckColumns}>
+                        <FormGroup hidden={!this.state.showCheckColumns} style={{ marginTop: 16 }}>
                                 <Checkbox onClick={() => this.setState({ ownerChecked: !this.state.ownerChecked })} defaultChecked inline>
                                     {"Possessore"}
                                 </Checkbox>
@@ -252,7 +252,7 @@ export default class MacRentTable extends Component {
                                     {"Nome mac"}
                                 </Checkbox>
                                 <Checkbox onClick={() => this.setState({ codeChecked: !this.state.codeChecked })}  inline>
-                                    {"Codice"}
+                                    {"Codice affitto"}
                                 </Checkbox>
                                 <Checkbox onClick={() => this.setState({ feeChecked: !this.state.feeChecked })}  inline>
                                     {"Rata"}
@@ -298,7 +298,7 @@ export default class MacRentTable extends Component {
                                             <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("name", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.codeChecked &&
-                                        <th>{"Codice"}<br />
+                                        <th>{"Codice affitto"}<br />
                                             <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("code", this.state.macRentInformations)} />
                                             <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("code", this.state.macRentInformations)} />
                                         </th>}

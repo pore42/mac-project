@@ -64,7 +64,7 @@ ol, ul {
 	}
 
 	.checkbox-inline{
-		width: 85px!important;
+		width: 90px!important;
 		margin-top: 5px;
 	}
 
@@ -96,9 +96,36 @@ ol, ul {
 	}
 
 
-  table, thead, tbody, th, td, tr, span { 
+	
+	#resTable td{
 		display: block; 
 	}
+
+	#resTable th{
+		display: block; 
+	}
+
+	#resTable tr{
+		display: block; 
+	}
+
+	#resTable tbody{
+		display: block; 
+	}
+
+	#resTable table{
+		display: block; 
+	}
+
+	#resTable thead{
+		display: block; 
+	}
+
+	#resTable span{
+		display: block; 
+	}
+
+
 
 	.tableData{
 		position: absolute;
@@ -121,24 +148,24 @@ ol, ul {
 	}
 
   /* Hide table headers (but not display: none;, for accessibility) */
-	thead tr { 
+	#resTable thead tr { 
 		position: absolute;
 		top: -9999px;
 		left: -9999px;
   }
   
 
-	tr {
+	#resTable tr {
 		border: 0px;
 		margin-bottom:0px;
 		margin-bottom: 20px;
 	 }
 
-  td:first-child{
+  #resTable td:first-child{
 		border-left: 1px solid #ddd !important;
 	}
 
-  td:last-child{
+	#resTable td:last-child{
 		border-right: 1px solid #ddd !important;
 		border-bottom: 1px solid #ddd !important;
 	}
@@ -172,18 +199,18 @@ ol, ul {
 
 
 
-  td:nth-of-type(1):before { content: "#: "; font-weight: bold;}
-	td:nth-of-type(2):before { content: "Possessore: "; font-weight: bold;}
-	td:nth-of-type(6):before { content: "Numero di serie: "; font-weight: bold;}
-	td:nth-of-type(4):before { content: "Data inizio: "; font-weight: bold;}
-	td:nth-of-type(5):before { content: "Data termine: "; font-weight: bold;}
-	td:nth-of-type(7):before { content: "Nome mac: "; font-weight: bold;}
-	td:nth-of-type(3):before { content: "Codice: "; font-weight: bold;}
-	td:nth-of-type(8):before { content: "Rata mensile: "; font-weight: bold;}
-	td:nth-of-type(9):before { content: "Ultima modifica: "; font-weight: bold;}
-	td:nth-of-type(10):before { content: "Note: "; font-weight: bold;}
-  td:nth-of-type(11):before { content: "Delete: "; font-weight: bold;}
-  td:nth-of-type(12):before { content: "Edit: "; font-weight: bold;}
+  #resTable td:nth-of-type(1):before { content: "#: "; font-weight: bold;}
+	#resTable td:nth-of-type(2):before { content: "Possessore: "; font-weight: bold;}
+	#resTable td:nth-of-type(3):before { content: "Numero di serie: "; font-weight: bold;}
+	#resTable td:nth-of-type(4):before { content: "Data inizio: "; font-weight: bold;}
+	#resTable td:nth-of-type(5):before { content: "Data termine: "; font-weight: bold;}
+	#resTable td:nth-of-type(6):before { content: "Nome mac: "; font-weight: bold;}
+	#resTable td:nth-of-type(7):before { content: "Codice: "; font-weight: bold;}
+	#resTable td:nth-of-type(8):before { content: "Rata mensile: "; font-weight: bold;}
+	#resTable td:nth-of-type(9):before { content: "Ultima modifica: "; font-weight: bold;}
+	#resTable #rowDataFix:before { content: "Note: "; font-weight: bold;}
+  #resTable #rowDataFix2:before { content: "Delete: "; font-weight: bold;}
+  #resTable #rowDataFix3:before { content: "Edit: "; font-weight: bold;}
 
 
 }

@@ -24,7 +24,7 @@ export default class MacRentInformations extends Component {
             code: "",
             serial: "",
             owner: "",
-            fee: "",
+            fee: 0,
             isSaveButtonClicked: false,
             userName: localStorage.getItem("userName"),
             macRentInformations: [],
@@ -96,7 +96,7 @@ export default class MacRentInformations extends Component {
     handleSaveButton(isSaveButtonClicked, userName){
         this.setState({isSaveButtonClicked: true});
     
-        if (this.state.name && this.state.code && this.state.dateFromOk && this.state.dateToOk && this.state.fee && this.state.serial && this.state.owner) {
+        if (this.state.owner && this.state.serial && this.state.dateFromOk && this.state.dateToOk ) {
             var modifyElement =
                 this.state.id !== 0 ? {
                     kind: "mac-rent-information",
@@ -140,13 +140,13 @@ export default class MacRentInformations extends Component {
                                         "integerValue": this.state.fee
                                     },
                                     "serial": {
-                                        "stringValue": this.state.serial
+                                        "stringValue": this.state.serial === "" ? "-" : this.state.serial
                                     },
                                     "note": {
-                                        "stringValue": this.state.note
+                                        "stringValue": this.state.note === "" ? "-" : this.state.note
                                     },
                                     "owner": {
-                                        "stringValue": this.state.owner
+                                        "stringValue": this.state.owner === "" ? "-" : this.state.owner
                                     },
                                     "lastMod": {
                                         "stringValue": localStorage.getItem("userName")
@@ -199,38 +199,45 @@ export default class MacRentInformations extends Component {
                             <Image src={image} responsive />
                             </Col>
                     </Row>
-
                     <Row className="show-grid">
-                        <FormGroup validationState={!this.state.name && this.state.isSaveButtonClicked ? "error": null}>
-                            <Col sm={4} style = {{marginBottom: 5}}>{"Nome"}</Col>
-                            <Col sm={8}>
+                        <FormGroup validationState={!this.state.owner && this.state.isSaveButtonClicked ? "error": null }>
+                            <Col sm={4} style = {{marginBottom: 5}}>{"Owner"}</Col>
+                            <Col sm = {7} xs={10}>
                                 <FormGroup controlId="formBasicText" >
                                     <FormControl type="text"
-                                        placeholder="Enter name"
-                                        onChange={e => this.setState({ name: e.target.value })}
-                                        value={this.state.name}
-                                    />
-                                    <FormControl.Feedback />
+                                            placeholder="Enter name"
+                                            onChange={e => this.setState({ owner: e.target.value })}
+                                            value={this.state.owner}
+                                        />
+                                        <FormControl.Feedback />
                                 </FormGroup>
+                            </Col>
+                            <Col sm = {1} xs={1}>
+                                <OverlayTrigger trigger="click" placement="top" overlay={
+                                    <Popover id="popover-positioned-right" title="info">
+                                            {"Persona a cui è affidato il Mac"}
+                                    </Popover>
+                                    }>
+                                    <Button shape="circle" icon="info" />
+                                </OverlayTrigger>
                             </Col>
                         </FormGroup>
                     </Row>
-
                     <Row className="show-grid">
-                        <FormGroup validationState={!this.state.code && this.state.isSaveButtonClicked ? "error": null }>
-                            <Col sm={4}style = {{marginBottom: 5}}>{"Codice Contratto"}</Col>
+                        <FormGroup validationState={!this.state.serial && this.state.isSaveButtonClicked ? "error": null }>
+                            <Col sm={4} style = {{marginBottom: 5}}>{"Numero di serie"}</Col>
                             <Col sm={8}>
                                 <FormGroup controlId="formBasicText">
                                     <FormControl type="text"
-                                        placeholder="Enter code"
-                                        onChange={e => this.setState({ code: e.target.value })}
-                                        value={this.state.code}                                    />
-                                    <FormControl.Feedback />
+                                            placeholder="Enter serial"
+                                            onChange={e => this.setState({ serial: e.target.value })}
+                                            value={this.state.serial}
+                                        />
+                                        <FormControl.Feedback />
                                 </FormGroup>
                             </Col>
                         </FormGroup>
                     </Row>
-
                     <Row className="show-grid" style ={{marginBottom: 15}}>
                         <FormGroup validationState={!this.state.dateFromOk && this.state.isSaveButtonClicked ? "error": null }>
                             <Col sm={4} style = {{marginBottom: 5}}>{"Data inizio contratto"}</Col>
@@ -259,48 +266,41 @@ export default class MacRentInformations extends Component {
                     </Row>
 
                     <Row className="show-grid">
-                        <FormGroup validationState={!this.state.serial && this.state.isSaveButtonClicked ? "error": null }>
-                            <Col sm={4} style = {{marginBottom: 5}}>{"Numero di serie"}</Col>
+                        <FormGroup validationState={null}>
+                            <Col sm={4} style = {{marginBottom: 5}}>{"Nome mac"}</Col>
                             <Col sm={8}>
-                                <FormGroup controlId="formBasicText">
+                                <FormGroup controlId="formBasicText" >
                                     <FormControl type="text"
-                                            placeholder="Enter serial"
-                                            onChange={e => this.setState({ serial: e.target.value })}
-                                            value={this.state.serial}
-                                        />
-                                        <FormControl.Feedback />
+                                        placeholder="Enter name"
+                                        onChange={e => this.setState({ name: e.target.value })}
+                                        value={this.state.name}
+                                    />
+                                    <FormControl.Feedback />
                                 </FormGroup>
                             </Col>
                         </FormGroup>
                     </Row>
 
                     <Row className="show-grid">
-                        <FormGroup validationState={!this.state.owner && this.state.isSaveButtonClicked ? "error": null }>
-                            <Col sm={4} style = {{marginBottom: 5}}>{"Owner"}</Col>
-                            <Col sm = {7} xs={10}>
-                                <FormGroup controlId="formBasicText" >
+                        <FormGroup validationState={null }>
+                            <Col sm={4}style = {{marginBottom: 5}}>{"Codice Contratto"}</Col>
+                            <Col sm={8}>
+                                <FormGroup controlId="formBasicText">
                                     <FormControl type="text"
-                                            placeholder="Enter name"
-                                            onChange={e => this.setState({ owner: e.target.value })}
-                                            value={this.state.owner}
-                                        />
-                                        <FormControl.Feedback />
+                                        placeholder="Enter code"
+                                        onChange={e => this.setState({ code: e.target.value })}
+                                        value={this.state.code}                                    />
+                                    <FormControl.Feedback />
                                 </FormGroup>
-                            </Col>
-                            <Col sm = {1} xs={1}>
-                                <OverlayTrigger trigger="click" placement="top" overlay={
-                                    <Popover id="popover-positioned-right" title="info">
-                                            {"Persona a cui è affidato il Mac"}
-                                    </Popover>
-                                    }>
-                                    <Button shape="circle" icon="info" />
-                                </OverlayTrigger>
                             </Col>
                         </FormGroup>
                     </Row>
+
+
+
                     
                     <Row className="show-grid">
-                        <FormGroup validationState={!this.state.fee && this.state.isSaveButtonClicked ? "error": null }>
+                        <FormGroup validationState={null }>
                             <Col sm={4} style = {{marginBottom: 5}}>{"Rata mensile"}</Col>
                             <Col sm={8}>
                                 <FormGroup>
