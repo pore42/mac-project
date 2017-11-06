@@ -225,8 +225,7 @@ export default class MacRentTable extends Component {
                         </Col>
                         <Col lg={6} sm={6} xs={12} style={{ fontSize: 10, marginTop: 32 }}>
                             <FormGroup>
-                                {/*<Col sm={3} xs={3}>*/}
-                                <Checkbox style={{/* marginLeft: 10 */}} onClick={() => this.setState({ nameChecked: !this.state.nameChecked })} defaultChecked inline>
+                                <Checkbox onClick={() => this.setState({ nameChecked: !this.state.nameChecked })} defaultChecked inline>
                                     {"Nome"}
                                 </Checkbox>
                                 <Checkbox onClick={() => this.setState({ codeChecked: !this.state.codeChecked })} defaultChecked inline>
@@ -235,12 +234,10 @@ export default class MacRentTable extends Component {
                                 <Checkbox onClick={() => this.setState({ dateFromChecked: !this.state.dateFromChecked })} defaultChecked inline>
                                     {"Inizio"}
                                 </Checkbox>
-                                <Checkbox style={{/* marginLeft: 14 */}} onClick={() => this.setState({ dateToChecked: !this.state.dateToChecked })} defaultChecked inline>
+                                <Checkbox onClick={() => this.setState({ dateToChecked: !this.state.dateToChecked })} defaultChecked inline>
                                     {"Termine"}
                                     </Checkbox>
-                                {/*</Col>*/}
-                                {/*<Col sm={3} xs={3}> */}
-                                <Checkbox style={{/* marginLeft: 10 */}} onClick={() => this.setState({ serialChecked: !this.state.serialChecked })} defaultChecked inline>
+                                <Checkbox  onClick={() => this.setState({ serialChecked: !this.state.serialChecked })} defaultChecked inline>
                                     {"N°serie"}
                                 </Checkbox>
                                 <Checkbox onClick={() => this.setState({ ownerChecked: !this.state.ownerChecked })} defaultChecked inline>
@@ -252,7 +249,6 @@ export default class MacRentTable extends Component {
                                 <Checkbox onClick={() => this.setState({ lastModChecked: !this.state.lastModChecked })} defaultChecked inline>
                                     {"Ultima modifica"}
                                 </Checkbox>
-                                {/*</Col>    */}
                             </FormGroup>
                         </Col>
                     </Row>
