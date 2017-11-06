@@ -88,16 +88,16 @@ export default withRouter(class MacRentInfoRow extends Component {
 
         return (
             <tr>
-                <td><span className="rowData">{id}</span></td>
-                {displayName && <td><span className="rowData">{name}</span></td>}
-                {displayCode && <td><span className="rowData">{code}</span></td>}
-                {displayDateFrom && <td style={{ backgroundColor: (diffFrom > 0 ? "" : "#99ff99") }}><span className="rowData">{dateFrom}</span></td>}
-                {displayDateTo && <td style={{ backgroundColor: (diffTo > 0 ? "#ff5555" : "") }}><span className="rowData">{dateTo}</span></td>}
-                {displaySerial && <td><span className="rowData">{serial}</span></td>}
-                {displayOwner && <td><span className="rowData">{owner}</span></td>}
-                {displayFee && <td><span className="rowData">{fee} €</span></td>}
-                {displayLastMod && <td><span className="rowData">{lastMod}</span></td>}
-                <td>
+                <td className="card"><span className="rowData">{id}</span></td>
+                {displayOwner && <td className="card"><span className="rowData">{owner}</span></td>}
+                {displaySerial && <td className="card"><span className="rowData">{serial}</span></td>}
+                {displayDateFrom && <td className="card" style={{ backgroundColor: (diffFrom > 0 ? "" : "#99ff99") }}><span className="rowData">{dateFrom}</span></td>}
+                {displayDateTo && <td className="card" style={{ backgroundColor: (diffTo > 0 ? "#ff5555" : "") }}><span className="rowData">{dateTo}</span></td>}
+                {displayName && <td className="card"><span className="rowData">{name}</span></td>}
+                {displayCode && <td className="card"><span className="rowData">{code}</span></td>}
+                {displayFee && <td className="card"><span className="rowData">{fee} €</span></td>}
+                {displayLastMod && <td className="card"><span className="rowData">{lastMod}</span></td>}
+                <td id="rowDataFix">
                 
                     <OverlayTrigger trigger="click" placement="left" overlay={
                     <Popover id="popover-positioned-left">
@@ -108,8 +108,8 @@ export default withRouter(class MacRentInfoRow extends Component {
                     </OverlayTrigger>
                   
                 </td>
-                <td><span className="rowData">  <Button size="small" icon="delete" onClick={this.handleDeleteButton.bind(this)}></Button></span></td>
-                <td><span className="rowData">  <Button size="small" type="primary" icon="edit" onClick={this.handleEditButton.bind(this)}></Button></span></td>
+                <td id="rowDataFix2"><span className="rowData">  <Button size="small" icon="delete" onClick={this.handleDeleteButton.bind(this)}></Button></span></td>
+                <td id="rowDataFix3"><span className="rowData">  <Button size="small" type="primary" icon="edit" onClick={this.handleEditButton.bind(this)}></Button></span></td>
             </tr>
         );
     }
