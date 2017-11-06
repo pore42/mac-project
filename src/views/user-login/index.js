@@ -53,7 +53,7 @@ export default class UserLogin extends Component {
             localStorage.setItem("userName", response.profileObj.name)
             this.setState({ authorizedStatus: true });
             console.log("risposto bene: ", this.props.history);
-            this.props.history.push(`/input/`, "statonuovo");
+            this.props.history.push(`/results/`, "statonuovo");
         }else{
             alert("email non autorizzata");
         }        

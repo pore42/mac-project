@@ -7,6 +7,7 @@ import { PropTypes } from "prop-types";
 
 import logo from "../../assets/images/mondora.png";
 import showMoreIcon from "../../assets/images/showMore.png";
+import addIcon from "../../assets/images/addDocIcon.png";
 
 
 
@@ -20,14 +21,14 @@ export default class MacRentTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            nameChecked: true,
-            codeChecked: true,
+            nameChecked: false,
+            codeChecked: false,
             dateFromChecked: true,
             dateToChecked: true,
             serialChecked: true,
             ownerChecked: true,
-            feeChecked: true,
-            lastModChecked: true,
+            feeChecked: false,
+            lastModChecked: false,
             showCheckColumns: false,
             filterTerm: "",
             macRentInformations: []/*this.deserializedMacRentInformation(this.props.elements)*/,
@@ -232,13 +233,14 @@ export default class MacRentTable extends Component {
                         </InputGroup>   
                     </Col>
                     <Col lg={6} sm={6} xs={12}  id="checkCol">
-                        <Image hidden={this.state.showCheckColumns} id="showMoreIcon" src={showMoreIcon} onClick={this.showCheck.bind(this)} /> 
-                            <FormGroup hidden={!this.state.showCheckColumns}>
-                                <Checkbox onClick={() => this.setState({ nameChecked: !this.state.nameChecked })} defaultChecked inline>
-                                    {"Nome"}
+                        <Image hidden={this.state.showCheckColumns} id="showMoreIcon" src={showMoreIcon} onClick={this.showCheck.bind(this)} title={"Clicca per mostrare altri dettagli"}/> 
+                        <Image id="addDocIcon" src={addIcon} onClick={() => this.props.history.push(`/input/`)} title={"Clicca per aggiungere i tuoi dati"}/>
+                        <FormGroup hidden={!this.state.showCheckColumns}>
+                                <Checkbox onClick={() => this.setState({ ownerChecked: !this.state.ownerChecked })} defaultChecked inline>
+                                    {"Possessore"}
                                 </Checkbox>
-                                <Checkbox onClick={() => this.setState({ codeChecked: !this.state.codeChecked })} defaultChecked inline>
-                                    {"Codice"}
+                                <Checkbox  onClick={() => this.setState({ serialChecked: !this.state.serialChecked })} defaultChecked inline>
+                                    {"N°serie"}
                                 </Checkbox>
                                 <Checkbox onClick={() => this.setState({ dateFromChecked: !this.state.dateFromChecked })} defaultChecked inline>
                                     {"Inizio"}
@@ -246,16 +248,16 @@ export default class MacRentTable extends Component {
                                 <Checkbox onClick={() => this.setState({ dateToChecked: !this.state.dateToChecked })} defaultChecked inline>
                                     {"Termine"}
                                     </Checkbox>
-                                <Checkbox  onClick={() => this.setState({ serialChecked: !this.state.serialChecked })} defaultChecked inline>
-                                    {"N°serie"}
+                                <Checkbox onClick={() => this.setState({ nameChecked: !this.state.nameChecked })}  inline>
+                                    {"Nome mac"}
                                 </Checkbox>
-                                <Checkbox onClick={() => this.setState({ ownerChecked: !this.state.ownerChecked })} defaultChecked inline>
-                                    {"Owner"}
+                                <Checkbox onClick={() => this.setState({ codeChecked: !this.state.codeChecked })}  inline>
+                                    {"Codice"}
                                 </Checkbox>
-                                <Checkbox onClick={() => this.setState({ feeChecked: !this.state.feeChecked })} defaultChecked inline>
+                                <Checkbox onClick={() => this.setState({ feeChecked: !this.state.feeChecked })}  inline>
                                     {"Rata"}
                                 </Checkbox>
-                                <Checkbox onClick={() => this.setState({ lastModChecked: !this.state.lastModChecked })} defaultChecked inline>
+                                <Checkbox onClick={() => this.setState({ lastModChecked: !this.state.lastModChecked })}  inline>
                                     {"Ultima modifica"}
                                 </Checkbox>
                             </FormGroup>
@@ -270,15 +272,15 @@ export default class MacRentTable extends Component {
                                         <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("id", this.state.macRentInformations)} />
                                         <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("id", this.state.macRentInformations)} />
                                     </th>
-                                    {this.state.nameChecked &&
-                                        <th>{"Nome"}<br />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("name", this.state.macRentInformations)} />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("name", this.state.macRentInformations)} />
+                                    {this.state.ownerChecked &&
+                                        <th>{"Owner"}<br />
+                                            <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("owner", this.state.macRentInformations)} />
+                                            <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("owner", this.state.macRentInformations)} />
                                         </th>}
-                                    {this.state.codeChecked &&
-                                        <th>{"Codice"}<br />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("code", this.state.macRentInformations)} />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("code", this.state.macRentInformations)} />
+                                    {this.state.serialChecked &&
+                                        <th>{"Numero di serie"}<br />
+                                            <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("serial", this.state.macRentInformations)} />
+                                            <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("serial", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.dateFromChecked &&
                                         <th>{"Data inizio"}<br />
@@ -290,15 +292,15 @@ export default class MacRentTable extends Component {
                                             <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("dateTo", this.state.macRentInformations)} />
                                             <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("dateTo", this.state.macRentInformations)} />
                                         </th>}
-                                    {this.state.serialChecked &&
-                                        <th>{"Numero di serie"}<br />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("serial", this.state.macRentInformations)} />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("serial", this.state.macRentInformations)} />
+                                    {this.state.nameChecked &&
+                                        <th>{"Nome Mac"}<br />
+                                            <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("name", this.state.macRentInformations)} />
+                                            <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("name", this.state.macRentInformations)} />
                                         </th>}
-                                    {this.state.ownerChecked &&
-                                        <th>{"Owner"}<br />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("owner", this.state.macRentInformations)} />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("owner", this.state.macRentInformations)} />
+                                    {this.state.codeChecked &&
+                                        <th>{"Codice"}<br />
+                                            <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("code", this.state.macRentInformations)} />
+                                            <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("code", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.feeChecked &&
                                         <th>{"Rata mensile"}<br />

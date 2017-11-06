@@ -17,8 +17,17 @@ ol, ul {
 		height: 40px;
 		margin-top: -16px;
 		cursor: pointer;
+		opacity: 0.8;
 	}
 
+	#addDocIcon{
+		width: 40px;
+		height: 40px;
+		margin-top: -16px;
+		margin-left: 100px;
+		cursor: pointer;
+		opacity: 0.8;
+	}
 
 
 	#checkCol{
@@ -55,7 +64,8 @@ ol, ul {
 	}
 
 	.checkbox-inline{
-		width: 65px!important;
+		width: 85px!important;
+		margin-top: 5px;
 	}
 
 	.checkbox-inline:last-child{
@@ -78,7 +88,11 @@ ol, ul {
 	#showMoreIcon{
 		font-size: 10px;
 		margin-top: 0px;
-		margin-left: 200px;
+		margin-left: 140px;
+	}
+
+	#addDocIcon{
+				margin-top: 1px;
 	}
 
 
@@ -146,24 +160,25 @@ ol, ul {
 		width: 45%; 
 		white-space: nowrap;
 		margin:0px;
+		margin-left: 7px;
 	}
 
 	.rowData
 	{
 		position: absolute;
-		right: 10px;
+		right: 15px;
 		top: 7px;
 	}
 
 
 
   td:nth-of-type(1):before { content: "#: "; font-weight: bold;}
-	td:nth-of-type(2):before { content: "Nome: "; font-weight: bold;}
-	td:nth-of-type(3):before { content: "Codice: "; font-weight: bold;}
+	td:nth-of-type(2):before { content: "Possessore: "; font-weight: bold;}
+	td:nth-of-type(6):before { content: "Numero di serie: "; font-weight: bold;}
 	td:nth-of-type(4):before { content: "Data inizio: "; font-weight: bold;}
 	td:nth-of-type(5):before { content: "Data termine: "; font-weight: bold;}
-	td:nth-of-type(6):before { content: "Numero di serie: "; font-weight: bold;}
-	td:nth-of-type(7):before { content: "Owner: "; font-weight: bold;}
+	td:nth-of-type(7):before { content: "Nome mac: "; font-weight: bold;}
+	td:nth-of-type(3):before { content: "Codice: "; font-weight: bold;}
 	td:nth-of-type(8):before { content: "Rata mensile: "; font-weight: bold;}
 	td:nth-of-type(9):before { content: "Ultima modifica: "; font-weight: bold;}
 	td:nth-of-type(10):before { content: "Note: "; font-weight: bold;}
