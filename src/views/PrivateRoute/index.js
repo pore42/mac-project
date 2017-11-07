@@ -3,7 +3,7 @@ import {Route, Redirect} from "react-router-dom";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
-    true ? (
+    (localStorage.getItem("userName") !== null && localStorage.getItem("userName") !== "loggedOutUser" ) ? (
       <Component {...props}/>
     ) : (
       <Redirect to={{
@@ -13,6 +13,5 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     )
   )}/>
 )
-//dovrai sostituire true con la condizione che checkka se sei loggato
 
 export default PrivateRoute;

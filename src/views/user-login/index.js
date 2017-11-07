@@ -10,7 +10,6 @@ export default class UserLogin extends Component {
     super(props);
     this.state = {
         accessToken: "",
-        authorizedStatus: false,
     };
 }
 
@@ -51,7 +50,6 @@ export default class UserLogin extends Component {
             console.log("save token");
             localStorage.setItem("googleAccessToken", response.accessToken);
             localStorage.setItem("userName", response.profileObj.name)
-            this.setState({ authorizedStatus: true });
             console.log("risposto bene: ", this.props.history);
             this.props.history.push(`/results/`, "statonuovo");
         }else{
