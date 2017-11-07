@@ -198,7 +198,7 @@ export default class MacRentTable extends Component {
     render() {
         return (
             <Grid fluid={true} style={{ marginTop: 20, margin: 0 }}>
-                <Row className="show-grid">
+                <Row className="show-grid" >
                     <Col lg={3} sm={6} xs={6} style={{ marginTop: 15, marginLeft: 30 }}>
                         <Image src={logo} bsSize="small" rounded/>
                     </Col>
@@ -221,6 +221,15 @@ export default class MacRentTable extends Component {
                     </Col>
                 </Row>
                 <hr></hr>
+                <Row>
+                    <Col lg={0} xs={12}>
+                        <center>
+                            <h3 id="mobileTableTitle" className="title" >
+                                Tabella affitto MacBook
+                            </h3>
+                        </center>
+                    </Col>
+                </Row>    
                 <Row style={{ marginTop: 20, marginBottom: 30 }}>
                     <Col lgOffset={1} lg={4} sm={3} xs={12} style={{ margin: 20 }}>
                         <InputGroup style={{ width: 340}}>
