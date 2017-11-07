@@ -273,7 +273,7 @@ export default class MacRentTable extends Component {
                                         <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("id", this.state.macRentInformations)} />
                                     </th>
                                     {this.state.ownerChecked &&
-                                        <th>{"Owner"}<br />
+                                        <th>{"Possessore"}<br />
                                             <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("owner", this.state.macRentInformations)} />
                                             <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("owner", this.state.macRentInformations)} />
                                         </th>}

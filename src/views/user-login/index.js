@@ -63,8 +63,8 @@ export default class UserLogin extends Component {
                 <Row className="show-grid" style={{marginTop: 15, marginBottom: 15}}>
                     <Image src={logo} responsive />
                 </Row>
-                <Row style={{ fontSize: 30, fontWeight: "heavy", border: 7, marginBottom: 10}}>
-                    {"Mac rentals summary"}
+                <Row style={{ fontSize: 30, fontWeight: "heavy", border: 7, marginBottom: 10, fontFamily: "oldMacFont"}}>
+                    {"Riassunto Affitti MacBook"}
                 </Row>
                 <Row>
                     <Jumbotron style={{padding: 50}}>

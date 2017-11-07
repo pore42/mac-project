@@ -194,7 +194,7 @@ export default class MacRentInformations extends Component {
 
     render () {
         return (
-            <form style={{marginBottom: 20, padding: 50}}>
+            <form id="formRentInformation">
                 <Grid>
                     <Row><Col xs={12} md={12}><center><h2>{this.state.title}</h2></center></Col></Row>
                     <Row>
@@ -204,11 +204,11 @@ export default class MacRentInformations extends Component {
                     </Row>
                     <Row className="show-grid">
                         <FormGroup validationState={!this.state.owner && this.state.isSaveButtonClicked ? "error": null }>
-                            <Col sm={4} style = {{marginBottom: 5}}>{"Owner"}</Col>
+                            <Col sm={4} style = {{marginBottom: 5}}>{"Possessore"}</Col>
                             <Col sm = {7} xs={10}>
                                 <FormGroup controlId="formBasicText" >
                                     <FormControl type="text"
-                                            placeholder="Enter name"
+                                            placeholder="Inserisci il nome dell'attuale possessore"
                                             onChange={e => this.setState({ owner: e.target.value })}
                                             value={this.state.owner}
                                         />
@@ -232,7 +232,7 @@ export default class MacRentInformations extends Component {
                             <Col sm={8}>
                                 <FormGroup controlId="formBasicText">
                                     <FormControl type="text"
-                                            placeholder="Enter serial"
+                                            placeholder="Inserisci seriale del tuo Mac"
                                             onChange={e => this.setState({ serial: e.target.value })}
                                             value={this.state.serial}
                                         />
@@ -274,7 +274,7 @@ export default class MacRentInformations extends Component {
                             <Col sm={8}>
                                 <FormGroup controlId="formBasicText" >
                                     <FormControl type="text"
-                                        placeholder="Enter name"
+                                        placeholder="Inserisci nome del MacBook"
                                         onChange={e => this.setState({ name: e.target.value })}
                                         value={this.state.name}
                                     />
@@ -290,7 +290,7 @@ export default class MacRentInformations extends Component {
                             <Col sm={8}>
                                 <FormGroup controlId="formBasicText">
                                     <FormControl type="text"
-                                        placeholder="Enter code"
+                                        placeholder="Inserisci il codice del contratto d'affitto"
                                         onChange={e => this.setState({ code: e.target.value })}
                                         value={this.state.code}                                    />
                                     <FormControl.Feedback />
@@ -309,7 +309,7 @@ export default class MacRentInformations extends Component {
                                 <FormGroup>
                                     <InputGroup>
                                         <FormControl 
-                                            placeholder="Enter fee"
+                                            placeholder="Inserisci importo rata mensile"
                                             type="text"
                                             onChange={e => this.setState({ fee: e.target.value })}
                                             value={this.state.fee}
@@ -327,7 +327,7 @@ export default class MacRentInformations extends Component {
                             <Col sm={8}>
                                 <FormGroup controlId="formControlsTextarea">
                                     <FormControl componentClass="textarea"
-                                        placeholder="Insert note here"
+                                        placeholder="Inserisci eventuali note"
                                         value={ this.state.note}
                                         onChange={e => this.setState({ note: e.target.value })}/>
                                 </FormGroup>
