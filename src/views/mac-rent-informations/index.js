@@ -27,6 +27,7 @@ export default class MacRentInformations extends Component {
             fee: 0,
             isSaveButtonClicked: false,
             userName: localStorage.getItem("userName"),
+            title: "Inserire nuovi dati di affitto MacBook",
             macRentInformations: [],
         };
     }
@@ -77,6 +78,7 @@ export default class MacRentInformations extends Component {
                         owner: (r.owner) ? r.owner.stringValue : "",
                         dateFromOk: true,
                         dateToOk: true,
+                        title: (r.name && r.serial) ? "Modifica i dati di affitto id un mac" : this.state.newRow
                     });
 
                 }).catch((error) => {
@@ -194,6 +196,7 @@ export default class MacRentInformations extends Component {
         return (
             <form style={{marginBottom: 20, padding: 50}}>
                 <Grid>
+                    <Row><Col xs={12} md={12}><center><h2>{this.state.title}</h2></center></Col></Row>
                     <Row>
                         <Col xs={12} md={12} style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                             <Image src={image} responsive />

@@ -203,7 +203,7 @@ export default class MacRentTable extends Component {
                         <Image src={logo} bsSize="small" rounded/>
                     </Col>
                     <Col lg={5} xs={0}>
-                        <h1 id="tableTitle">
+                        <h1 id="tableTitle" className="title">
                         Tabella affitto MacBook
                         </h1>
                     </Col>
@@ -235,7 +235,7 @@ export default class MacRentTable extends Component {
                     <Col lg={7} sm={6} xs={12}  id="checkCol">
                         <Col lg={4} xs={6}><Image hidden={this.state.showCheckColumns} id="showMoreIcon" src={showMoreIcon} onClick={this.showCheck.bind(this)} title={"Clicca per mostrare altri dettagli"} /> </Col>
                         <Col lg={3} xs={5} xsOffset={1}><Image id="addDocIcon" src={addIcon} onClick={() => this.props.history.push(`/input/`)} title={"Clicca per aggiungere i tuoi dati"}/></Col>
-                        <FormGroup hidden={!this.state.showCheckColumns} style={{ marginTop: 16 }}>
+                        <FormGroup hidden={!this.state.showCheckColumns} style={{ marginTop: 36 }}>
                                 <Checkbox onClick={() => this.setState({ ownerChecked: !this.state.ownerChecked })} defaultChecked inline>
                                     {"Possessore"}
                                 </Checkbox>
