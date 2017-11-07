@@ -72,7 +72,7 @@ export default class UserLogin extends Component {
                     <Jumbotron style={{padding: 50}}>
                         <grid>
                             <Row>
-                                <Col xs={3} style={{width: 45, height: 45, padding: 0, margin: 0}}>
+                                <Col xs={3} style={{ width: 45, height: 45, padding: 0, marginRight: -2}}>
                                     <Image src={logoGoogle} responsive />
                                 </Col>
                                 <Col xs={9} style={{padding: 0}}>
