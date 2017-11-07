@@ -235,7 +235,7 @@ export default class MacRentTable extends Component {
                     <Col lg={7} sm={6} xs={12}  id="checkCol">
                         <Col lg={4} xs={6}><Image hidden={this.state.showCheckColumns} id="showMoreIcon" src={showMoreIcon} onClick={this.showCheck.bind(this)} title={"Clicca per mostrare altri dettagli"} /> </Col>
                         <Col lg={3} xs={5} xsOffset={1}><Image id="addDocIcon" src={addIcon} onClick={() => this.props.history.push(`/input/`)} title={"Clicca per aggiungere i tuoi dati"}/></Col>
-                        <FormGroup hidden={!this.state.showCheckColumns} style={{ marginTop: 36 }}>
+                        <FormGroup id="checkGroup" hidden={!this.state.showCheckColumns} >
                                 <Checkbox onClick={() => this.setState({ ownerChecked: !this.state.ownerChecked })} defaultChecked inline>
                                     {"Possessore"}
                                 </Checkbox>
@@ -265,7 +265,7 @@ export default class MacRentTable extends Component {
                     </Row>
                 <Row>
                     <Col sm={12} xs={12} style={{ marginLeft: 10, margin: 5 }}>
-                        <Table id="resTable"style={{ fontSize: 13 }} striped bordered responsive>
+                        <Table id="resTable" style={{ fontSize: 13 }} striped bordered responsive>
                             <thead key="thead">
                                 <tr>
                                     <th>{" #"}<br />
@@ -313,8 +313,8 @@ export default class MacRentTable extends Component {
                                         <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("lastMod", this.state.macRentInformations)} />
                                     </th>}
                                     <th>Note<br /><br /></th>
-                                    <th>Delete<br /><br /></th>
-                                    <th>Edit<br /><br /></th>
+                                    <th>Cancella<br /><br /></th>
+                                    <th>Modifica<br /><br /></th>
                                 </tr>
                             </thead>
                             <tbody key="tbody">

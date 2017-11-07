@@ -245,10 +245,12 @@ export default class MacRentInformations extends Component {
                         <FormGroup validationState={!this.state.dateFromOk && this.state.isSaveButtonClicked ? "error": null }>
                             <Col sm={4} style = {{marginBottom: 5}}>{"Data inizio contratto"}</Col>
                             <Col sm={8}>
-                                <DatePicker size={"large"}
-                                format={"DD/MM/YYYY"}
-                                onChange={this.handleDateFromChange.bind(this)}
-                                value={moment(this.state.dateFrom)}
+                                <DatePicker
+                                    allowClear={false}    
+                                    size={"large"}
+                                    format={"DD/MM/YYYY"}
+                                    onChange={this.handleDateFromChange.bind(this)}
+                                    value={moment(this.state.dateFrom)}
                                 /> 
                             </Col>
                         </FormGroup>
@@ -259,6 +261,7 @@ export default class MacRentInformations extends Component {
                             <Col style = {{marginBottom: 5}} sm={4}>{"Data termine contratto"}</Col>
                             <Col sm={8}>
                                 <DatePicker 
+                                    allowClear={false}      
                                     size={"large"}
                                     format={"DD/MM/YYYY"}
                                     onChange={this.handleDateToChange.bind(this)}
@@ -306,11 +309,11 @@ export default class MacRentInformations extends Component {
                         <FormGroup validationState={null }>
                             <Col sm={4} style = {{marginBottom: 5}}>{"Rata mensile"}</Col>
                             <Col sm={8}>
-                                <FormGroup>
+                                <FormGroup validationState={ typeof (Number(this.state.fee)) !== "number" ? "error" : null}>
                                     <InputGroup>
                                         <FormControl 
                                             placeholder="Inserisci importo rata mensile"
-                                            type="text"
+                                            type="number"
                                             onChange={e => this.setState({ fee: e.target.value })}
                                             value={this.state.fee}
                                             />
