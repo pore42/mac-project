@@ -95,7 +95,7 @@ export default withRouter(class MacRentInfoRow extends Component {
                 {displayDateTo && <td className="card" style={{ backgroundColor: (diffTo > 0 ? "#ff5555" : "") }}><span className="rowData">{dateTo}</span></td>}
                 {displayName && <td className="card"><span className="rowData">{name}</span></td>}
                 {displayCode && <td className="card"><span className="rowData">{code}</span></td>}
-                {displayFee && <td className="card"><span className="rowData">{fee} €</span></td>}
+                {displayFee && <td className="card"><span className="rowData">{fee > 0 ? (fee + "€") : "-"}</span></td>}
                 {displayLastMod && <td className="card"><span className="rowData">{lastMod}</span></td>}
                 <td id="rowDataFix">
                 
