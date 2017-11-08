@@ -1,7 +1,9 @@
 body {
   font: 11px "Century Gothic", Futura, sans-serif;
   margin: 50px;
+  
 }
+
 
 ol, ul {
   padding-left: 40px;
@@ -24,7 +26,6 @@ ol, ul {
 		width: 40px;
 		height: 40px;
 		margin-top: -16px;
-		margin-left: 100px;
 		cursor: pointer;
 		opacity: 0.8;
 	}
@@ -35,23 +36,63 @@ ol, ul {
 		margin-top: 32px;
 	}
 
+	#checkGroup{
+		margin-top: 36px;	
+	}
+
+
 
 @font-face {
     font-family: oldMacFont;
     src: url(./assets/font/HelveticaNeue.ttf);
 }
 
-#tableTitle{
+ .title{
 	font-family: oldMacFont;
-		margin-top: 45px;
+
 }
 
 
-@media screen and (max-width: 650px) {
+#tableTitle{
+	margin-top: 45px;
+}
+
+#mobileTableTitle{
+	display: none;
+}
 
 
+#formRentInformation{
+	margin-bottom: 20px;
+	padding: 50px;
+	padding-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+	
+	#checkGroup{
+		margin-top: 58px;	
+	}
+	
+
+	#mobileTableTitle{
+	display: block;
+	margin: 18px;
+	background-color: #D5D5D5D5;
+	}
+	
 	#tableTitle{
-			display: none;
+		display: none;
+	}
+
+	#filter{
+		width: 80vw;
+	}
+	
+	#formRentInformation{
+		margin-bottom: 20px;
+		padding: 30px;
+		padding-top: 20px;
 	}
 
 	logoutButton{
@@ -64,7 +105,7 @@ ol, ul {
 	}
 
 	.checkbox-inline{
-		width: 90px!important;
+		width: 95px!important;
 		margin-top: 5px;
 	}
 
@@ -158,7 +199,7 @@ ol, ul {
 	#resTable tr {
 		border: 0px;
 		margin-bottom:0px;
-		margin-bottom: 20px;
+		margin-bottom: 40px;
 	 }
 
   #resTable td:first-child{
@@ -198,8 +239,7 @@ ol, ul {
 	}
 
 
-
-  #resTable td:nth-of-type(1):before { content: "#: "; font-weight: bold;}
+	#resTable td:nth-of-type(1):before { content: "#: "; font-weight: bold;}
 	#resTable td:nth-of-type(2):before { content: "Possessore: "; font-weight: bold;}
 	#resTable td:nth-of-type(3):before { content: "Numero di serie: "; font-weight: bold;}
 	#resTable td:nth-of-type(4):before { content: "Data inizio: "; font-weight: bold;}
@@ -209,8 +249,8 @@ ol, ul {
 	#resTable td:nth-of-type(8):before { content: "Rata mensile: "; font-weight: bold;}
 	#resTable td:nth-of-type(9):before { content: "Ultima modifica: "; font-weight: bold;}
 	#resTable #rowDataFix:before { content: "Note: "; font-weight: bold;}
-  #resTable #rowDataFix2:before { content: "Delete: "; font-weight: bold;}
-  #resTable #rowDataFix3:before { content: "Edit: "; font-weight: bold;}
+	#resTable #rowDataFix2:before { content: "Cancella: "; font-weight: bold;}
+	#resTable #rowDataFix3:before { content: "Modifica: "; font-weight: bold;}
 
 
 }
