@@ -17,7 +17,10 @@
     "react-google-login": "^2.9.2",
     "react-google-login-component": "^0.7.0",
     "react-localstorage": "^0.3.1",
-    "react-router-dom": "^4.1.1"
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.1.1",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.2.1",
