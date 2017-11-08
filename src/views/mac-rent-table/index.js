@@ -233,7 +233,8 @@ export default class MacRentTable extends Component {
                 <Row style={{ marginTop: 20, marginBottom: 30 }}>
                     <Col lgOffset={1} lg={4} sm={3} xs={12} style={{ margin: 20 }}>
                         <InputGroup style={{ width: 340}}>
-                                <FormControl
+                            <FormControl
+                                    id="filter"
                                     onChange={e => this.setState({ filterTerm: e.target.value })}
                                     placeholder="search"
                                     value={this.state.filterTerm}

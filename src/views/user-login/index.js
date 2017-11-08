@@ -59,7 +59,7 @@ export default class UserLogin extends Component {
 
     render () {
         return ( 
-            <grid style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+            <grid style={{ display: "flex", flexDirection: "column", alignItems: "center"}}>
                 <Row className="show-grid" style={{marginTop: 15, marginBottom: 15}}>
                     <Image src={logo} responsive />
                 </Row>
