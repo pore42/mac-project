@@ -1,14 +1,11 @@
 import {
     FETCH_RENT_INFO_START,
     FETCH_RENT_INFO_SUCCESS,
-    FETCH_RENT_INFO_ERROR
-} from '../actions/elements';
-
-
-import {
+    FETCH_RENT_INFO_ERROR,
     DELETE_SUCCESS,
     DELETE_ERROR
-} from '../actions/delete';
+} from '../actions/elements';
+
 
 
 const defaultState = {

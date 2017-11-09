@@ -12,7 +12,7 @@ import showMoreIcon from "../../assets/images/showMore.png";
 import addIcon from "../../assets/images/addDocIcon.png";
 
 import { fetchRentInfo } from "../../actions/elements";
-import { deleteElement } from "../../actions/delete";
+import { deleteElement } from "../../actions/elements";
 
 import MacRentInfoRow from "../../components/mac-rent-info-row";
 
