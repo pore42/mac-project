@@ -4,20 +4,23 @@ import changeCase from "change-case";
 import GoogleLogout from "react-google-login";
 import moment from "moment";
 import { PropTypes } from "prop-types";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 
 import logo from "../../assets/images/mondora.png";
 import showMoreIcon from "../../assets/images/showMore.png";
 import addIcon from "../../assets/images/addDocIcon.png";
 
 
-
+import { fetchRentInfo } from "../../actions/elements"
 
 import MacRentInfoRow from "../../components/mac-rent-info-row";
 
 var Button = require("antd/lib/button");
 var _ = require("lodash");
 
-export default class MacRentTable extends Component {
+class MacRentTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,42 +34,25 @@ export default class MacRentTable extends Component {
             lastModChecked: false,
             showCheckColumns: false,
             filterTerm: "",
-            macRentInformations: []/*this.deserializedMacRentInformation(this.props.elements)*/,
             userName: "",
         }
     };
-    static PropTypes = {
+
+    static propTypes = {
         match: PropTypes.object,
         elements: PropTypes.array,
-    }
+        fetchRentInfo: PropTypes.func.isRequired,
+    };
+
+
 
     componentDidMount() {
+        const { fetchRentInfo } = this.props;
 
-        console.log("get data from google");
-        fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:runQuery?access_token=${localStorage.getItem("googleAccessToken")}`, {
-            method: "POST",
-            body: JSON.stringify({
-                query: {
-                    kind: [
-                        {
-                            name: "mac-rent-information"
-                        }
-                    ]
-                }
-            })
-        }).then((res) => {
-            if (!res.ok) { throw new Error("errore in fase di salvataggio") }
-            return res.json();
+        if (fetchRentInfo) {
+            fetchRentInfo();
         }
-        ).then(data => {
-                var elements = data.batch.entityResults;
-                this.setState({ macRentInformations: this.deserializedMacRentInformation(elements) });
 
-        }).catch((error) => {
-            alert("fallito recupero informazioni riguardo l'affitto dei mac");
-            console.error(error);
-        });
-        
     }
 
 
@@ -196,6 +182,7 @@ export default class MacRentTable extends Component {
     }
 
     render() {
+        console.log("fetchaEW", this.props.elements);
         return (
             <Grid fluid={true} style={{ marginTop: 20, margin: 0 }}>
                 <Row className="show-grid" >
@@ -328,7 +315,7 @@ export default class MacRentTable extends Component {
                                 </tr>
                             </thead>
                             <tbody key="tbody">
-                                {this.state.macRentInformations
+                                {this.deserializedMacRentInformation(this.props.elements)
                                     .filter(element => this.filterValues(element, this.state.filterTerm))
                                     .map(macRentInfo =>
                                         <MacRentInfoRow key={macRentInfo.id}
@@ -364,3 +351,18 @@ export default class MacRentTable extends Component {
         );
     }
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        elements: state.elements.data
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchRentInfo: bindActionCreators(fetchRentInfo, dispatch)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MacRentTable);
