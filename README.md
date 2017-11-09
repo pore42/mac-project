@@ -4,7 +4,15 @@ Go in the project folder. >  cd mri-project
 Build it using. > npm run build
 
 
-Create a bucket in GoogleCloudProject. You can keep the default values, just click create and choose a Bucket's name. mri-bucket
+Open https://console.cloud.google.com/start.
+
+On the left click menu Icon.
+
+Scroll the menu on the right and click Storage, then click Browser.
+
+On the top of page choose the project name (select mac-rent-informations).
+
+Select mri-bucket. You can keep the default values, just click create and choose a Bucket's name. mri-bucket
 
 
 Once the bucket has been created, click into it and select upload folder. Browse to your project directory and upload the entire build folder.
