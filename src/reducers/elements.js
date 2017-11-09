@@ -4,6 +4,13 @@ import {
     FETCH_RENT_INFO_ERROR
 } from '../actions/elements';
 
+
+import {
+    DELETE_SUCCESS,
+    DELETE_ERROR
+} from '../actions/delete';
+
+
 const defaultState = {
     started: false,
     success: false,
@@ -31,6 +38,11 @@ export default function elements(state = defaultState, { type, payload }) {
                 started: false,
                 error: true
             };
+        case DELETE_SUCCESS:
+            return{ 
+                ...state,
+                data: state.data.filter(x => x.realId !== payload)
+            }   
         default:
             return state;
     }

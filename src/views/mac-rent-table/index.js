@@ -7,13 +7,12 @@ import { PropTypes } from "prop-types";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-
 import logo from "../../assets/images/mondora.png";
 import showMoreIcon from "../../assets/images/showMore.png";
 import addIcon from "../../assets/images/addDocIcon.png";
 
-
-import { fetchRentInfo } from "../../actions/elements"
+import { fetchRentInfo } from "../../actions/elements";
+import { deleteElement } from "../../actions/delete";
 
 import MacRentInfoRow from "../../components/mac-rent-info-row";
 
@@ -57,38 +56,42 @@ class MacRentTable extends Component {
 
 
 
-    deserializedMacRentInformation(rowElements) {
+    // deserializedMacRentInformation(rowElements) {
 
 
-        const elements = rowElements.map((el, i) =>
-            ({
-                id: i,
-                realId: Number(el.entity.key.path[0].id),
-                name: el.entity.properties.name.stringValue,
-                code: el.entity.properties.code.stringValue,
-                dateFrom: moment(el.entity.properties.dateFrom.timestampValue),
-                dateTo: moment(el.entity.properties.dateTo.timestampValue),
-                serial: el.entity.properties.serial.stringValue,
-                owner: el.entity.properties.owner.stringValue,
-                fee: el.entity.properties.fee.integerValue,
-                lastMod: el.entity.properties.lastMod.stringValue,
-                note: el.entity.properties.note.stringValue,
-            }));
+    //     const elements = rowElements.map((el, i) =>
+    //         ({
+    //             id: i,
+    //             realId: Number(el.entity.key.path[0].id),
+    //             name: el.entity.properties.name.stringValue,
+    //             code: el.entity.properties.code.stringValue,
+    //             dateFrom: moment(el.entity.properties.dateFrom.timestampValue),
+    //             dateTo: moment(el.entity.properties.dateTo.timestampValue),
+    //             serial: el.entity.properties.serial.stringValue,
+    //             owner: el.entity.properties.owner.stringValue,
+    //             fee: el.entity.properties.fee.integerValue,
+    //             lastMod: el.entity.properties.lastMod.stringValue,
+    //             note: el.entity.properties.note.stringValue,
+    //         }));
 
+    //     return elements;
 
-        return elements;
-
-    }
+    // }
 
     deleteMacRentInformation(iden) {
 
-        var removeIndex = this.state.macRentInformations.findIndex((el) => el.realId === iden);
-        var copy = this.state.macRentInformations;
-        copy.splice(removeIndex, 1);
+    //    var removeIndex = this.state.macRentInformations.findIndex((el) => el.realId === iden);
+    //    var copy = this.state.macRentInformations;
+    //    copy.splice(removeIndex, 1);
 
 
+        const { deleteElement } = this.props;
 
-        fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:beginTransaction?access_token=${localStorage.getItem("googleAccessToken")}`, {
+        if (deleteElement) {
+            deleteElement(iden);
+        }
+
+       /* fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:beginTransaction?access_token=${localStorage.getItem("googleAccessToken")}`, {
             method: "POST",
             body: JSON.stringify(
                 {
@@ -143,7 +146,7 @@ class MacRentTable extends Component {
         }).catch((error) => {
             alert("transazione fallita");
             console.error(error);
-        });
+        });*/
 
     }
 
@@ -182,7 +185,6 @@ class MacRentTable extends Component {
     }
 
     render() {
-        console.log("fetchaEW", this.props.elements);
         return (
             <Grid fluid={true} style={{ marginTop: 20, margin: 0 }}>
                 <Row className="show-grid" >
@@ -315,7 +317,7 @@ class MacRentTable extends Component {
                                 </tr>
                             </thead>
                             <tbody key="tbody">
-                                {this.deserializedMacRentInformation(this.props.elements)
+                                {/*this.deserializedMacRentInformation*/(this.props.elements)
                                     .filter(element => this.filterValues(element, this.state.filterTerm))
                                     .map(macRentInfo =>
                                         <MacRentInfoRow key={macRentInfo.id}
@@ -361,7 +363,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchRentInfo: bindActionCreators(fetchRentInfo, dispatch)
+        fetchRentInfo: bindActionCreators(fetchRentInfo, dispatch),
+        deleteElement: bindActionCreators(deleteElement, dispatch)
     };
 };
 
