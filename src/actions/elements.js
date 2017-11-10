@@ -38,7 +38,7 @@ export function fetchRentInfo() {
                 
                 console.log(data);
 
-                var elements = deserializedMacRentInformation(data.batch.entityResults);
+                var elements = data.batch.moreResults === "NO_MORE_RESULTS" ? []: deserializedMacRentInformation(data.batch.entityResults);
 
                 console.log(elements);
 
@@ -120,9 +120,13 @@ export function fetchRentInfo() {
                           "transaction": data.transaction
                       })
               }).then((res) => {
-                  return res.json();
+                  if (res.ok) {
+                      return res.json()
+                  }
+                  else {
+                      throw new Error("fallita cancellazione");
+                  }    
               }).then(data => {
-
 
                   dispatch({
                       type: DELETE_SUCCESS,
@@ -137,7 +141,10 @@ export function fetchRentInfo() {
               });
 
               }).catch((err) => {
-                  console.log("fallita inizio transazione");
+                  dispatch({
+                      type: DELETE_ERROR,
+                      payload: err
+                  });
           });
 
       };
