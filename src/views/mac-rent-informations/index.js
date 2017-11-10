@@ -6,9 +6,9 @@ import PropTypes from "prop-types";
 
 import image from "../../assets/images/image.png";
 
-var Button = require("antd/lib/button");
-var DatePicker = require("antd/lib/date-picker");
-var message = require("antd/lib/message");
+import Button from "antd/lib/button";
+import DatePicker from "antd/lib/date-picker";
+import message from "antd/lib/message";
 
 
 export default class MacRentInformations extends Component {

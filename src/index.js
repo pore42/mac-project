@@ -18,7 +18,7 @@ import PrivateRoute from "./views/PrivateRoute";
 
 import store from "./reducers";
 
-var LocaleProvider = require("antd/lib/locale-provider");
+import LocaleProvider from "antd/lib/locale-provider";
 
 
 //incapsulo tutto nel provider, che sarebbe lo store dell'applicazione
