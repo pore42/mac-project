@@ -1,5 +1,4 @@
 import {
-    FETCH_RENT_INFO_START,
     FETCH_RENT_INFO_SUCCESS,
     FETCH_RENT_INFO_ERROR,
     DELETE_SUCCESS,
@@ -17,11 +16,6 @@ const defaultState = {
 
 export default function elements(state = defaultState, { type, payload }) {
     switch (type) {
-        case FETCH_RENT_INFO_START:
-            return {
-                ...state,
-                started: true
-            };
         case FETCH_RENT_INFO_SUCCESS:
             return {
                 ...state,

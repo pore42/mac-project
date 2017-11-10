@@ -8,13 +8,8 @@ import { REACT_APP_RENT_DELETE } from '../config';
 
 
 
-export const FETCH_RENT_INFO_START = 'FETCH_RENT_INFO_START';
 export const FETCH_RENT_INFO_SUCCESS = 'FETCH_RENT_INFO_SUCCESS';
 export const FETCH_RENT_INFO_ERROR = 'FETCH_RENT_INFO_ERROR';
-
-export const FETCH_DELETE_TOKEN_START = 'FETCH_DELETE_TOKEN_START';
-export const FETCH_DELETE_TOKEN_SUCCESS = 'FETCH_DELETE_TOKEN_SUCCESS';
-export const FETCH_DELETE_TOKEN_ERROR = 'FETCH_DELETE_TOKEN_ERROR';
 
 
 export const DELETE_SUCCESS = 'DELETE_SUCCESS';
@@ -25,9 +20,6 @@ export const DELETE_ERROR = 'DELETE_ERROR';
 
 export function fetchRentInfo() {
     return dispatch => {
-        dispatch({
-            type: FETCH_RENT_INFO_START
-        });
 
         fetch(REACT_APP_RENT_INFO + `${localStorage.getItem("googleAccessToken")}`, {
             method: "POST",
@@ -94,10 +86,6 @@ export function fetchRentInfo() {
 
   export function deleteElement(iden) {
       return dispatch => {
-          dispatch({
-              type: FETCH_DELETE_TOKEN_START
-          });
-
 
           fetch(REACT_APP_RENT_DELETE_TOKEN + `${localStorage.getItem("googleAccessToken")}`, {
               method: "POST",
@@ -108,9 +96,6 @@ export function fetchRentInfo() {
                       }
                   })
           }).then((res) => {
-              dispatch({
-                  type: FETCH_DELETE_TOKEN_SUCCESS,
-              });
               return res.json();
           }).then(data => {
               console.log("iniziata transazione numero:", data.transaction, " correttamente");
@@ -144,8 +129,6 @@ export function fetchRentInfo() {
                       payload: iden
                   });
 
-                  //this.setState({ macRentInformations: copy });
-
               }).catch((err) => {
                   dispatch({
                       type: DELETE_ERROR,
@@ -153,11 +136,8 @@ export function fetchRentInfo() {
                   });
               });
 
-          }).catch((err) => {
-              dispatch({
-                  type: FETCH_DELETE_TOKEN_ERROR,
-                  payload: err
-              });
+              }).catch((err) => {
+                  console.log("fallita inizio transazione");
           });
 
       };
