@@ -11,7 +11,7 @@ import {
 const defaultState = {
     started: false,
     success: false,
-    error: false,
+    fetchError: false,
     data: []
 };
 
@@ -26,20 +26,20 @@ export default function elements(state = defaultState, { type, payload }) {
             return {
                 ...state,
                 started: false,
-                error: false,
+                fetchError: false,
                 data: payload
             };
         case FETCH_RENT_INFO_ERROR:
             return {
                 ...state,
                 started: false,
-                error: true
+                fetchError: true
             };
         case DELETE_SUCCESS:
             return{ 
                 ...state,
                 data: state.data.filter(x => x.realId !== payload)
-            }   
+            }
         default:
             return state;
     }

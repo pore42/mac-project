@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormGroup, Table, FormControl, InputGroup, Grid, Col, Row, Checkbox, Image } from "react-bootstrap";
+import { FormGroup, Table, FormControl, InputGroup, Grid, Col, Row, Checkbox, Image, Modal } from "react-bootstrap";
 import changeCase from "change-case";
 import GoogleLogout from "react-google-login";
 import moment from "moment";
@@ -33,6 +33,7 @@ class MacRentTable extends Component {
             feeChecked: false,
             lastModChecked: false,
             showCheckColumns: false,
+            showFetchErrorModal: false,
             macRentInformations: [],
             filterTerm: "",
             userName: "",
@@ -43,6 +44,7 @@ class MacRentTable extends Component {
         match: PropTypes.object,
         elements: PropTypes.array,
         fetchRentInfo: PropTypes.func.isRequired,
+        fetchError: PropTypes.bool,
     };
 
 
@@ -58,11 +60,18 @@ class MacRentTable extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.elements !== nextProps.elements) {
+        if (this.props.elements !== nextProps.elemenets) {
             this.setState({
                 macRentInformations: nextProps.elements
-            })
+            });
         }
+
+        if (this.props.fetchError !== nextProps.fetchError) { 
+            this.setState({
+                showFetchErrorModal: true
+            });
+        }
+
     }
 
     deleteMacRentInformation(iden) {
@@ -109,9 +118,31 @@ class MacRentTable extends Component {
         );
     }
 
+
+    closeFetchErrorModal() { 
+        this.setState({showFetchErrorModal: false});
+    }
+
+
+    renderFetchErrorModal(){
+        return (<Modal show={this.state.showFetchErrorModal} onHide={() =>this.closeFetchErrorModal()}>
+            <Modal.Header>
+                <Modal.Title>Recupero dei dati fallito</Modal.Title>
+            </Modal.Header>
+
+
+            <Modal.Footer>
+                <Button onClick={() => this.closeFetchErrorModal()}>Close</Button>
+            </Modal.Footer>
+
+    </Modal>)
+    }
+
     render() {
         return (
             <Grid fluid={true} style={{ marginTop: 20, margin: 0 }}>
+                {console.log(this.props)}
+                {this.renderFetchErrorModal()}
                 <Row className="show-grid" >
                     <Col lg={3} sm={6} xs={6} style={{ marginTop: 15, marginLeft: 30 }}>
                         <Image src={logo} bsSize="small" rounded/>
@@ -282,7 +313,8 @@ class MacRentTable extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        elements: state.elements.data
+        elements: state.elements.data,
+        fetchError: state.elements.fetchError,
     };
 };
 

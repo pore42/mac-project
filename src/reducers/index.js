@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 import elements from './elements';
 
 const reducers = combineReducers({
-    elements
+    elements,
 });
 
 const logger = createLogger({
