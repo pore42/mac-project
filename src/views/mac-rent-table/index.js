@@ -16,8 +16,9 @@ import { deleteElement } from "../../actions/elements";
 
 import MacRentInfoRow from "../../components/mac-rent-info-row";
 
-var Button = require("antd/lib/button");
-var _ = require("lodash");
+import Button from "antd/lib/button";
+import _ from "lodash";
+
 
 class MacRentTable extends Component {
     constructor(props) {
@@ -65,7 +66,6 @@ class MacRentTable extends Component {
     }
 
     deleteMacRentInformation(iden) {
-
 
         const { deleteElement } = this.props;
 
