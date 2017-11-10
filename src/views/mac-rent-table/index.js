@@ -32,6 +32,7 @@ class MacRentTable extends Component {
             feeChecked: false,
             lastModChecked: false,
             showCheckColumns: false,
+            macRentInformations: [],
             filterTerm: "",
             userName: "",
         }
@@ -55,34 +56,15 @@ class MacRentTable extends Component {
     }
 
 
-
-    // deserializedMacRentInformation(rowElements) {
-
-
-    //     const elements = rowElements.map((el, i) =>
-    //         ({
-    //             id: i,
-    //             realId: Number(el.entity.key.path[0].id),
-    //             name: el.entity.properties.name.stringValue,
-    //             code: el.entity.properties.code.stringValue,
-    //             dateFrom: moment(el.entity.properties.dateFrom.timestampValue),
-    //             dateTo: moment(el.entity.properties.dateTo.timestampValue),
-    //             serial: el.entity.properties.serial.stringValue,
-    //             owner: el.entity.properties.owner.stringValue,
-    //             fee: el.entity.properties.fee.integerValue,
-    //             lastMod: el.entity.properties.lastMod.stringValue,
-    //             note: el.entity.properties.note.stringValue,
-    //         }));
-
-    //     return elements;
-
-    // }
+    componentWillReceiveProps(nextProps) {
+        if (this.props.elements !== nextProps.elements) {
+            this.setState({
+                macRentInformations: nextProps.elements
+            })
+        }
+    }
 
     deleteMacRentInformation(iden) {
-
-    //    var removeIndex = this.state.macRentInformations.findIndex((el) => el.realId === iden);
-    //    var copy = this.state.macRentInformations;
-    //    copy.splice(removeIndex, 1);
 
 
         const { deleteElement } = this.props;
@@ -90,63 +72,6 @@ class MacRentTable extends Component {
         if (deleteElement) {
             deleteElement(iden);
         }
-
-       /* fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:beginTransaction?access_token=${localStorage.getItem("googleAccessToken")}`, {
-            method: "POST",
-            body: JSON.stringify(
-                {
-                    "transactionOptions": {
-                        "readWrite": {}
-                    }
-                })
-
-        }).then((res) => {
-            if (!res.ok) {
-                throw new Error("errore in fase di richiesta inizio transazione");
-            }
-
-            return res.json();
-        }).then(data => {
-            console.log("iniziata transazione numero:", data.transaction, " correttamente");
-
-                fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
-                    method: "POST",
-                    body: JSON.stringify(
-                        {
-                            "mode": "MODE_UNSPECIFIED",
-                            "mutations": [
-                                {
-                                    "delete": {
-                                        "path": [
-                                            {
-                                                "kind": "mac-rent-information",
-                                                "id": iden,
-                                            }
-                                        ]
-                                    }
-                                }
-                            ],
-                            "transaction": data.transaction
-                        })
-                }).then((res) => {
-                    if (!res.ok) {
-                        throw new Error("errore in fase di cancellazione");
-                    }
-
-                    return res.json();
-                }).then(data => {
-                    console.log(data);
-                    this.setState({ macRentInformations: copy });
-
-                }).catch((error) => {
-                    alert("cancellazione elemento scelto fallita");
-                    console.error(error);
-                });
-
-        }).catch((error) => {
-            alert("transazione fallita");
-            console.error(error);
-        });*/
 
     }
 
@@ -317,7 +242,7 @@ class MacRentTable extends Component {
                                 </tr>
                             </thead>
                             <tbody key="tbody">
-                                {/*this.deserializedMacRentInformation*/(this.props.elements)
+                                {(this.state.macRentInformations)
                                     .filter(element => this.filterValues(element, this.state.filterTerm))
                                     .map(macRentInfo =>
                                         <MacRentInfoRow key={macRentInfo.id}
