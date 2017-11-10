@@ -38,9 +38,8 @@ export function fetchRentInfo() {
                 
                 console.log(data);
 
-                var elements = data.batch.moreResults === "NO_MORE_RESULTS" ? []: deserializedMacRentInformation(data.batch.entityResults);
+                var elements = data.batch.entityResults.length > 0 ? deserializedMacRentInformation(data.batch.entityResults): [];
 
-                console.log(elements);
 
                 //pulito passare i dati
                 dispatch({
