@@ -21,41 +21,38 @@ export const DELETE_ERROR = 'DELETE_ERROR';
 
 
 export function fetchRentInfo() {
-    return dispatch => {
 
-        fetch(REACT_APP_RENT_INFO + `${localStorage.getItem("googleAccessToken")}`, {
-            method: "POST",
-            body: JSON.stringify({
-                query: {
-                    kind: [
-                        {
-                            name: "mac-rent-information"
-                        }
-                    ]
-                }
-            })
-        }).then(result => {
-            console.log("pare ok?", result.ok)
-            return result.json()
-        }).then(data => {
+       return async dispatch => {
 
-            console.log("ho recuperato questo ", data);
-
-            var elements = data.batch.entityResults !== undefined ? deserializedMacRentInformation(data.batch.entityResults) : [];
+            try {
+                const result = await post(REACT_APP_RENT_INFO + `${localStorage.getItem("googleAccessToken")}`, {
+                    query: {
+                        kind: [
+                            {
+                                name: "mac-rent-information"
+                            }
+                        ]
+                    }
+                });
+            
+                var data = await result.data;
+                console.log("ho recuperato questo ", data);
+                var elements = data.batch.entityResults !== undefined ? deserializedMacRentInformation(data.batch.entityResults) : [];
 
 
-            //pulito passare i dati
-            dispatch({
-                type: FETCH_RENT_INFO_SUCCESS,
-                payload: elements
-            });
-        }).catch((err) => {
-            dispatch({
-                type: FETCH_RENT_INFO_ERROR,
-                payload: err
-            });
-        });
-    };
+                dispatch({
+                    type: FETCH_RENT_INFO_SUCCESS,
+                    payload: elements
+                });
+
+         } catch (error) {
+                dispatch({
+                    type: FETCH_RENT_INFO_ERROR,
+                    payload: error
+                });
+            }
+        };
+
 }
 
 
@@ -124,69 +121,6 @@ export function deleteElement(iden, token) {
                 payload: error
             })
         }
-
-
-
-
-        // fetch(REACT_APP_RENT_DELETE_TOKEN + `${localStorage.getItem("googleAccessToken")}`, {
-        //     method: "POST",
-        //     body: JSON.stringify(
-        //         {
-        //             "transactionOptions": {
-        //                 "readWrite": {}
-        //             }
-        //         })
-        // }).then((res) => {
-        //     return res.json();
-        // }).then(data => {
-        //     console.log("iniziata transazione numero:", data.transaction, " correttamente");
-
-        //     fetch(REACT_APP_RENT_DELETE + `${localStorage.getItem("googleAccessToken")}`, {
-        //         method: "POST",
-        //         body: JSON.stringify(
-        //             {
-        //                 "mode": "MODE_UNSPECIFIED",
-        //                 "mutations": [
-        //                     {
-        //                         "delete": {
-        //                             "path": [
-        //                                 {
-        //                                     "kind": "mac-rent-information",
-        //                                     "id": iden,
-        //                                 }
-        //                             ]
-        //                         }
-        //                     }
-        //                 ],
-        //                 "transaction": data.transaction
-        //             })
-        //     }).then((res) => {
-        //         if (res.ok) {
-        //             return res.json()
-        //         }
-        //         else {
-        //             throw new Error("fallita cancellazione");
-        //         }
-        //     }).then(data => {
-        //         dispatch({
-        //             type: DELETE_SUCCESS,
-        //             payload: iden
-        //         });
-
-        //     }).catch((err) => {
-        //         dispatch({
-        //             type: DELETE_ERROR,
-        //             payload: err
-        //         });
-        //     });
-
-        // }).catch((err) => {
-        //     dispatch({
-        //         type: DELETE_ERROR,
-        //         payload: err
-        //     });
-        // });
-
     };
 
 

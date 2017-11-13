@@ -34,6 +34,7 @@ class MacRentTable extends Component {
             lastModChecked: false,
             showCheckColumns: false,
             showFetchErrorModal: false,
+            showDeleteErrorModal: false,
             macRentInformations: [],
             filterTerm: "",
             userName: "",
@@ -45,8 +46,8 @@ class MacRentTable extends Component {
         elements: PropTypes.array,
         fetchRentInfo: PropTypes.func.isRequired,
         fetchError: PropTypes.bool,
+        deleteError: PropTypes.bool
     };
-
 
 
     componentDidMount() {
@@ -71,6 +72,14 @@ class MacRentTable extends Component {
                 showFetchErrorModal: true
             });
         }
+
+
+        if (this.props.deleteError !== nextProps.deleteError) {
+            this.setState({
+                showDeleteErrorModal: true
+            });
+        }
+
 
     }
 
@@ -123,13 +132,18 @@ class MacRentTable extends Component {
         this.setState({showFetchErrorModal: false});
     }
 
+    closeDeleteErrorModal() {
+        this.setState({ showDeleteErrorModal: false });
+    }
+
+
+
 
     renderFetchErrorModal(){
         return (<Modal show={this.state.showFetchErrorModal} onHide={() =>this.closeFetchErrorModal()}>
             <Modal.Header>
                 <Modal.Title>Recupero dei dati fallito</Modal.Title>
             </Modal.Header>
-
 
             <Modal.Footer>
                 <Button onClick={() => this.closeFetchErrorModal()}>Close</Button>
@@ -138,11 +152,26 @@ class MacRentTable extends Component {
     </Modal>)
     }
 
+
+    renderDeleteErrorModal() {
+        return (<Modal show={this.state.showDeleteErrorModal} onHide={() => this.closeDeleteErrorModal()}>
+            <Modal.Header>
+                <Modal.Title>Cancellazione elemento non possibile</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Footer>
+                <Button onClick={() => this.closeDeleteErrorModal()}>Close</Button>
+            </Modal.Footer>
+
+        </Modal>)
+    }
+
     render() {
         return (
             <Grid fluid={true} style={{ marginTop: 20, margin: 0 }}>
                 {console.log(this.props)}
                 {this.renderFetchErrorModal()}
+                {this.renderDeleteErrorModal()}
                 <Row className="show-grid" >
                     <Col lg={3} sm={6} xs={6} style={{ marginTop: 15, marginLeft: 30 }}>
                         <Image src={logo} bsSize="small" rounded/>
@@ -315,6 +344,7 @@ const mapStateToProps = (state) => {
     return {
         elements: state.elements.data,
         fetchError: state.elements.fetchError,
+        deleteError: state.elements.deleteError,
     };
 };
 
