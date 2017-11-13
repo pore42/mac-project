@@ -3,7 +3,8 @@ import {
     FETCH_RENT_INFO_ERROR,
     DELETE_SUCCESS,
     DELETE_ERROR,
-    SAVE_SUCCESS
+    SAVE_SUCCESS,
+    SAVE_ERROR
 } from '../actions/elements';
 
 
@@ -14,6 +15,7 @@ const defaultState = {
     fetchError: false,
     deleteError: false,
     saveSuccess: false,
+    saveError: false,
     data: []
 };
 
@@ -46,6 +48,11 @@ export default function elements(state = defaultState, { type, payload }) {
             return {
                 ...state,
                 saveSuccess: true
+            }
+        case SAVE_ERROR:
+            return {
+                ...state,
+                saveError: true
             }    
         default:
             return state;

@@ -7,6 +7,7 @@ import moment from "moment";
 
 import { REACT_APP_RENT_DELETE_TOKEN } from '../config';
 import { REACT_APP_RENT_DELETE } from '../config';
+import { REACT_APP_RENT_SAVE } from '../config';
 
 
 
@@ -18,6 +19,7 @@ export const DELETE_SUCCESS = 'DELETE_SUCCESS';
 export const DELETE_ERROR = 'DELETE_ERROR';
 
 export const SAVE_SUCCESS = 'SAVE_SUCCESS';
+export const SAVE_ERROR = 'SAVE_ERROR';
 
 
 export function fetchRentInfo() {
@@ -125,7 +127,7 @@ export function deleteElement(iden, token) {
 }
 
 
-export function saveElement(userName, id, name, code, dateFrom, dateTo, fee, serial, note, owner, history) {
+export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note, owner, history) {
 
     return async dispatch => {
         try {
@@ -139,7 +141,7 @@ export function saveElement(userName, id, name, code, dateFrom, dateTo, fee, ser
                     }
                 ;
 
-            const result = await post(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
+            const result = await post(REACT_APP_RENT_SAVE + `${localStorage.getItem("googleAccessToken")}`, {
                 "mode": "NON_TRANSACTIONAL",
                 "mutations": [
                     {

@@ -108,88 +108,8 @@ export class MacRentInformations extends Component {
         
         if (this.state.owner && this.state.serial && this.state.dateFromOk && this.state.dateToOk) {
 
-            var userName = localStorage.getItem("googleAccessToken")
-
-
-            this.props.saveElement(userName, this.state.id, this.state.name, this.state.code, this.state.dateFrom, this.state.dateTo, this.state.fee, this.state.serial, this.state.note, this.state.owner, this.props.history);
-        }
-
-        /*if (this.state.owner && this.state.serial && this.state.dateFromOk && this.state.dateToOk ) {
-            var modifyElement =
-                this.state.id !== 0 ? {
-                    kind: "mac-rent-information",
-                    id: this.state.id
-                } :
-                    {
-                        kind:"mac-rent-information"
-                    }    
-            ;
-    
-            fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
-                method: "POST",
-                body: JSON.stringify({
-                    "mode": "NON_TRANSACTIONAL",
-                    "mutations": [
-                        {
-                            "upsert": {
-                                "key": {
-                                    "partitionId": {
-                                        "projectId": "mac-rent-informations"
-                                    },
-                                    "path": [
-                                        modifyElement
-                                    ]
-                                },
-                                "properties": {
-
-                                    "name": {
-                                        "stringValue": this.state.name
-                                    },
-                                    "code": {
-                                        "stringValue": this.state.code
-                                    },
-                                    "dateFrom": {
-                                        "timestampValue": this.state.dateFrom
-                                    },
-                                    "dateTo": {
-                                        "timestampValue": this.state.dateTo
-                                    },
-                                    "fee": {
-                                        "integerValue": this.state.fee
-                                    },
-                                    "serial": {
-                                        "stringValue": this.state.serial === "" ? "-" : this.state.serial
-                                    },
-                                    "note": {
-                                        "stringValue": this.state.note === "" ? "-" : this.state.note
-                                    },
-                                    "owner": {
-                                        "stringValue": this.state.owner === "" ? "-" : this.state.owner
-                                    },
-                                    "lastMod": {
-                                        "stringValue": localStorage.getItem("userName")
-                                    },
-                                }
-                            }
-                        }
-                    ]
-                })
-            }).then(res => {
-
-                if (!res.ok)
-                    throw new Error("errore in fase di salvataggio");
-                else {
-                    alert("Salvataggio effettuato con successo");
-                    this.props.history.push(`/results/`);
-                }
-            }
-                ).catch((error) => {
-                    alert("salvataggio andato male male");
-                    console.error(error);
-            
-                });
-        }*/
-    
+            this.props.saveElement( this.state.id, this.state.name, this.state.code, this.state.dateFrom, this.state.dateTo, this.state.fee, this.state.serial, this.state.note, this.state.owner, this.props.history);
+        }    
         
     }
 
@@ -373,6 +293,7 @@ export class MacRentInformations extends Component {
 const mapStateToProps = (state) => {
     return {
         saveSuccess: state.elements.saveSuccess,
+        saveError: state.elements.saveError
     };
 };
 
