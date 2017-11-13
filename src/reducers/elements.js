@@ -11,6 +11,7 @@ const defaultState = {
     started: false,
     success: false,
     fetchError: false,
+    deleteError: false,
     data: []
 };
 
@@ -34,6 +35,11 @@ export default function elements(state = defaultState, { type, payload }) {
                 ...state,
                 data: state.data.filter(x => x.realId !== payload)
             }
+        case DELETE_ERROR:
+            return {
+                ...state,
+                deleteError: true,
+            }    
         default:
             return state;
     }
