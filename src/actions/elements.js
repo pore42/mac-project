@@ -17,7 +17,7 @@ export const FETCH_RENT_INFO_ERROR = 'FETCH_RENT_INFO_ERROR';
 export const DELETE_SUCCESS = 'DELETE_SUCCESS';
 export const DELETE_ERROR = 'DELETE_ERROR';
 
-
+export const SAVE_SUCCESS = 'SAVE_SUCCESS';
 
 
 export function fetchRentInfo() {
@@ -122,8 +122,97 @@ export function deleteElement(iden, token) {
             })
         }
     };
+}
+
+
+export function saveElement(userName, id, name, code, dateFrom, dateTo, fee, serial, note, owner, history) {
+
+    return dispatch => {
+        var modifyElement =
+            id !== 0 ? {
+                kind: "mac-rent-information",
+                id: id
+            } :
+                {
+                    kind: "mac-rent-information"
+                }
+            ;
+
+        fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
+            method: "POST",
+            body: JSON.stringify({
+                "mode": "NON_TRANSACTIONAL",
+                "mutations": [
+                    {
+                        "upsert": {
+                            "key": {
+                                "partitionId": {
+                                    "projectId": "mac-rent-informations"
+                                },
+                                "path": [
+                                    modifyElement
+                                ]
+                            },
+                            "properties": {
+
+                                "name": {
+                                    "stringValue": name
+                                },
+                                "code": {
+                                    "stringValue": code
+                                },
+                                "dateFrom": {
+                                    "timestampValue": dateFrom
+                                },
+                                "dateTo": {
+                                    "timestampValue": dateTo
+                                },
+                                "fee": {
+                                    "integerValue": fee
+                                },
+                                "serial": {
+                                    "stringValue": serial === "" ? "-" : serial
+                                },
+                                "note": {
+                                    "stringValue": note === "" ? "-" : note
+                                },
+                                "owner": {
+                                    "stringValue": owner === "" ? "-" : owner
+                                },
+                                "lastMod": {
+                                    "stringValue": localStorage.getItem("userName")
+                                },
+                            }
+                        }
+                    }
+                ]
+            })
+        }).then(res => {
 
 
 
+            dispatch({
+                type: SAVE_SUCCESS,
+            });
+
+            /* if (!res.ok)
+                 throw new Error("errore in fase di salvataggio");
+             else {
+                 alert("Salvataggio effettuato con successo");
+                }*/
+                history.push(`/results/`);
+        }
+            ).catch((error) => {
+                alert("salvataggio andato male male");
+                console.error(error);
+
+            });
+    
+        /*return dispatch =>{
+            dispatch({
+                type: SAVE_SUCCESS,
+            });
+        }*/
+    }    
 }
 

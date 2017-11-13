@@ -3,6 +3,10 @@ import {FormGroup, FormControl, InputGroup, Grid, Col, Row, Popover, Image, Over
 import moment from "moment";
 import PropTypes from "prop-types";
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { saveElement } from "../../actions/elements";
+
 
 import image from "../../assets/images/image.png";
 
@@ -11,7 +15,7 @@ import DatePicker from "antd/lib/date-picker";
 import message from "antd/lib/message";
 
 
-export default class MacRentInformations extends Component {
+export class MacRentInformations extends Component {
 
     constructor(props) {
         super(props);
@@ -32,7 +36,7 @@ export default class MacRentInformations extends Component {
         };
     }
 
-    static PropTypes = {
+    static propTypes = {
         match: PropTypes.object,
     }
 
@@ -98,7 +102,19 @@ export default class MacRentInformations extends Component {
     handleSaveButton(isSaveButtonClicked, userName){
         this.setState({isSaveButtonClicked: true});
     
-        if (this.state.owner && this.state.serial && this.state.dateFromOk && this.state.dateToOk ) {
+        console.log("qui funzione", this.props.saveElement);
+        console.log("salvato con successo", this.props.saveSuccess);
+
+        
+        if (this.state.owner && this.state.serial && this.state.dateFromOk && this.state.dateToOk) {
+
+            var userName = localStorage.getItem("googleAccessToken")
+
+
+            this.props.saveElement(userName, this.state.id, this.state.name, this.state.code, this.state.dateFrom, this.state.dateTo, this.state.fee, this.state.serial, this.state.note, this.state.owner, this.props.history);
+        }
+
+        /*if (this.state.owner && this.state.serial && this.state.dateFromOk && this.state.dateToOk ) {
             var modifyElement =
                 this.state.id !== 0 ? {
                     kind: "mac-rent-information",
@@ -172,7 +188,7 @@ export default class MacRentInformations extends Component {
                     console.error(error);
             
                 });
-        }
+        }*/
     
         
     }
@@ -352,3 +368,21 @@ export default class MacRentInformations extends Component {
     }
 
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        saveSuccess: state.elements.saveSuccess,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        saveElement: bindActionCreators(saveElement, dispatch),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MacRentInformations);
+
+
+
