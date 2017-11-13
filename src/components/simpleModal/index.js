@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal , Button} from "react-bootstrap";
 import { PropTypes } from "prop-types";
 
-default export class simpleModal extends Component {
-    constructor(props) {
-    }
+export default class SimpleModal extends Component {
 
     static propTypes = {
         show: PropTypes.bool.isRequired,
@@ -15,11 +13,11 @@ default export class simpleModal extends Component {
     render() {
         return (<Modal show={this.props.show} onHide={() => this.props.close()}>
             <Modal.Header>
-                <Modal.Title>this.props.title</Modal.Title>
+                <Modal.Title>{this.props.title}</Modal.Title>
             </Modal.Header>
 
             <Modal.Footer>
-                <Button onClick={() => this.closeDeleteErrorModal()}>Close</Button>
+                <Button onClick={() => this.props.close()}>Close</Button>
             </Modal.Footer>
 
         </Modal>)

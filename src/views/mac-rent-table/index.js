@@ -15,6 +15,7 @@ import { fetchRentInfo } from "../../actions/elements";
 import { deleteElement } from "../../actions/elements";
 
 import MacRentInfoRow from "../../components/mac-rent-info-row";
+import SimpleModal from "../../components/simpleModal";
 
 import Button from "antd/lib/button";
 import _ from "lodash";
@@ -139,31 +140,19 @@ class MacRentTable extends Component {
 
 
 
-    renderFetchErrorModal(){
-        return (<Modal show={this.state.showFetchErrorModal} onHide={() =>this.closeFetchErrorModal()}>
-            <Modal.Header>
-                <Modal.Title>Recupero dei dati fallito</Modal.Title>
-            </Modal.Header>
+    renderFetchErrorModal() {
+        
+        return (<SimpleModal show={this.state.showFetchErrorModal} close={this.closeFetchErrorModal.bind(this)} title="Recupero dati fallito"/>);
 
-            <Modal.Footer>
-                <Button onClick={() => this.closeFetchErrorModal()}>Close</Button>
-            </Modal.Footer>
 
-    </Modal>)
     }
 
 
     renderDeleteErrorModal() {
-        return (<Modal show={this.state.showDeleteErrorModal} onHide={() => this.closeDeleteErrorModal()}>
-            <Modal.Header>
-                <Modal.Title>Cancellazione elemento non possibile</Modal.Title>
-            </Modal.Header>
 
-            <Modal.Footer>
-                <Button onClick={() => this.closeDeleteErrorModal()}>Close</Button>
-            </Modal.Footer>
 
-        </Modal>)
+        return (<SimpleModal show={this.state.showDeleteErrorModal} close={this.closeDeleteErrorModal.bind(this)} title="Cancellazione elemento fallito" />);
+        
     }
 
     render() {
