@@ -127,20 +127,19 @@ export function deleteElement(iden, token) {
 
 export function saveElement(userName, id, name, code, dateFrom, dateTo, fee, serial, note, owner, history) {
 
-    return dispatch => {
-        var modifyElement =
-            id !== 0 ? {
-                kind: "mac-rent-information",
-                id: id
-            } :
-                {
-                    kind: "mac-rent-information"
-                }
-            ;
+    return async dispatch => {
+        try {
+            var modifyElement =
+                id !== 0 ? {
+                    kind: "mac-rent-information",
+                    id: id
+                } :
+                    {
+                        kind: "mac-rent-information"
+                    }
+                ;
 
-        fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
-            method: "POST",
-            body: JSON.stringify({
+            const result = await post(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:commit?access_token=${localStorage.getItem("googleAccessToken")}`, {
                 "mode": "NON_TRANSACTIONAL",
                 "mutations": [
                     {
@@ -186,33 +185,23 @@ export function saveElement(userName, id, name, code, dateFrom, dateTo, fee, ser
                         }
                     }
                 ]
-            })
-        }).then(res => {
-
-
-
-            dispatch({
-                type: SAVE_SUCCESS,
             });
 
-            /* if (!res.ok)
-                 throw new Error("errore in fase di salvataggio");
-             else {
-                 alert("Salvataggio effettuato con successo");
-                }*/
-                history.push(`/results/`);
+
+            if (result !== undefined) {
+                dispatch({
+                    type: SAVE_SUCCESS,
+                });
+            }
+
+            history.push(`/results/`);
+
+        } catch (error) {
+            dispatch({
+                type: SAVE_ERROR,
+                payload: error
+            });
         }
-            ).catch((error) => {
-                alert("salvataggio andato male male");
-                console.error(error);
-
-            });
-    
-        /*return dispatch =>{
-            dispatch({
-                type: SAVE_SUCCESS,
-            });
-        }*/
     }    
 }
 
