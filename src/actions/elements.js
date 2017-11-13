@@ -1,4 +1,6 @@
 
+import { post } from "axios";
+
 import { REACT_APP_RENT_INFO } from '../config';
 import moment from "moment";
 
@@ -33,20 +35,21 @@ export function fetchRentInfo() {
                 }
             })
         }).then(result => {
+            console.log("pare ok?", result.ok)
             return result.json()
-            }).then(data => { 
-                
-                console.log(data);
+        }).then(data => {
 
-                var elements = data.batch.entityResults.length > 0 ? deserializedMacRentInformation(data.batch.entityResults): [];
+            console.log("ho recuperato questo ", data);
+
+            var elements = data.batch.entityResults !== undefined ? deserializedMacRentInformation(data.batch.entityResults) : [];
 
 
-                //pulito passare i dati
-                dispatch({
-                    type: FETCH_RENT_INFO_SUCCESS,
-                    payload: elements
-                });
-            }).catch((err) => {
+            //pulito passare i dati
+            dispatch({
+                type: FETCH_RENT_INFO_SUCCESS,
+                payload: elements
+            });
+        }).catch((err) => {
             dispatch({
                 type: FETCH_RENT_INFO_ERROR,
                 payload: err
@@ -57,98 +60,136 @@ export function fetchRentInfo() {
 
 
 
-  function  deserializedMacRentInformation(rowElements) {
+function deserializedMacRentInformation(rowElements) {
 
 
-        const elements = rowElements.map((el, i) =>
-            ({
-                id: i,
-                realId: Number(el.entity.key.path[0].id),
-                name: el.entity.properties.name.stringValue,
-                code: el.entity.properties.code.stringValue,
-                dateFrom: moment(el.entity.properties.dateFrom.timestampValue),
-                dateTo: moment(el.entity.properties.dateTo.timestampValue),
-                serial: el.entity.properties.serial.stringValue,
-                owner: el.entity.properties.owner.stringValue,
-                fee: el.entity.properties.fee.integerValue,
-                lastMod: el.entity.properties.lastMod.stringValue,
-                note: el.entity.properties.note.stringValue,
-            }));
+    const elements = rowElements.map((el, i) =>
+        ({
+            id: i,
+            realId: Number(el.entity.key.path[0].id),
+            name: el.entity.properties.name.stringValue,
+            code: el.entity.properties.code.stringValue,
+            dateFrom: moment(el.entity.properties.dateFrom.timestampValue),
+            dateTo: moment(el.entity.properties.dateTo.timestampValue),
+            serial: el.entity.properties.serial.stringValue,
+            owner: el.entity.properties.owner.stringValue,
+            fee: el.entity.properties.fee.integerValue,
+            lastMod: el.entity.properties.lastMod.stringValue,
+            note: el.entity.properties.note.stringValue,
+        }));
 
-        return elements;
+    return elements;
 
-  }
-    
-
-
-
-
-  export function deleteElement(iden) {
-      return dispatch => {
-
-          fetch(REACT_APP_RENT_DELETE_TOKEN + `${localStorage.getItem("googleAccessToken")}`, {
-              method: "POST",
-              body: JSON.stringify(
-                  {
-                      "transactionOptions": {
-                          "readWrite": {}
-                      }
-                  })
-          }).then((res) => {
-              return res.json();
-          }).then(data => {
-              console.log("iniziata transazione numero:", data.transaction, " correttamente");
-
-              fetch(REACT_APP_RENT_DELETE + `${localStorage.getItem("googleAccessToken")}`, {
-                  method: "POST",
-                  body: JSON.stringify(
-                      {
-                          "mode": "MODE_UNSPECIFIED",
-                          "mutations": [
-                              {
-                                  "delete": {
-                                      "path": [
-                                          {
-                                              "kind": "mac-rent-information",
-                                              "id": iden,
-                                          }
-                                      ]
-                                  }
-                              }
-                          ],
-                          "transaction": data.transaction
-                      })
-              }).then((res) => {
-                  if (res.ok) {
-                      return res.json()
-                  }
-                  else {
-                      throw new Error("fallita cancellazione");
-                  }    
-              }).then(data => {
-
-                  dispatch({
-                      type: DELETE_SUCCESS,
-                      payload: iden
-                  });
-
-              }).catch((err) => {
-                  dispatch({
-                      type: DELETE_ERROR,
-                      payload: err
-                  });
-              });
-
-              }).catch((err) => {
-                  dispatch({
-                      type: DELETE_ERROR,
-                      payload: err
-                  });
-          });
-
-      };
+}
 
 
 
-  }
- 
+
+
+export function deleteElement(iden, token) {
+    return async dispatch => {
+
+        try {
+            const result = await post(REACT_APP_RENT_DELETE_TOKEN + `${localStorage.getItem("googleAccessToken")}`, {
+                "transactionOptions": {
+                    "readWrite": {}
+                }
+            });
+
+            await post(REACT_APP_RENT_DELETE + `${localStorage.getItem("googleAccessToken")}`, {
+                "mode": "MODE_UNSPECIFIED",
+                "mutations": [
+                    {
+                        "delete": {
+                            "path": [
+                                {
+                                    "kind": "mac-rent-information",
+                                    "id": iden,
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "transaction": result.data.transaction
+            });
+
+            dispatch({
+                type: DELETE_SUCCESS,
+                payload: iden
+            });
+
+        } catch (error) {
+            dispatch({
+                type: DELETE_ERROR,
+                payload: error
+            })
+        }
+
+
+
+
+        // fetch(REACT_APP_RENT_DELETE_TOKEN + `${localStorage.getItem("googleAccessToken")}`, {
+        //     method: "POST",
+        //     body: JSON.stringify(
+        //         {
+        //             "transactionOptions": {
+        //                 "readWrite": {}
+        //             }
+        //         })
+        // }).then((res) => {
+        //     return res.json();
+        // }).then(data => {
+        //     console.log("iniziata transazione numero:", data.transaction, " correttamente");
+
+        //     fetch(REACT_APP_RENT_DELETE + `${localStorage.getItem("googleAccessToken")}`, {
+        //         method: "POST",
+        //         body: JSON.stringify(
+        //             {
+        //                 "mode": "MODE_UNSPECIFIED",
+        //                 "mutations": [
+        //                     {
+        //                         "delete": {
+        //                             "path": [
+        //                                 {
+        //                                     "kind": "mac-rent-information",
+        //                                     "id": iden,
+        //                                 }
+        //                             ]
+        //                         }
+        //                     }
+        //                 ],
+        //                 "transaction": data.transaction
+        //             })
+        //     }).then((res) => {
+        //         if (res.ok) {
+        //             return res.json()
+        //         }
+        //         else {
+        //             throw new Error("fallita cancellazione");
+        //         }
+        //     }).then(data => {
+        //         dispatch({
+        //             type: DELETE_SUCCESS,
+        //             payload: iden
+        //         });
+
+        //     }).catch((err) => {
+        //         dispatch({
+        //             type: DELETE_ERROR,
+        //             payload: err
+        //         });
+        //     });
+
+        // }).catch((err) => {
+        //     dispatch({
+        //         type: DELETE_ERROR,
+        //         payload: err
+        //     });
+        // });
+
+    };
+
+
+
+}
+
