@@ -18,7 +18,6 @@ const defaultState = {
     deleteError: false,
     saveSuccess: false,
     saveError: false,
-    fetchRowSuccess: false,
     fetchRowError: false,
     fetchedElement: {},
     data: []
@@ -62,7 +61,7 @@ export default function elements(state = defaultState, { type, payload }) {
         case FETCH_ROW_SUCCESS:
             return {
                 ...state,
-                fetchRowSuccess: true,
+                fetchRowError: false,
                 fetchedElement: payload
             }
         case FETCH_ROW_ERROR:

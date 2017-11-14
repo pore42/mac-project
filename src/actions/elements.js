@@ -8,6 +8,7 @@ import moment from "moment";
 import { REACT_APP_RENT_DELETE_TOKEN } from '../config';
 import { REACT_APP_RENT_DELETE } from '../config';
 import { REACT_APP_RENT_SAVE } from '../config';
+import { REACT_APP_FETCH_ELEMENT } from '../config';
 
 
 
@@ -213,36 +214,25 @@ export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note,
 
 export function fetchRow(id) { 
     
-    return dispatch => {
-        console.log("questo è l'id", id);
+    return async dispatch => {
+        try {
+            console.log("questo è l'id", id);
 
-
-        if (id > 0) {
-            fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:lookup?access_token=${localStorage.getItem("googleAccessToken")}`, {
-                method: "POST",
-                body: JSON.stringify(
-                    {
-                        "keys": [
-                            {
-                                "path": [
-                                    {
-                                        "id": id !== 0 ? id : 0,
-                                        "kind": "mac-rent-information"
-                                    }
-                                ]
-                            }
-                        ]
-                    })
-            }).then((res) => {
-                if (!res.ok) {
-                    throw new Error("errore in fase di salvataggio");
-                }
-
-                return res.json();
-            }).then(data => {
-
-                //setstatus from response
-                var r = data.found[0].entity.properties;
+                const result = await post(REACT_APP_FETCH_ELEMENT + `${localStorage.getItem("googleAccessToken")}`, {
+                    "keys": [
+                        {
+                            "path": [
+                                {
+                                    "id": id !== 0 ? id : 0,
+                                    "kind": "mac-rent-information"
+                                }
+                            ]
+                        }
+                    ]
+                });
+                console.log(result.data);
+                
+                var r = result.data.found[0].entity.properties;
 
                 dispatch({
                     type: FETCH_ROW_SUCCESS,
@@ -259,32 +249,23 @@ export function fetchRow(id) {
                     }
                 });
 
+        } catch (error) { 
+            dispatch({
+                type: FETCH_ROW_ERROR,
+                payload: {
+                    id: 0,
+                    name: "",
+                    code: "",
+                    dateFrom: moment(),
+                    dateTo: moment(),
+                    fee: "",
+                    serial: "",
+                    note: "",
+                    owner: "",
+                }
 
-
-            }).catch((error) => {
-                dispatch({
-                    type: FETCH_ROW_ERROR,
-                    payload: {
-                        id: 0,
-                        name: "",
-                        code: "",
-                        dateFrom: moment(),
-                        dateTo: moment(),
-                        fee: "",
-                        serial: "",
-                        note: "",
-                        owner: "",
-                    }
-                    
-                });
-                console.error(error);
             });
-
-
-
-        
         }
-
     }
 }
 

@@ -23,8 +23,6 @@ export class MacRentInformations extends Component {
 
     constructor(props) {
         super(props);
-        var fetchedElement = props.fetchedElement;
-
 
         this.state = {
             note: "",
@@ -38,6 +36,7 @@ export class MacRentInformations extends Component {
             fee: 0,
             showSaveSuccessModal: false,
             showSaveErrorModal: false, 
+            showFetchErrorModal: false, 
             isSaveButtonClicked: false,
             dateFromOk: true,
             dateToOk: true,
@@ -51,6 +50,7 @@ export class MacRentInformations extends Component {
         match: PropTypes.object,
         saveSuccess: PropTypes.bool,
         saveError: PropTypes.bool,
+        fetchRowError: PropTypes.bool,
         fetchedElement: PropTypes.object,
     }
 
@@ -60,7 +60,7 @@ export class MacRentInformations extends Component {
         
         
          var id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-                 if (fetchRow) { 
+                 if (fetchRow && id > 0) { 
                      fetchRow(id);
                  }
                 
@@ -98,6 +98,14 @@ export class MacRentInformations extends Component {
                 fee: nextProps.fetchedElement.fee,});
         }
 
+        console.log(this.state.showFetchErrorModal);
+        if (nextProps.fetchRowError) {
+            this.setState({
+                showFetchErrorModal: true
+            });
+        }
+
+        
 
     }
 
@@ -143,7 +151,12 @@ export class MacRentInformations extends Component {
 
     closeSaveErrorModal() {
         this.setState({ showSaveErrorModal: false });
-     }
+    }
+    
+    closeFetchErrorModal() {
+        this.setState({ showFetchErrorModal: false });
+        this.props.history.push(`/results/`);
+    }
 
     renderSaveSuccessModal() { 
         return (<SimpleModal show={this.state.showSaveSuccessModal} close={this.closeSaveSuccessModal.bind(this)} title="Salvataggio elemento avvenuto con successo" />);
@@ -153,11 +166,16 @@ export class MacRentInformations extends Component {
         return (<SimpleModal show={this.state.showSaveErrorModal} close={this.closeSaveErrorModal.bind(this)} title="Salvataggio elemento fallito" />);
     }
 
+    renderFetchErrorModal() {
+        return (<SimpleModal show={this.state.showFetchErrorModal} close={this.closeFetchErrorModal.bind(this)} title="Recupero dati da modificare è fallito" />);
+    }
+
     render () {
         return (
             <form id="formRentInformation">
                 {this.renderSaveSuccessModal()}
                 {this.renderSaveErrorModal()}
+                {this.renderFetchErrorModal()}
                 <Grid>
                     <Row><Col xs={12} md={12}><center><h2>{this.state.title}</h2></center></Col></Row>
                     <Row>
@@ -321,6 +339,7 @@ const mapStateToProps = (state) => {
     return {
         saveSuccess: state.elements.saveSuccess,
         saveError: state.elements.saveError,
+        fetchRowError: state.elements.fetchRowError,
         fetchedElement: state.elements.fetchedElement,
     };
 };
