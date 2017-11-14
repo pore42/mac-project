@@ -9,6 +9,7 @@ import SimpleModal from "../../components/simpleModal"
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { saveElement } from "../../actions/elements";
+import { fetchRow } from "../../actions/elements";
 
 
 import image from "../../assets/images/image.png";
@@ -22,6 +23,9 @@ export class MacRentInformations extends Component {
 
     constructor(props) {
         super(props);
+        var fetchedElement = props.fetchedElement;
+
+
         this.state = {
             note: "",
             id: 0,
@@ -35,8 +39,10 @@ export class MacRentInformations extends Component {
             showSaveSuccessModal: false,
             showSaveErrorModal: false, 
             isSaveButtonClicked: false,
+            dateFromOk: true,
+            dateToOk: true,
             userName: localStorage.getItem("userName"),
-            title: "Inserire nuovi dati di affitto MacBook",
+            title: "",
             macRentInformations: [],
         };
     }
@@ -44,60 +50,23 @@ export class MacRentInformations extends Component {
     static propTypes = {
         match: PropTypes.object,
         saveSuccess: PropTypes.bool,
-        saveError: PropTypes.bool
+        saveError: PropTypes.bool,
+        fetchedElement: PropTypes.object,
     }
 
     componentDidMount() {
         
-        var id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-        //lookup serve proprio a richiedere entità per chiave(id qui)
-        if (id > 0) {
-            fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:lookup?access_token=${localStorage.getItem("googleAccessToken")}`, {
-                method: "POST",
-                body: JSON.stringify(
-                    {
-                        "keys": [
-                            {
-                                "path": [
-                                    {
-                                        "id": id !== 0 ? id : 0,
-                                        "kind": "mac-rent-information"
-                                    }
-                                ]
-                            }
-                        ]
-                    })
-            }).then((res) => {
-                if (!res.ok) {
-                    throw new Error("errore in fase di salvataggio");
-                }
+        const { fetchRow } = this.props;
+        
+        
+         var id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+                 if (fetchRow) { 
+                     fetchRow(id);
+                 }
                 
-                return res.json();
-            }).then(data => {
-                                  
-                    //setstatus from response
-                    var r = data.found[0].entity.properties;
-                    this.setState({
-                        id: id,
-                        name: (r.name) ? r.name.stringValue : "",
-                        code: (r.code) ? r.code.stringValue : "",
-                        dateFrom: (r.dateFrom) ? moment(r.dateFrom.timestampValue) : moment(),
-                        dateTo: (r.dateTo) ? moment(r.dateTo.timestampValue) : moment(),
-                        fee: (r.fee) ? r.fee.integerValue : "",
-                        serial: (r.serial) ? r.serial.stringValue : "",
-                        note: (r.note) ? r.note.stringValue : "",
-                        owner: (r.owner) ? r.owner.stringValue : "",
-                        dateFromOk: true,
-                        dateToOk: true,
-                        title: (r.name && r.serial) ? "Modifica i dati di affitto id un mac" : this.state.newRow
-                    });
-
-                }).catch((error) => {
-                    alert("recupero informazioni id: ", id);
-                    console.error(error);
-
-                });
-        }
+        this.setState({
+            title: (id > 0) ? "Modifica i dati di affitto id un mac" : "Inserire nuovi dati di affitto MacBook",
+        });
         
     }
 
@@ -114,6 +83,19 @@ export class MacRentInformations extends Component {
             this.setState({
                 showSaveSuccessModal: true
             });
+        }
+
+        if (this.props.fetchedElement !== nextProps.fetchedElement) {
+            this.setState({
+                owner: nextProps.fetchedElement.owner,
+                note: nextProps.fetchedElement.note,
+                id: nextProps.fetchedElement.id,
+                dateFrom: nextProps.fetchedElement.dateFrom,
+                dateTo: nextProps.fetchedElement.dateTo,
+                name: nextProps.fetchedElement.name,
+                code: nextProps.fetchedElement.code,
+                serial: nextProps.fetchedElement.serial,
+                fee: nextProps.fetchedElement.fee,});
         }
 
 
@@ -338,13 +320,15 @@ export class MacRentInformations extends Component {
 const mapStateToProps = (state) => {
     return {
         saveSuccess: state.elements.saveSuccess,
-        saveError: state.elements.saveError
+        saveError: state.elements.saveError,
+        fetchedElement: state.elements.fetchedElement,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         saveElement: bindActionCreators(saveElement, dispatch),
+        fetchRow: bindActionCreators(fetchRow, dispatch),
     };
 };
 

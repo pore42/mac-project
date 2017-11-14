@@ -4,7 +4,9 @@ import {
     DELETE_SUCCESS,
     DELETE_ERROR,
     SAVE_SUCCESS,
-    SAVE_ERROR
+    SAVE_ERROR,
+    FETCH_ROW_SUCCESS,
+    FETCH_ROW_ERROR
 } from '../actions/elements';
 
 
@@ -16,6 +18,9 @@ const defaultState = {
     deleteError: false,
     saveSuccess: false,
     saveError: false,
+    fetchRowSuccess: false,
+    fetchRowError: false,
+    fetchedElement: {},
     data: []
 };
 
@@ -53,6 +58,18 @@ export default function elements(state = defaultState, { type, payload }) {
             return {
                 ...state,
                 saveError: true
+            }
+        case FETCH_ROW_SUCCESS:
+            return {
+                ...state,
+                fetchRowSuccess: true,
+                fetchedElement: payload
+            }
+        case FETCH_ROW_ERROR:
+            return {
+                ...state,
+                fetchRowError: true,
+                fetchedElement: payload
             }    
         default:
             return state;

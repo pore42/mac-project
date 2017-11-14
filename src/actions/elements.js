@@ -22,6 +22,10 @@ export const SAVE_SUCCESS = 'SAVE_SUCCESS';
 export const SAVE_ERROR = 'SAVE_ERROR';
 
 
+export const FETCH_ROW_SUCCESS = 'FETCH_ROW_SUCCESS';
+export const FETCH_ROW_ERROR = 'FETCH_ROW_ERROR';
+
+
 export function fetchRentInfo() {
 
        return async dispatch => {
@@ -189,7 +193,6 @@ export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note,
                 ]
             });
 
-
             if (result !== undefined) {
                 dispatch({
                     type: SAVE_SUCCESS,
@@ -204,5 +207,84 @@ export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note,
             });
         }
     }    
+}
+
+
+
+export function fetchRow(id) { 
+    
+    return dispatch => {
+        console.log("questo è l'id", id);
+
+
+        if (id > 0) {
+            fetch(`https://datastore.googleapis.com/v1/projects/mac-rent-informations:lookup?access_token=${localStorage.getItem("googleAccessToken")}`, {
+                method: "POST",
+                body: JSON.stringify(
+                    {
+                        "keys": [
+                            {
+                                "path": [
+                                    {
+                                        "id": id !== 0 ? id : 0,
+                                        "kind": "mac-rent-information"
+                                    }
+                                ]
+                            }
+                        ]
+                    })
+            }).then((res) => {
+                if (!res.ok) {
+                    throw new Error("errore in fase di salvataggio");
+                }
+
+                return res.json();
+            }).then(data => {
+
+                //setstatus from response
+                var r = data.found[0].entity.properties;
+
+                dispatch({
+                    type: FETCH_ROW_SUCCESS,
+                    payload: {
+                        id: id,
+                        name: (r.name) ? r.name.stringValue : "",
+                        code: (r.code) ? r.code.stringValue : "",
+                        dateFrom: (r.dateFrom) ? moment(r.dateFrom.timestampValue) : moment(),
+                        dateTo: (r.dateTo) ? moment(r.dateTo.timestampValue) : moment(),
+                        fee: (r.fee) ? r.fee.integerValue : "",
+                        serial: (r.serial) ? r.serial.stringValue : "",
+                        note: (r.note) ? r.note.stringValue : "",
+                        owner: (r.owner) ? r.owner.stringValue : "",
+                    }
+                });
+
+
+
+            }).catch((error) => {
+                dispatch({
+                    type: FETCH_ROW_ERROR,
+                    payload: {
+                        id: 0,
+                        name: "",
+                        code: "",
+                        dateFrom: moment(),
+                        dateTo: moment(),
+                        fee: "",
+                        serial: "",
+                        note: "",
+                        owner: "",
+                    }
+                    
+                });
+                console.error(error);
+            });
+
+
+
+        
+        }
+
+    }
 }
 
