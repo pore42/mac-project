@@ -92,6 +92,10 @@ class MacRentTable extends Component {
             deleteElement(iden);
         }
 
+        if (this.props.deleteError) {
+            this.setState({ showDeleteErrorModal: true });
+        }
+
     }
 
 

@@ -54,6 +54,7 @@ export class MacRentInformations extends Component {
         fetchedElement: PropTypes.object,
     }
 
+
     componentDidMount() {
         
         const { fetchRow } = this.props;
@@ -77,7 +78,10 @@ export class MacRentInformations extends Component {
             this.setState({
                 showSaveErrorModal: true
             });
-        }
+        } else {
+            this.setState({
+                showSaveErrorModal: false
+            });}
 
         if (this.props.saveSuccess !== nextProps.saveSuccess) {
             this.setState({
@@ -103,6 +107,10 @@ export class MacRentInformations extends Component {
             this.setState({
                 showFetchErrorModal: true
             });
+        } else {
+            this.setState({
+                showFetchErrorModal: false
+            });
         }
 
         
@@ -120,11 +128,15 @@ export class MacRentInformations extends Component {
         console.log("qui funzione", this.props.saveElement);
         console.log("salvato con successo", this.props.saveSuccess);
 
+        if (this.props.saveSuccess) {
+            this.setState({ showSaveSuccessModal: true });
+        }
         
         if (this.state.owner && this.state.serial && this.state.dateFromOk && this.state.dateToOk) {
 
             this.props.saveElement( this.state.id, this.state.name, this.state.code, this.state.dateFrom, this.state.dateTo, this.state.fee, this.state.serial, this.state.note, this.state.owner);
-        }    
+        }
+
         
     }
 

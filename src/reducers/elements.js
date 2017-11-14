@@ -51,12 +51,14 @@ export default function elements(state = defaultState, { type, payload }) {
         case SAVE_SUCCESS:
             return {
                 ...state,
-                saveSuccess: true
+                saveSuccess: true,
+                saveError: false,
             }
         case SAVE_ERROR:
             return {
                 ...state,
-                saveError: true
+                saveError: true,
+                saveSuccess: false,
             }
         case FETCH_ROW_SUCCESS:
             return {
