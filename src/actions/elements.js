@@ -127,7 +127,7 @@ export function deleteElement(iden, token) {
 }
 
 
-export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note, owner, history) {
+export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note, owner) {
 
     return async dispatch => {
         try {
@@ -196,8 +196,7 @@ export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note,
                 });
             }
 
-            history.push(`/results/`);
-
+            
         } catch (error) {
             dispatch({
                 type: SAVE_ERROR,

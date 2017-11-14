@@ -3,6 +3,9 @@ import {FormGroup, FormControl, InputGroup, Grid, Col, Row, Popover, Image, Over
 import moment from "moment";
 import PropTypes from "prop-types";
 
+import SimpleModal from "../../components/simpleModal"
+
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { saveElement } from "../../actions/elements";
@@ -29,6 +32,8 @@ export class MacRentInformations extends Component {
             serial: "",
             owner: "",
             fee: 0,
+            showSaveSuccessModal: false,
+            showSaveErrorModal: false, 
             isSaveButtonClicked: false,
             userName: localStorage.getItem("userName"),
             title: "Inserire nuovi dati di affitto MacBook",
@@ -38,6 +43,8 @@ export class MacRentInformations extends Component {
 
     static propTypes = {
         match: PropTypes.object,
+        saveSuccess: PropTypes.bool,
+        saveError: PropTypes.bool
     }
 
     componentDidMount() {
@@ -94,6 +101,24 @@ export class MacRentInformations extends Component {
         
     }
 
+
+    componentWillReceiveProps(nextProps) {
+
+        if (this.props.saveError !== nextProps.saveError) {
+            this.setState({
+                showSaveErrorModal: true
+            });
+        }
+
+        if (this.props.saveSuccess !== nextProps.saveSuccess) {
+            this.setState({
+                showSaveSuccessModal: true
+            });
+        }
+
+
+    }
+
     handleChange(date){
         message.info("Selected Date: " + date.toString());
         this.setState({ date });
@@ -108,7 +133,7 @@ export class MacRentInformations extends Component {
         
         if (this.state.owner && this.state.serial && this.state.dateFromOk && this.state.dateToOk) {
 
-            this.props.saveElement( this.state.id, this.state.name, this.state.code, this.state.dateFrom, this.state.dateTo, this.state.fee, this.state.serial, this.state.note, this.state.owner, this.props.history);
+            this.props.saveElement( this.state.id, this.state.name, this.state.code, this.state.dateFrom, this.state.dateTo, this.state.fee, this.state.serial, this.state.note, this.state.owner);
         }    
         
     }
@@ -128,9 +153,29 @@ export class MacRentInformations extends Component {
             });
     }
 
+
+    closeSaveSuccessModal() { 
+        this.setState({ showSaveSuccessModal: false });
+        this.props.history.push(`/results/`);
+    }
+
+    closeSaveErrorModal() {
+        this.setState({ showSaveErrorModal: false });
+     }
+
+    renderSaveSuccessModal() { 
+        return (<SimpleModal show={this.state.showSaveSuccessModal} close={this.closeSaveSuccessModal.bind(this)} title="Salvataggio elemento avvenuto con successo" />);
+    }
+
+    renderSaveErrorModal() { 
+        return (<SimpleModal show={this.state.showSaveErrorModal} close={this.closeSaveErrorModal.bind(this)} title="Salvataggio elemento fallito" />);
+    }
+
     render () {
         return (
             <form id="formRentInformation">
+                {this.renderSaveSuccessModal()}
+                {this.renderSaveErrorModal()}
                 <Grid>
                     <Row><Col xs={12} md={12}><center><h2>{this.state.title}</h2></center></Col></Row>
                     <Row>
