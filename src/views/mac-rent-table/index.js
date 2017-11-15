@@ -36,6 +36,7 @@ class MacRentTable extends Component {
             showCheckColumns: false,
             showFetchErrorModal: false,
             showDeleteErrorModal: false,
+            showHistory: false,
             macRentInformations: [],
             filterTerm: "",
             userName: "",
@@ -141,6 +142,10 @@ class MacRentTable extends Component {
         this.setState({ showDeleteErrorModal: false });
     }
 
+    showHistory() { 
+        this.setState({ showHistory: !this.state.showHistory });
+    }
+
 
 
 
@@ -238,8 +243,9 @@ class MacRentTable extends Component {
                                     {"Ultima modifica"}
                                 </Checkbox>
                             </FormGroup>
-                        </Col>
-                    </Row>
+                    </Col>
+                    <Row><Col lg={12} xs={12} style={{ marginTop: 20 }}><center><Button style={{ background: this.state.showHistory ? "lightgreen": "yellow" }} value={this.state.showHistory} onClick={() => this.showHistory()}>{this.state.showHistory ? "VERO" : "FALSE"}</Button></center></Col></Row>
+                </Row>
                 <Row>
                     <Col sm={12} xs={12} style={{ marginLeft: 10, margin: 5 }}>
                         <Table id="resTable" style={{ fontSize: 13 }} striped bordered responsive>
