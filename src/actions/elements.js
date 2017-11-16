@@ -66,6 +66,8 @@ export function fetchRentInfo() {
 
 function deserializedMacRentInformation(rowElements) {
 
+   rowElements.forEach(el => console.log(el.entity.properties.deleted.booleanValue) );
+
 
     const elements = rowElements.map((el, i) =>
         ({
@@ -80,6 +82,7 @@ function deserializedMacRentInformation(rowElements) {
             fee: el.entity.properties.fee.integerValue,
             lastMod: el.entity.properties.lastMod.stringValue,
             note: el.entity.properties.note.stringValue,
+            deleted: el.entity.properties.deleted.booleanValue,
         }));
 
     return elements;
@@ -132,7 +135,7 @@ export function deleteElement(iden, token) {
 }
 
 
-export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note, owner) {
+export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note, owner, deleted) {
 
     return async dispatch => {
         try {
@@ -145,6 +148,11 @@ export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note,
                         kind: "mac-rent-information"
                     }
                 ;
+            
+            deleted = id !== 0 ? deleted : true;
+
+
+            console.log("salvo con questo deleted", deleted);
 
             const result = await post(REACT_APP_RENT_SAVE + `${localStorage.getItem("googleAccessToken")}`, {
                 "mode": "NON_TRANSACTIONAL",
@@ -188,6 +196,9 @@ export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note,
                                 "lastMod": {
                                     "stringValue": localStorage.getItem("userName")
                                 },
+                                "deleted": {
+                                    "booleanValue": deleted
+                                }
                             }
                         }
                     }
@@ -246,6 +257,7 @@ export function fetchRow(id) {
                         serial: (r.serial) ? r.serial.stringValue : "",
                         note: (r.note) ? r.note.stringValue : "",
                         owner: (r.owner) ? r.owner.stringValue : "",
+                        deleted: (r.deleted !== undefined) ? r.deleted.booleanValue : undefined,
                     }
                 });
 
@@ -262,6 +274,7 @@ export function fetchRow(id) {
                     serial: "",
                     note: "",
                     owner: "",
+                    deleted: "undefined",
                 }
 
             });

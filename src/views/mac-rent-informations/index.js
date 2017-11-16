@@ -34,6 +34,7 @@ export class MacRentInformations extends Component {
             serial: "",
             owner: "",
             fee: 0,
+            deleted: undefined,
             showSaveSuccessModal: false,
             showSaveErrorModal: false, 
             showFetchErrorModal: false, 
@@ -99,7 +100,9 @@ export class MacRentInformations extends Component {
                 name: nextProps.fetchedElement.name,
                 code: nextProps.fetchedElement.code,
                 serial: nextProps.fetchedElement.serial,
-                fee: nextProps.fetchedElement.fee,});
+                fee: nextProps.fetchedElement.fee,
+                deleted: nextProps.fetchedElement.deleted,
+                });
         }
 
         console.log(this.state.showFetchErrorModal);
@@ -125,8 +128,9 @@ export class MacRentInformations extends Component {
     handleSaveButton(isSaveButtonClicked, userName){
         this.setState({isSaveButtonClicked: true});
     
-        console.log("qui funzione", this.props.saveElement);
-        console.log("salvato con successo", this.props.saveSuccess);
+        // console.log("qui funzione", this.props.saveElement);
+        // console.log("salvato con successo", this.props.saveSuccess);
+        // console.log("salvo con delete nello stato uguale a :", this.state.deleted);
 
         if (this.props.saveSuccess) {
             this.setState({ showSaveSuccessModal: true });
@@ -134,7 +138,7 @@ export class MacRentInformations extends Component {
         
         if (this.state.owner && this.state.serial && this.state.dateFromOk && this.state.dateToOk) {
 
-            this.props.saveElement( this.state.id, this.state.name, this.state.code, this.state.dateFrom, this.state.dateTo, this.state.fee, this.state.serial, this.state.note, this.state.owner);
+            this.props.saveElement(this.state.id, this.state.name, this.state.code, this.state.dateFrom, this.state.dateTo, this.state.fee, this.state.serial, this.state.note, this.state.owner, this.state.deleted);
         }
 
         
@@ -188,6 +192,7 @@ export class MacRentInformations extends Component {
                 {this.renderSaveSuccessModal()}
                 {this.renderSaveErrorModal()}
                 {this.renderFetchErrorModal()}
+                {console.log("fetchedel", this.props.fetchedElement, "delete", this.state.deleted)}
                 <Grid>
                     <Row><Col xs={12} md={12}><center><h2>{this.state.title}</h2></center></Col></Row>
                     <Row>
