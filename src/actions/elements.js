@@ -139,17 +139,22 @@ export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note,
 
     return async dispatch => {
         try {
-            var modifyElement =
-                id !== 0 ? {
-                    kind: "mac-rent-information",
-                    id: id
-                } :
+
+            var modifyElement;
+            if (id !== 0 ){
+                modifyElement =
+                    {
+                        kind: "mac-rent-information",
+                        id: id
+                    };
+            } else {
+                modifyElement =
                     {
                         kind: "mac-rent-information"
-                    }
-                ;
-            
-            deleted = id !== 0 ? deleted : true;
+                    };
+                
+                deleted = true;
+            }
 
 
             console.log("salvo con questo deleted", deleted);
