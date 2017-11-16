@@ -145,7 +145,7 @@ export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note,
                 modifyElement =
                     {
                         kind: "mac-rent-information",
-                        id: id
+                        //id: id
                     };
             } else {
                 modifyElement =
@@ -163,7 +163,7 @@ export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note,
                 "mode": "NON_TRANSACTIONAL",
                 "mutations": [
                     {
-                        "upsert": {
+                        "insert": {
                             "key": {
                                 "partitionId": {
                                     "projectId": "mac-rent-informations"
