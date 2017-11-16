@@ -35,6 +35,7 @@ export class MacRentInformations extends Component {
             owner: "",
             fee: 0,
             deleted: undefined,
+            importantChange: false,
             showSaveSuccessModal: false,
             showSaveErrorModal: false, 
             showFetchErrorModal: false, 
@@ -138,7 +139,7 @@ export class MacRentInformations extends Component {
         
         if (this.state.owner && this.state.serial && this.state.dateFromOk && this.state.dateToOk) {
 
-            this.props.saveElement(this.state.id, this.state.name, this.state.code, this.state.dateFrom, this.state.dateTo, this.state.fee, this.state.serial, this.state.note, this.state.owner, this.state.deleted);
+            this.props.saveElement(this.state.id, this.state.name, this.state.code, this.state.dateFrom, this.state.dateTo, this.state.fee, this.state.serial, this.state.note, this.state.owner, this.state.deleted, this.state.importantChange);
         }
 
         
@@ -148,14 +149,14 @@ export class MacRentInformations extends Component {
         this.setState(state => {
         state.dateFrom= date;
             }, ()=>{
-                this.setState({ dateFromOk: (this.state.dateFrom ? true : false)  });
+                this.setState({ dateFromOk: (this.state.dateFrom ? true : false), importantChange: true  });
             });
     }
     handleDateToChange(date, dateString){
         this.setState(state => {
         state.dateTo= date;
             }, ()=>{
-                this.setState({ dateToOk: (this.state.dateTo ? true: false) });
+                this.setState({ dateToOk: (this.state.dateTo ? true: false), importantChange: true });
             });
     }
 
@@ -207,7 +208,7 @@ export class MacRentInformations extends Component {
                                 <FormGroup controlId="formBasicText" >
                                     <FormControl type="text"
                                             placeholder="Inserisci il nome dell'attuale possessore"
-                                            onChange={e => this.setState({ owner: e.target.value })}
+                                            onChange={e => this.setState({ owner: e.target.value, importantChange: true })}
                                             value={this.state.owner}
                                         />
                                         <FormControl.Feedback />
@@ -231,7 +232,7 @@ export class MacRentInformations extends Component {
                                 <FormGroup controlId="formBasicText">
                                     <FormControl type="text"
                                             placeholder="Inserisci seriale del tuo Mac"
-                                            onChange={e => this.setState({ serial: e.target.value })}
+                                            onChange={e => this.setState({ serial: e.target.value, importantChange: true})}
                                             value={this.state.serial}
                                         />
                                         <FormControl.Feedback />

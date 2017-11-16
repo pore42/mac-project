@@ -134,6 +134,8 @@ export function deleteElement(iden, name, code, dateFrom, dateTo, fee, serial, n
 
         console.log("questo è l'id", iden);
 
+        var operation = `"update"`;
+
         try{
         var modifyElement =
                 {
@@ -211,95 +213,156 @@ export function deleteElement(iden, name, code, dateFrom, dateTo, fee, serial, n
 }
 
 
-export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note, owner, deleted) {
+export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note, owner, deleted, importantChange) {
+    console.log("salvo con questo deleted", deleted);
 
     return async dispatch => {
         try {
 
             var modifyElement;
-            if (id !== 0 ){
+            if (id !== 0 && !importantChange){
                 modifyElement =
                     {
                         kind: "mac-rent-information",
-                        //id: id
-                    };
-            } else {
-                modifyElement =
-                    {
-                        kind: "mac-rent-information"
+                        id: id
                     };
                 
-                deleted = true;
-            }
+                
+                const result = await post(REACT_APP_RENT_SAVE + `${localStorage.getItem("googleAccessToken")}`, {
+                    "mode": "NON_TRANSACTIONAL",
+                    "mutations": [
+                        {
+                            "update": {
+                                "key": {
+                                    "partitionId": {
+                                        "projectId": "mac-rent-informations"
+                                    },
+                                    "path": [
+                                        modifyElement
+                                    ]
+                                },
+                                "properties": {
 
-
-            console.log("salvo con questo deleted", deleted);
-
-            const result = await post(REACT_APP_RENT_SAVE + `${localStorage.getItem("googleAccessToken")}`, {
-                "mode": "NON_TRANSACTIONAL",
-                "mutations": [
-                    {
-                        "insert": {
-                            "key": {
-                                "partitionId": {
-                                    "projectId": "mac-rent-informations"
-                                },
-                                "path": [
-                                    modifyElement
-                                ]
-                            },
-                            "properties": {
-
-                                "name": {
-                                    "stringValue": name
-                                },
-                                "code": {
-                                    "stringValue": code
-                                },
-                                "dateFrom": {
-                                    "timestampValue": dateFrom
-                                },
-                                "dateTo": {
-                                    "timestampValue": dateTo
-                                },
-                                "fee": {
-                                    "integerValue": fee
-                                },
-                                "serial": {
-                                    "stringValue": serial === "" ? "-" : serial
-                                },
-                                "note": {
-                                    "stringValue": note === "" ? "-" : note
-                                },
-                                "owner": {
-                                    "stringValue": owner === "" ? "-" : owner
-                                },
-                                "lastMod": {
-                                    "stringValue": localStorage.getItem("userName")
-                                },
-                                "deleted": {
-                                    "booleanValue": deleted
+                                    "name": {
+                                        "stringValue": name
+                                    },
+                                    "code": {
+                                        "stringValue": code
+                                    },
+                                    "dateFrom": {
+                                        "timestampValue": dateFrom
+                                    },
+                                    "dateTo": {
+                                        "timestampValue": dateTo
+                                    },
+                                    "fee": {
+                                        "integerValue": fee
+                                    },
+                                    "serial": {
+                                        "stringValue": serial === "" ? "-" : serial
+                                    },
+                                    "note": {
+                                        "stringValue": note === "" ? "-" : note
+                                    },
+                                    "owner": {
+                                        "stringValue": owner === "" ? "-" : owner
+                                    },
+                                    "lastMod": {
+                                        "stringValue": localStorage.getItem("userName")
+                                    },
+                                    "deleted": {
+                                        "booleanValue": deleted
+                                    }
                                 }
                             }
                         }
-                    }
-                ]
-            });
-
-            if (result !== undefined) {
-                dispatch({
-                    type: SAVE_SUCCESS,
+                    ]
                 });
-            }
-
+                
+                if (result !== undefined) {
+                    dispatch({
+                        type: SAVE_SUCCESS,
+                    });
+                }
+                
+                } else {
+                    deleted = id === 0 ? true : deleted ;
+                    
+                modifyElement =
+                {
+                    kind: "mac-rent-information"
+                };
+                
+                const result = await post(REACT_APP_RENT_SAVE + `${localStorage.getItem("googleAccessToken")}`, {
+                    "mode": "NON_TRANSACTIONAL",
+                    "mutations": [
+                        {
+                            "insert": {
+                                "key": {
+                                    "partitionId": {
+                                        "projectId": "mac-rent-informations"
+                                    },
+                                    "path": [
+                                        modifyElement
+                                    ]
+                                },
+                                "properties": {
+    
+                                    "name": {
+                                        "stringValue": name
+                                    },
+                                    "code": {
+                                        "stringValue": code
+                                    },
+                                    "dateFrom": {
+                                        "timestampValue": dateFrom
+                                    },
+                                    "dateTo": {
+                                        "timestampValue": dateTo
+                                    },
+                                    "fee": {
+                                        "integerValue": fee
+                                    },
+                                    "serial": {
+                                        "stringValue": serial === "" ? "-" : serial
+                                    },
+                                    "note": {
+                                        "stringValue": note === "" ? "-" : note
+                                    },
+                                    "owner": {
+                                        "stringValue": owner === "" ? "-" : owner
+                                    },
+                                    "lastMod": {
+                                        "stringValue": localStorage.getItem("userName")
+                                    },
+                                    "deleted": {
+                                        "booleanValue": deleted
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                });
+                
             
+            if (result !== undefined) {
+                    dispatch({
+                        type: SAVE_SUCCESS,
+                    });
+                }
+
+            } 
+            
+         
+            
+
         } catch (error) {
             dispatch({
                 type: SAVE_ERROR,
                 payload: error
             });
         }
-    }    
+    }
 }
 
 
