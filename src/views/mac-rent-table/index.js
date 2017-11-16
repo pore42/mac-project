@@ -163,7 +163,7 @@ class MacRentTable extends Component {
 
         return (elements
             .filter(element => this.filterValues(element, this.state.filterTerm))
-            .filter(element => element.deleted));
+            .filter(element => element.deleted || (!element.deleted && this.state.showHistory)));
     }
 
 

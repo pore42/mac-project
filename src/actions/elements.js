@@ -187,6 +187,10 @@ export function deleteElement(iden, name, code, dateFrom, dateTo, fee, serial, n
                             },
                             "deleted": {
                                 "booleanValue": false
+                            },
+                            "lastTime":
+                            {
+                                "timestampValue": moment()
                             }
                         }
                     }
