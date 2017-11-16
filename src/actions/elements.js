@@ -196,6 +196,7 @@ export function deleteElement(iden, name, code, dateFrom, dateTo, fee, serial, n
 
             dispatch({
                 type: DELETE_SUCCESS,
+                payload: iden
             });
 
 
@@ -272,6 +273,10 @@ export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note,
                                     },
                                     "deleted": {
                                         "booleanValue": deleted
+                                    },
+                                    "lastTime":
+                                    {
+                                        "timestampValue": moment()
                                     }
                                 }
                             }
@@ -337,6 +342,10 @@ export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note,
                                     },
                                     "deleted": {
                                         "booleanValue": deleted
+                                    },
+                                    "lastTime":
+                                    {
+                                        "timestampValue": moment()
                                     }
                                 }
                             }

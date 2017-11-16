@@ -63,11 +63,14 @@ class MacRentTable extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.elements !== nextProps.elemenets) {
+        if (this.props.elements !== nextProps.elements) {
             this.setState({
                 macRentInformations: nextProps.elements
             });
         }
+
+        console.log(nextProps);
+        this.setState({ macRentInformations: nextProps.elements });
 
         if (this.props.fetchError !== nextProps.fetchError) {
             this.setState({
@@ -98,11 +101,14 @@ class MacRentTable extends Component {
 
         if (deleteElement) {
             deleteElement(iden, target.name, target.code, target.dateFrom, target.dateTo, target.fee, target.serial, target.note, target.owner, target.deleted);
+            console.log("nuovi elementi: ", this.state.macRentInformations);
         }
+        
 
         if (this.props.deleteError) {
             this.setState({ showDeleteErrorModal: true });
         }
+
 
     }
 
@@ -153,7 +159,12 @@ class MacRentTable extends Component {
         this.setState({ showHistory: !this.state.showHistory });
     }
 
+    filterTable(elements) { 
 
+        return (elements
+            .filter(element => this.filterValues(element, this.state.filterTerm))
+            .filter(element => element.deleted));
+    }
 
 
     renderFetchErrorModal() {
@@ -172,6 +183,7 @@ class MacRentTable extends Component {
     }
 
     render() {
+        console.log("elementi in arrivo", this.props.elements);
         return (
             <Grid fluid={true} style={{ marginTop: 20, margin: 0 }}>
                 {console.log(this.props)}
@@ -308,8 +320,7 @@ class MacRentTable extends Component {
                                 </tr>
                             </thead>
                             <tbody key="tbody">
-                                {(this.state.macRentInformations)
-                                    .filter(element => this.filterValues(element, this.state.filterTerm))
+                                {this.filterTable(this.state.macRentInformations)
                                     .map(macRentInfo =>
                                         <MacRentInfoRow key={macRentInfo.id}
                                             delete={this.deleteMacRentInformation.bind(this)}

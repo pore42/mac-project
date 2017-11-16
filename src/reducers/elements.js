@@ -39,8 +39,15 @@ export default function elements(state = defaultState, { type, payload }) {
                 fetchError: true
             };
         case DELETE_SUCCESS:
-            return{ 
-                ...state,
+            {
+                console.log("elementi che arriveranno", elements);
+                return {
+                    ...state,
+                    data: state.data.map(x => x.realId === payload ? {
+                        ...x,
+                        deleted: false,
+                    }: x)
+                }
             }
         case DELETE_ERROR:
             return {
