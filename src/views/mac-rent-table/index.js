@@ -69,7 +69,7 @@ class MacRentTable extends Component {
             });
         }
 
-        if (this.props.fetchError !== nextProps.fetchError) { 
+        if (this.props.fetchError !== nextProps.fetchError) {
             this.setState({
                 showFetchErrorModal: true
             });
@@ -89,8 +89,15 @@ class MacRentTable extends Component {
 
         const { deleteElement } = this.props;
 
+
+        var target = this.state.macRentInformations.find((el) => el.realId === iden);
+
+
+        console.log("this is the target", target);
+
+
         if (deleteElement) {
-            deleteElement(iden);
+            deleteElement(iden, target.name, target.code, target.dateFrom, target.dateTo, target.fee, target.serial, target.note, target.owner, target.deleted);
         }
 
         if (this.props.deleteError) {
@@ -100,8 +107,8 @@ class MacRentTable extends Component {
     }
 
 
-    showCheck(){
-        this.setState({showCheckColumns: true});
+    showCheck() {
+        this.setState({ showCheckColumns: true });
     }
 
 
@@ -134,15 +141,15 @@ class MacRentTable extends Component {
     }
 
 
-    closeFetchErrorModal() { 
-        this.setState({showFetchErrorModal: false});
+    closeFetchErrorModal() {
+        this.setState({ showFetchErrorModal: false });
     }
 
     closeDeleteErrorModal() {
         this.setState({ showDeleteErrorModal: false });
     }
 
-    showHistory() { 
+    showHistory() {
         this.setState({ showHistory: !this.state.showHistory });
     }
 
@@ -150,8 +157,8 @@ class MacRentTable extends Component {
 
 
     renderFetchErrorModal() {
-        
-        return (<SimpleModal show={this.state.showFetchErrorModal} close={this.closeFetchErrorModal.bind(this)} title="Recupero dati fallito"/>);
+
+        return (<SimpleModal show={this.state.showFetchErrorModal} close={this.closeFetchErrorModal.bind(this)} title="Recupero dati fallito" />);
 
 
     }
@@ -161,7 +168,7 @@ class MacRentTable extends Component {
 
 
         return (<SimpleModal show={this.state.showDeleteErrorModal} close={this.closeDeleteErrorModal.bind(this)} title="Cancellazione elemento fallito" />);
-        
+
     }
 
     render() {
@@ -172,18 +179,18 @@ class MacRentTable extends Component {
                 {this.renderDeleteErrorModal()}
                 <Row className="show-grid" >
                     <Col lg={3} sm={6} xs={6} style={{ marginTop: 15, marginLeft: 30 }}>
-                        <Image src={logo} bsSize="small" rounded/>
+                        <Image src={logo} bsSize="small" rounded />
                     </Col>
                     <Col lg={5} xs={0}>
                         <h1 id="tableTitle" className="title">
-                        Tabella affitto MacBook
+                            Tabella affitto MacBook
                         </h1>
                     </Col>
                     <Col lg={3} sm={6} xs={5} id="logoutCol" >
                         <div className="floatRight">
                             <div style={{ right: "0px", margin: "40px" }}>
                                 <GoogleLogout
-                                    id="logoutButton"    
+                                    id="logoutButton"
                                     clientId="524088644940-rlsefunif94pvmlhla81d71vcogtvdiq.apps.googleusercontent.com"
                                     buttonText="Logout"
                                     onLogoutSuccess={(res) => console.log(res)}
@@ -201,50 +208,50 @@ class MacRentTable extends Component {
                             </h3>
                         </center>
                     </Col>
-                </Row>    
+                </Row>
                 <Row style={{ marginTop: 20, marginBottom: 30 }}>
                     <Col lgOffset={1} lg={4} sm={3} xs={12} style={{ margin: 20 }}>
-                        <InputGroup style={{ width: 340}}>
+                        <InputGroup style={{ width: 340 }}>
                             <FormControl
-                                    id="filter"
-                                    onChange={e => this.setState({ filterTerm: e.target.value })}
-                                    placeholder="search"
-                                    value={this.state.filterTerm}
-                                    type="text"
-                                />
-                        </InputGroup>   
+                                id="filter"
+                                onChange={e => this.setState({ filterTerm: e.target.value })}
+                                placeholder="search"
+                                value={this.state.filterTerm}
+                                type="text"
+                            />
+                        </InputGroup>
                     </Col>
-                    <Col lg={7} sm={6} xs={12}  id="checkCol">
+                    <Col lg={7} sm={6} xs={12} id="checkCol">
                         <Col lg={4} xs={6}><Image hidden={this.state.showCheckColumns} id="showMoreIcon" src={showMoreIcon} onClick={this.showCheck.bind(this)} title={"Clicca per mostrare altri dettagli"} /> </Col>
-                        <Col lg={3} xs={5} xsOffset={1}><Image id="addDocIcon" src={addIcon} onClick={() => this.props.history.push(`/input/`)} title={"Clicca per aggiungere i tuoi dati"}/></Col>
+                        <Col lg={3} xs={5} xsOffset={1}><Image id="addDocIcon" src={addIcon} onClick={() => this.props.history.push(`/input/`)} title={"Clicca per aggiungere i tuoi dati"} /></Col>
                         <FormGroup id="checkGroup" hidden={!this.state.showCheckColumns} >
-                                <Checkbox onClick={() => this.setState({ ownerChecked: !this.state.ownerChecked })} defaultChecked inline>
-                                    {"Possessore"}
-                                </Checkbox>
-                                <Checkbox  onClick={() => this.setState({ serialChecked: !this.state.serialChecked })} defaultChecked inline>
-                                    {"N°serie"}
-                                </Checkbox>
-                                <Checkbox onClick={() => this.setState({ dateFromChecked: !this.state.dateFromChecked })} defaultChecked inline>
-                                    {"Inizio"}
-                                </Checkbox>
-                                <Checkbox onClick={() => this.setState({ dateToChecked: !this.state.dateToChecked })} defaultChecked inline>
-                                    {"Termine"}
-                                    </Checkbox>
-                                <Checkbox onClick={() => this.setState({ nameChecked: !this.state.nameChecked })}  inline>
-                                    {"Nome mac"}
-                                </Checkbox>
-                                <Checkbox onClick={() => this.setState({ codeChecked: !this.state.codeChecked })}  inline>
-                                    {"Codice affitto"}
-                                </Checkbox>
-                                <Checkbox onClick={() => this.setState({ feeChecked: !this.state.feeChecked })}  inline>
-                                    {"Rata"}
-                                </Checkbox>
-                                <Checkbox onClick={() => this.setState({ lastModChecked: !this.state.lastModChecked })}  inline>
-                                    {"Ultima modifica"}
-                                </Checkbox>
-                            </FormGroup>
+                            <Checkbox onClick={() => this.setState({ ownerChecked: !this.state.ownerChecked })} defaultChecked inline>
+                                {"Possessore"}
+                            </Checkbox>
+                            <Checkbox onClick={() => this.setState({ serialChecked: !this.state.serialChecked })} defaultChecked inline>
+                                {"N°serie"}
+                            </Checkbox>
+                            <Checkbox onClick={() => this.setState({ dateFromChecked: !this.state.dateFromChecked })} defaultChecked inline>
+                                {"Inizio"}
+                            </Checkbox>
+                            <Checkbox onClick={() => this.setState({ dateToChecked: !this.state.dateToChecked })} defaultChecked inline>
+                                {"Termine"}
+                            </Checkbox>
+                            <Checkbox onClick={() => this.setState({ nameChecked: !this.state.nameChecked })} inline>
+                                {"Nome mac"}
+                            </Checkbox>
+                            <Checkbox onClick={() => this.setState({ codeChecked: !this.state.codeChecked })} inline>
+                                {"Codice affitto"}
+                            </Checkbox>
+                            <Checkbox onClick={() => this.setState({ feeChecked: !this.state.feeChecked })} inline>
+                                {"Rata"}
+                            </Checkbox>
+                            <Checkbox onClick={() => this.setState({ lastModChecked: !this.state.lastModChecked })} inline>
+                                {"Ultima modifica"}
+                            </Checkbox>
+                        </FormGroup>
                     </Col>
-                    <Row><Col lg={12} xs={12} style={{ marginTop: 20 }}><center><Button style={{ background: this.state.showHistory ? "lightgreen": "yellow" }} value={this.state.showHistory} onClick={() => this.showHistory()}>{this.state.showHistory ? "VERO" : "FALSE"}</Button></center></Col></Row>
+                    <Row><Col lg={12} xs={12} style={{ marginTop: 20 }}><center><Button style={{ background: this.state.showHistory ? "lightgreen" : "yellow" }} value={this.state.showHistory} onClick={() => this.showHistory()}>{this.state.showHistory ? "VERO" : "FALSE"}</Button></center></Col></Row>
                 </Row>
                 <Row>
                     <Col sm={12} xs={12} style={{ marginLeft: 10, margin: 5 }}>
@@ -318,14 +325,14 @@ class MacRentTable extends Component {
                                             owner={macRentInfo.owner}
                                             serial={macRentInfo.serial}
                                             userName={this.state.userName}
-                                            displayName= {this.state.nameChecked}
-                                            displayCode = {this.state.codeChecked}
-                                            displayDateFrom = {this.state.dateFromChecked}
-                                            displayDateTo = {this.state.dateToChecked}
-                                            displaySerial = {this.state.serialChecked}
-                                            displayOwner = {this.state.ownerChecked}
-                                            displayFee = {this.state.feeChecked}
-                                            displayLastMod = {this.state.lastModChecked}
+                                            displayName={this.state.nameChecked}
+                                            displayCode={this.state.codeChecked}
+                                            displayDateFrom={this.state.dateFromChecked}
+                                            displayDateTo={this.state.dateToChecked}
+                                            displaySerial={this.state.serialChecked}
+                                            displayOwner={this.state.ownerChecked}
+                                            displayFee={this.state.feeChecked}
+                                            displayLastMod={this.state.lastModChecked}
                                         />,
                                 )
                                 }

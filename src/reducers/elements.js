@@ -41,7 +41,6 @@ export default function elements(state = defaultState, { type, payload }) {
         case DELETE_SUCCESS:
             return{ 
                 ...state,
-                data: state.data.filter(x => x.realId !== payload)
             }
         case DELETE_ERROR:
             return {
