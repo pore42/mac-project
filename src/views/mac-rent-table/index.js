@@ -161,11 +161,44 @@ class MacRentTable extends Component {
 
     filterTable(elements) { 
 
-        return (elements
-            .filter(element => this.filterValues(element, this.state.filterTerm))
-            .filter(element => element.deleted || (!element.deleted && this.state.showHistory)));
+        if (this.state.showHistory) {
+            return (elements
+                .filter(element => this.filterValues(element, this.state.filterTerm))
+                .filter(element => element.deleted || (!element.deleted && this.state.showHistory)));
+        }
+        else { 
+            return (elements
+                .filter(element => this.filterValues(element, this.state.filterTerm))
+                .filter(element => element.deleted || (!element.deleted && this.state.showHistory))).sort((a, b) => this.compareRows(a, b));
+        }
     }
 
+
+    compareRows(a, b) {
+        if (a.serial < b.serial) {
+            return -1;
+        }
+        if (a.serial > b.serial) {
+            return 1;
+        }    
+        if (a.serial === b.serial){
+            return 0;
+        }
+
+    }
+
+    // createHistory(allElements) {
+    //     var completeHistory = allElements.reduce((group, row) => {
+    //         var targetArray = group.(row.serial);
+    //         if (targetArray !== undefined) {
+    //             targetArray = targetArray.concat(row);
+    //         }
+    //         else { 
+    //             allElements.(row.serial) = [row];
+    //         }
+    //     };
+    //     console.log(completeHistory);
+    // }
 
     renderFetchErrorModal() {
 
