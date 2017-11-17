@@ -41,12 +41,13 @@ export default function elements(state = defaultState, { type, payload }) {
         case DELETE_SUCCESS:
             {
                 console.log("elementi che arriveranno", elements);
+                var clone = Object.assign({}, state.data);
+                var targetIndex = clone.find((el) => el.realId === payload);
+                
+                clone[targetIndex].deleted = false;
                 return {
                     ...state,
-                    data: state.data.map(x => x.realId === payload ? {
-                        ...x,
-                        deleted: false,
-                    }: x)
+                    data: clone
                 }
             }
         case DELETE_ERROR:
