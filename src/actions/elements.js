@@ -5,8 +5,6 @@ import { REACT_APP_RENT_INFO } from '../config';
 import moment from "moment";
 
 
-import { REACT_APP_RENT_DELETE_TOKEN } from '../config';
-import { REACT_APP_RENT_DELETE } from '../config';
 import { REACT_APP_RENT_SAVE } from '../config';
 import { REACT_APP_FETCH_ELEMENT } from '../config';
 
