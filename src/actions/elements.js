@@ -93,43 +93,7 @@ function deserializedMacRentInformation(rowElements) {
 
 export function deleteElement(iden, name, code, dateFrom, dateTo, fee, serial, note, owner, deleted) {
     return async dispatch => {
-
-        // try {
-        //     const result = await post(REACT_APP_RENT_DELETE_TOKEN + `${localStorage.getItem("googleAccessToken")}`, {
-        //         "transactionOptions": {
-        //             "readWrite": {}
-        //         }
-        //     });
-
-        //     await post(REACT_APP_RENT_DELETE + `${localStorage.getItem("googleAccessToken")}`, {
-        //         "mode": "MODE_UNSPECIFIED",
-        //         "mutations": [
-        //             {
-        //                 "delete": {
-        //                     "path": [
-        //                         {
-        //                             "kind": "mac-rent-information",
-        //                             "id": iden,
-        //                         }
-        //                     ]
-        //                 }
-        //             }
-        //         ],
-        //         "transaction": result.data.transaction
-        //     });
-
-        //     dispatch({
-        //         type: DELETE_SUCCESS,
-        //         payload: iden
-        //     });
-
-        // // } catch (error) {
-        //     dispatch({
-        //         type: DELETE_ERROR,
-        //         payload: error
-        //      })
-        // }
-
+        
         console.log("questo è l'id", iden);
 
         var operation = `"update"`;
