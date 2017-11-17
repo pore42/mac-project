@@ -182,23 +182,11 @@ class MacRentTable extends Component {
             return 1;
         }    
         if (a.serial === b.serial){
-            return 0;
+            moment(a.lastTime).diff(moment(b.lastTime));
         }
 
     }
 
-    // createHistory(allElements) {
-    //     var completeHistory = allElements.reduce((group, row) => {
-    //         var targetArray = group.(row.serial);
-    //         if (targetArray !== undefined) {
-    //             targetArray = targetArray.concat(row);
-    //         }
-    //         else { 
-    //             allElements.(row.serial) = [row];
-    //         }
-    //     };
-    //     console.log(completeHistory);
-    // }
 
     renderFetchErrorModal() {
 
