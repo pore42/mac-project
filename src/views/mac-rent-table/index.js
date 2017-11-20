@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormGroup, Table, FormControl, InputGroup, Grid, Col, Row, Checkbox, Image, Modal } from "react-bootstrap";
+import { FormGroup, Table, FormControl, InputGroup, Grid, Col, Row, Checkbox, Image } from "react-bootstrap";
 import changeCase from "change-case";
 import GoogleLogout from "react-google-login";
 import moment from "moment";

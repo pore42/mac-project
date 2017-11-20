@@ -96,8 +96,6 @@ export function deleteElement(iden, name, code, dateFrom, dateTo, fee, serial, n
         
         console.log("questo è l'id", iden);
 
-        var operation = `"update"`;
-
         try{
         var modifyElement =
                 {
@@ -160,11 +158,12 @@ export function deleteElement(iden, name, code, dateFrom, dateTo, fee, serial, n
             ]
         });
 
+        if (result !== undefined) {
             dispatch({
                 type: DELETE_SUCCESS,
                 payload: iden
             });
-
+        }
 
         } catch (error) {
             dispatch({
