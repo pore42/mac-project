@@ -158,20 +158,32 @@ class MacRentTable extends Component {
     showHistory() {
         this.setState({ showHistory: !this.state.showHistory });
     }
+    
+    filterTable(elements) {
+        console.log("SONO IN FILTRA");
 
-    filterTable(elements) { 
-
-        if (this.state.showHistory) {
-            return (elements
-                .filter(element => this.filterValues(element, this.state.filterTerm))
-                .filter(element => element.deleted || (!element.deleted && this.state.showHistory)));
+        var newElements = (elements
+            .filter(element => this.filterValues(element, this.state.filterTerm))
+            .filter(element => element.deleted || (!element.deleted && this.state.showHistory)));
+        if (!this.state.showHistory) {
+            console.log("showhistory");
+            if (newElements.length < 1) return [];
+            newElements = newElements.sort((a, b) => this.compareRows(a, b));
+            var onlyLastElements = [newElements[0]];
+            for (var i = 1; i < newElements.length; i++) {
+                if (newElements[i].serial !== newElements[i - 1].serial) {
+                    onlyLastElements = onlyLastElements.concat([newElements[i]]);
+                };
+                console.log(onlyLastElements);
+            }
+            console.log("dovrebbe tornare", onlyLastElements, newElements);
+            return onlyLastElements
+            //return newElements;
         }
-        else { 
-            return (elements
-                .filter(element => this.filterValues(element, this.state.filterTerm))
-                .filter(element => element.deleted || (!element.deleted && this.state.showHistory))).sort((a, b) => this.compareRows(a, b));
-        }
-    }
+        else {
+            return newElements;
+        }    
+    }    
 
 
     compareRows(a, b) {
