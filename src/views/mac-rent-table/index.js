@@ -268,8 +268,9 @@ class MacRentTable extends Component {
                         </InputGroup>
                     </Col>
                     <Col lg={7} sm={6} xs={12} id="checkCol">
-                        <Col lg={4} xs={6}><Image hidden={this.state.showCheckColumns} id="showMoreIcon" src={showMoreIcon} onClick={this.showCheck.bind(this)} title={"Clicca per mostrare altri dettagli"} /> </Col>
-                        <Col lg={3} xs={5} xsOffset={1}><Image id="addDocIcon" src={addIcon} onClick={() => this.props.history.push(`/input/`)} title={"Clicca per aggiungere i tuoi dati"} /></Col>
+                        <Col lg={3} xs={3} ><Image hidden={this.state.showCheckColumns} id="showMoreIcon" src={showMoreIcon} onClick={this.showCheck.bind(this)} title={"Clicca per mostrare altri dettagli"} /> </Col>
+                        <Col lg={3} xs={3} xsOffset={1}><Image id="addDocIcon" src={addIcon} onClick={() => this.props.history.push(`/input/`)} title={"Clicca per aggiungere i tuoi dati"} /></Col>
+                        <Col lg={4} xs={4}><center><span className="labelHistory">Mostra storico:  </span><Button id="showHistoryButton" style={{ background: this.state.showHistory ? "lightgreen" : "yellow" }} value={this.state.showHistory} onClick={() => this.showHistory()}>{this.state.showHistory ? "SI" : "NO"}</Button></center></Col>
                         <FormGroup id="checkGroup" hidden={!this.state.showCheckColumns} >
                             <Checkbox onClick={() => this.setState({ ownerChecked: !this.state.ownerChecked })} defaultChecked inline>
                                 {"Possessore"}
@@ -297,7 +298,6 @@ class MacRentTable extends Component {
                             </Checkbox>
                         </FormGroup>
                     </Col>
-                    <Row><Col lg={12} xs={12} style={{ marginTop: 20 }}><center><Button style={{ background: this.state.showHistory ? "lightgreen" : "yellow" }} value={this.state.showHistory} onClick={() => this.showHistory()}>{this.state.showHistory ? "VERO" : "FALSE"}</Button></center></Col></Row>
                 </Row>
                 <Row>
                     <Col sm={12} xs={12} style={{ marginLeft: 10, margin: 5 }}>

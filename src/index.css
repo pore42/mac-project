@@ -1,7 +1,12 @@
+@font-face {
+	font-family: oldMacFont;
+	src: url(./assets/font/HelveticaNeue.ttf);
+}
+
 body {
-  font: 11px "Century Gothic", Futura, sans-serif;
-  margin: 50px;
-  
+	font: 11px "Century Gothic", Futura, sans-serif;
+	margin: 50px;
+	
 }
 
 
@@ -17,7 +22,6 @@ ol, ul {
 	#showMoreIcon{
 		width: 40px;
 		height: 40px;
-		margin-top: -16px;
 		cursor: pointer;
 		opacity: 0.8;
 	}
@@ -25,32 +29,33 @@ ol, ul {
 	#addDocIcon{
 		width: 40px;
 		height: 40px;
-		margin-top: -16px;
 		cursor: pointer;
 		opacity: 0.8;
 	}
 
+	#showHistoryButton{
+		margin-top: 6px;
+	}
+
+	.labelHistory{
+		font-family: oldMacFont;
+		font-weight: bold;
+		font-size: 15px;
+	}
 
 	#checkCol{
 		font-size: 10px;
-		margin-top: 32px;
+		margin-top: 16px;
 	}
 
-	#checkGroup{
-		margin-top: 36px;	
-	}
 
 
 
 	#checkGroup{
-		margin-top: 30px;
+		margin-top: 66px;
 	}
 
 
-@font-face {
-    font-family: oldMacFont;
-    src: url(./assets/font/HelveticaNeue.ttf);
-}
 
  .title{
 	font-family: oldMacFont;
@@ -133,7 +138,7 @@ ol, ul {
 	#showMoreIcon{
 		font-size: 10px;
 		margin-top: 0px;
-		margin-left: 140px;
+		margin-left: 20px;
 	}
 
 	#addDocIcon{
