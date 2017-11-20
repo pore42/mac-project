@@ -253,7 +253,7 @@ ol, ul {
 	#resTable td:nth-of-type(8):before { content: "Rata mensile: "; font-weight: bold;}
 	#resTable td:nth-of-type(9):before { content: "Ultima modifica: "; font-weight: bold;}
 	#resTable #rowDataFix:before { content: "Note: "; font-weight: bold;}
-	#resTable #rowDataFix2:before { content: "Cancella: "; font-weight: bold;}
+	#resTable .rowDataFix2:before { content: "Cancella: "; font-weight: bold;}
 	#resTable #rowDataFix3:before { content: "Modifica: "; font-weight: bold;}
 
 

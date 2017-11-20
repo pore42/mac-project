@@ -6,6 +6,8 @@ import moment from "moment";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { Button } from "antd";
+import restore_from_trash from "../../assets/images/restore_from_trash.png";
+import { Image } from "react-bootstrap";
 
 export default withRouter(class MacRentInfoRow extends Component {
     constructor() {
@@ -28,6 +30,7 @@ export default withRouter(class MacRentInfoRow extends Component {
         note: PropTypes.string,
         owner: PropTypes.string,
         serial: PropTypes.string,
+        exist: PropTypes.bool,
         delete: PropTypes.func,
         nameChecked: PropTypes.bool,
         userName: PropTypes.string,
@@ -49,13 +52,20 @@ export default withRouter(class MacRentInfoRow extends Component {
         var deleteElement = this.props.delete;
 
         confirmAlert({
-            title: "Eliminare?",
+            title: this.props.exist ? "Eliminare elemento?": "Ripristinare elemento?",
             message: "",
             confirmLabel: "OK",
             cancelLabel: "Annulla",
             onConfirm: () => deleteElement(this.props.realId),
         });
 
+    }
+
+    renderDeleteOrRestore() { 
+
+        return ((this.props.exist) ?
+            <td className="rowDataFix2"><span className="rowData">  <Button size="small" icon="delete" onClick={this.handleDeleteButton.bind(this)}></Button></span></td> :
+            <td className="rowDataFix2"><span className="rowData">  <Image size="small" width={20} height={20} src={restore_from_trash} onClick={this.handleDeleteButton.bind(this)}></Image></span></td>);
     }
 
     render() {
@@ -108,7 +118,7 @@ export default withRouter(class MacRentInfoRow extends Component {
                     </OverlayTrigger>
                   
                 </td>
-                <td id="rowDataFix2"><span className="rowData">  <Button size="small" icon="delete" onClick={this.handleDeleteButton.bind(this)}></Button></span></td>
+                {this.renderDeleteOrRestore()}
                 <td id="rowDataFix3"><span className="rowData">  <Button size="small" type="primary" icon="edit" onClick={this.handleEditButton.bind(this)}></Button></span></td>
             </tr>
         );

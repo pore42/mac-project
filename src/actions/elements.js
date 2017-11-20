@@ -146,7 +146,7 @@ export function deleteElement(iden, name, code, dateFrom, dateTo, fee, serial, n
                                 "stringValue": localStorage.getItem("userName")
                             },
                             "exist": {
-                                "booleanValue": false
+                                "booleanValue": !exist
                             },
                             "lastTime":
                             {

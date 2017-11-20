@@ -45,7 +45,7 @@ export default function elements(state = defaultState, { type, payload }) {
                 console.log("elementi clonati", clone);
                 var targetIndex = clone.findIndex((el) => el.realId === payload);
                 
-                clone[targetIndex].exist = false;
+                clone[targetIndex].exist = !clone[targetIndex].exist;
                 return {
                     ...state,
                     data: clone,

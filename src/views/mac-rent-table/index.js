@@ -164,7 +164,8 @@ class MacRentTable extends Component {
 
         var newElements = (elements
             .filter(element => this.filterValues(element, this.state.filterTerm))
-            .filter(element => element.exist || (!element.exist && this.state.showHistory)));
+            .filter(element => element.exist || (!element.exist && this.state.showHistory))
+            .sort((a, b) => this.compareRows(a, b)));
         if (!this.state.showHistory) {
             console.log("showhistory");
             if (newElements.length < 1) return [];
@@ -211,7 +212,7 @@ class MacRentTable extends Component {
     renderDeleteErrorModal() {
 
 
-        return (<SimpleModal show={this.state.showDeleteErrorModal} close={this.closeDeleteErrorModal.bind(this)} title="Cancellazione elemento fallito" />);
+        return (<SimpleModal show={this.state.showDeleteErrorModal} close={this.closeDeleteErrorModal.bind(this)} title="Cancellazione, o ripristino elemento fallito" />);
 
     }
 
@@ -368,6 +369,7 @@ class MacRentTable extends Component {
                                             note={macRentInfo.note}
                                             owner={macRentInfo.owner}
                                             serial={macRentInfo.serial}
+                                            exist={macRentInfo.exist}
                                             userName={this.state.userName}
                                             displayName={this.state.nameChecked}
                                             displayCode={this.state.codeChecked}
