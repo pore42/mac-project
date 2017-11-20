@@ -34,7 +34,7 @@ export class MacRentInformations extends Component {
             serial: "",
             owner: "",
             fee: 0,
-            deleted: undefined,
+            exist: undefined,
             importantChange: false,
             showSaveSuccessModal: false,
             showSaveErrorModal: false, 
@@ -102,7 +102,7 @@ export class MacRentInformations extends Component {
                 code: nextProps.fetchedElement.code,
                 serial: nextProps.fetchedElement.serial,
                 fee: nextProps.fetchedElement.fee,
-                deleted: nextProps.fetchedElement.deleted,
+                exist: nextProps.fetchedElement.exist,
                 });
         }
 
@@ -131,7 +131,7 @@ export class MacRentInformations extends Component {
     
         // console.log("qui funzione", this.props.saveElement);
         // console.log("salvato con successo", this.props.saveSuccess);
-        // console.log("salvo con delete nello stato uguale a :", this.state.deleted);
+        // console.log("salvo con delete nello stato uguale a :", this.state.exist);
 
         if (this.props.saveSuccess) {
             this.setState({ showSaveSuccessModal: true });
@@ -139,7 +139,7 @@ export class MacRentInformations extends Component {
         
         if (this.state.owner && this.state.serial && this.state.dateFromOk && this.state.dateToOk) {
 
-            this.props.saveElement(this.state.id, this.state.name, this.state.code, this.state.dateFrom, this.state.dateTo, this.state.fee, this.state.serial, this.state.note, this.state.owner, this.state.deleted, this.state.importantChange);
+            this.props.saveElement(this.state.id, this.state.name, this.state.code, this.state.dateFrom, this.state.dateTo, this.state.fee, this.state.serial, this.state.note, this.state.owner, this.state.exist, this.state.importantChange);
         }
 
         
@@ -193,7 +193,7 @@ export class MacRentInformations extends Component {
                 {this.renderSaveSuccessModal()}
                 {this.renderSaveErrorModal()}
                 {this.renderFetchErrorModal()}
-                {console.log("fetchedel", this.props.fetchedElement, "delete", this.state.deleted)}
+                {console.log("fetchedel", this.props.fetchedElement, "delete", this.state.exist)}
                 <Grid>
                     <Row><Col xs={12} md={12}><center><h2>{this.state.title}</h2></center></Col></Row>
                     <Row>

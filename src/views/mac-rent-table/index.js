@@ -100,7 +100,7 @@ class MacRentTable extends Component {
 
 
         if (deleteElement) {
-            deleteElement(iden, target.name, target.code, target.dateFrom, target.dateTo, target.fee, target.serial, target.note, target.owner, target.deleted);
+            deleteElement(iden, target.name, target.code, target.dateFrom, target.dateTo, target.fee, target.serial, target.note, target.owner, target.exist);
             console.log("nuovi elementi: ", this.state.macRentInformations);
         }
         
@@ -164,7 +164,7 @@ class MacRentTable extends Component {
 
         var newElements = (elements
             .filter(element => this.filterValues(element, this.state.filterTerm))
-            .filter(element => element.deleted || (!element.deleted && this.state.showHistory)));
+            .filter(element => element.exist || (!element.exist && this.state.showHistory)));
         if (!this.state.showHistory) {
             console.log("showhistory");
             if (newElements.length < 1) return [];
