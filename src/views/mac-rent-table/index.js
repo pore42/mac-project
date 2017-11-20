@@ -69,7 +69,7 @@ class MacRentTable extends Component {
             });
         }
 
-        console.log(nextProps);
+        //console.log(nextProps);
         this.setState({ macRentInformations: nextProps.elements });
 
         if (this.props.fetchError !== nextProps.fetchError) {
@@ -96,12 +96,12 @@ class MacRentTable extends Component {
         var target = this.state.macRentInformations.find((el) => el.realId === iden);
 
 
-        console.log("this is the target", target);
+        //console.log("this is the target", target);
 
 
         if (deleteElement) {
             deleteElement(iden, target.name, target.code, target.dateFrom, target.dateTo, target.fee, target.serial, target.note, target.owner, target.exist);
-            console.log("nuovi elementi: ", this.state.macRentInformations);
+            //console.log("nuovi elementi: ", this.state.macRentInformations);
         }
         
 
@@ -122,7 +122,7 @@ class MacRentTable extends Component {
     logout(response) {
         localStorage.setItem("googleAccessToken", "no-token");
         localStorage.setItem("userName", "loggedOutUser");
-        console.log(response);
+        //console.log(response);
         window.location = "/";
     }
 
@@ -160,14 +160,13 @@ class MacRentTable extends Component {
     }
     
     filterTable(elements) {
-        console.log("SONO IN FILTRA");
 
         var newElements = (elements
             .filter(element => this.filterValues(element, this.state.filterTerm))
             .filter(element => element.exist || (!element.exist && this.state.showHistory))
             .sort((a, b) => this.compareRows(a, b)));
         if (!this.state.showHistory) {
-            console.log("showhistory");
+
             if (newElements.length < 1) return [];
             newElements = newElements.sort((a, b) => this.compareRows(a, b));
             var onlyLastElements = [newElements[0]];
@@ -175,9 +174,7 @@ class MacRentTable extends Component {
                 if (newElements[i].serial !== newElements[i - 1].serial) {
                     onlyLastElements = onlyLastElements.concat([newElements[i]]);
                 };
-                console.log(onlyLastElements);
             }
-            console.log("dovrebbe tornare", onlyLastElements, newElements);
             return onlyLastElements
             //return newElements;
         }
@@ -217,10 +214,8 @@ class MacRentTable extends Component {
     }
 
     render() {
-        console.log("elementi in arrivo", this.props.elements);
         return (
             <Grid fluid={true} style={{ marginTop: 20, margin: 0 }}>
-                {console.log(this.props)}
                 {this.renderFetchErrorModal()}
                 {this.renderDeleteErrorModal()}
                 <Row className="show-grid" >

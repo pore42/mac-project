@@ -40,9 +40,7 @@ export default function elements(state = defaultState, { type, payload }) {
             };
         case DELETE_SUCCESS:
             {
-                console.log("elementi che arriveranno", elements);
                 var clone = Object.assign([], state.data);
-                console.log("elementi clonati", clone);
                 var targetIndex = clone.findIndex((el) => el.realId === payload);
                 
                 clone[targetIndex].exist = !clone[targetIndex].exist;

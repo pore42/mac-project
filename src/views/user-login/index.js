@@ -45,12 +45,12 @@ export default class UserLogin extends Component {
 }
 
     responseGoogle = (response) => {
-        console.log(response)
+        //console.log(response)
         if(response.profileObj.email.includes("@mondora.com")){
-            console.log("save token");
+            //console.log("save token");
             localStorage.setItem("googleAccessToken", response.accessToken);
             localStorage.setItem("userName", response.profileObj.name)
-            console.log("risposto bene: ", this.props.history);
+            //console.log("risposto bene: ", this.props.history);
             this.props.history.push(`/results/`, "statonuovo");
         }else{
             alert("email non autorizzata");

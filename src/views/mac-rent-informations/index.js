@@ -106,7 +106,7 @@ export class MacRentInformations extends Component {
                 });
         }
 
-        console.log(this.state.showFetchErrorModal);
+        //console.log(this.state.showFetchErrorModal);
         if (nextProps.fetchRowError) {
             this.setState({
                 showFetchErrorModal: true
@@ -193,7 +193,7 @@ export class MacRentInformations extends Component {
                 {this.renderSaveSuccessModal()}
                 {this.renderSaveErrorModal()}
                 {this.renderFetchErrorModal()}
-                {console.log("fetchedel", this.props.fetchedElement, "delete", this.state.exist)}
+                {/*console.log("fetchedel", this.props.fetchedElement, "delete", this.state.exist)*/}
                 <Grid>
                     <Row><Col xs={12} md={12}><center><h2>{this.state.title}</h2></center></Col></Row>
                     <Row>
