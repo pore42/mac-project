@@ -41,7 +41,7 @@ export function fetchRentInfo() {
                 });
             
                 var data = await result.data;
-                console.log("ho recuperato questo ", data);
+               // console.log("ho recuperato questo ", data);
                 var elements = data.batch.entityResults !== undefined ? deserializedMacRentInformation(data.batch.entityResults) : [];
 
 
@@ -64,7 +64,7 @@ export function fetchRentInfo() {
 
 function deserializedMacRentInformation(rowElements) {
 
-   rowElements.forEach(el => console.log(el.entity.properties.exist.booleanValue) );
+   //rowElements.forEach(el => console.log(el.entity.properties.exist.booleanValue) );
 
 
     const elements = rowElements.map((el, i) =>
@@ -94,7 +94,7 @@ function deserializedMacRentInformation(rowElements) {
 export function deleteElement(iden, name, code, dateFrom, dateTo, fee, serial, note, owner, exist) {
     return async dispatch => {
         
-        console.log("questo è l'id", iden);
+        //console.log("questo è l'id", iden);
 
         try{
         var modifyElement =
@@ -180,7 +180,7 @@ export function deleteElement(iden, name, code, dateFrom, dateTo, fee, serial, n
 
 
 export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note, owner, exist, importantChange) {
-    console.log("salvo con questo exist", exist);
+    //console.log("salvo con questo exist", exist);
 
     return async dispatch => {
         try {
@@ -345,7 +345,7 @@ export function fetchRow(id) {
     
     return async dispatch => {
         try {
-            console.log("questo è l'id", id);
+            //console.log("questo è l'id", id);
 
                 const result = await post(REACT_APP_FETCH_ELEMENT + `${localStorage.getItem("googleAccessToken")}`, {
                     "keys": [
@@ -359,7 +359,7 @@ export function fetchRow(id) {
                         }
                     ]
                 });
-                console.log(result.data);
+               //console.log(result.data);
                 
                 var r = result.data.found[0].entity.properties;
 

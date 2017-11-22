@@ -287,7 +287,7 @@ export class MacRentInformations extends Component {
                     </Row>
 
                     <Row className="show-grid">
-                        <FormGroup validationState={null }>
+                        <FormGroup validationState={null}>
                             <Col sm={4}style = {{marginBottom: 5}}>{"Codice Contratto"}</Col>
                             <Col sm={8}>
                                 <FormGroup controlId="formBasicText">

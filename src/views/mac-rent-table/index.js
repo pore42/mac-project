@@ -122,7 +122,7 @@ class MacRentTable extends Component {
     logout(response) {
         localStorage.setItem("googleAccessToken", "no-token");
         localStorage.setItem("userName", "loggedOutUser");
-        //console.log(response);
+        console.log("risposta a logout", response);
         window.location = "/";
     }
 
@@ -234,7 +234,7 @@ class MacRentTable extends Component {
                                     id="logoutButton"
                                     clientId="524088644940-rlsefunif94pvmlhla81d71vcogtvdiq.apps.googleusercontent.com"
                                     buttonText="Logout"
-                                    onLogoutSuccess={(res) => console.log(res)}
+                                    onLogoutSuccess={(res) => console.log("onLogoutSuccess", res)}
                                     onSuccess={this.logout} />
                             </div>
                         </div>
