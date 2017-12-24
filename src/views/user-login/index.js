@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Jumbotron, Col, Row, Image } from "react-bootstrap";
 import GoogleLogin from "react-google-login";
 import logo from "../../assets/images/mondora.png";
+import {Grid } from "react-bootstrap";
 import logoGoogle from "../../assets/images/google.png";
 
 
@@ -19,26 +20,22 @@ export default class UserLogin extends Component {
             alert("email non autorizzata");
         }
     }
-
-
-
-
+    
     render() {
         const responseGoogle = (response) => {
             this.onSignIn(response);
         }
-
         return (
-            <grid style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <Row className="show-grid" style={{ marginTop: 15, marginBottom: 15 }}>
+            <Grid style={{ display: "flex", flexDirection: "column", alignItems: "center"}}>
+                <Row className="show-grid" style={{marginTop: 15, marginBottom: 15}}>
                     <Image src={logo} responsive />
                 </Row>
                 <Row style={{ fontSize: 30, fontWeight: "heavy", border: 7, marginBottom: 10, fontFamily: "oldMacFont" }}>
                     {"Riassunto Affitti MacBook"}
                 </Row>
                 <Row>
-                    <Jumbotron style={{ padding: 50 }}>
-                        <grid>
+                    <Jumbotron style={{padding: 50}}>
+                        <Grid>
                             <Row>
                                 <Col xs={3} style={{ width: 45, height: 45, padding: 0, marginRight: -2 }}>
                                     <Image src={logoGoogle} responsive />
@@ -55,10 +52,10 @@ export default class UserLogin extends Component {
                                     />
                                 </Col>
                             </Row>
-                        </grid>
+                        </Grid>
                     </Jumbotron>
                 </Row>
-            </grid>
+            </Grid>
         );
     }
 
