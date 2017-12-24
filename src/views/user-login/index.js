@@ -2,6 +2,7 @@ import React , {Component} from "react";
 import {Jumbotron, Col, Row, Image} from "react-bootstrap";
 import GoogleLogin from "react-google-login";
 import logo from "../../assets/images/mondora.png";
+import {Grid } from "react-bootstrap";
 import logoGoogle from "../../assets/images/google.png";
 
 export default class UserLogin extends Component {
@@ -9,7 +10,7 @@ export default class UserLogin extends Component {
     constructor(props) {
     super(props);
     this.state = {
-        accessToken: "",
+        accessToken: " ",
     };
 }
 
@@ -59,7 +60,7 @@ export default class UserLogin extends Component {
 
     render () {
         return ( 
-            <grid style={{ display: "flex", flexDirection: "column", alignItems: "center"}}>
+            <Grid style={{ display: "flex", flexDirection: "column", alignItems: "center"}}>
                 <Row className="show-grid" style={{marginTop: 15, marginBottom: 15}}>
                     <Image src={logo} responsive />
                 </Row>
@@ -68,7 +69,7 @@ export default class UserLogin extends Component {
                 </Row>
                 <Row>
                     <Jumbotron style={{padding: 50}}>
-                        <grid>
+                        <Grid>
                             <Row>
                                 <Col xs={3} style={{ width: 45, height: 45, padding: 0, marginRight: -2}}>
                                     <Image src={logoGoogle} responsive />
@@ -85,10 +86,10 @@ export default class UserLogin extends Component {
                                     />
                                 </Col>
                             </Row>
-                        </grid>
+                        </Grid>
                     </Jumbotron>
                 </Row>
-            </grid>
+            </Grid>
         );
     }
 };
