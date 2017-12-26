@@ -1,8 +1,7 @@
 import React , {Component} from "react";
-import {Jumbotron, Col, Row, Image} from "react-bootstrap";
+import {Jumbotron, Grid, Col, Row, Image} from "react-bootstrap";
 import GoogleLogin from "react-google-login";
 import logo from "../../assets/images/mondora.png";
-import {Grid } from "react-bootstrap";
 import logoGoogle from "../../assets/images/google.png";
 
 export default class UserLogin extends Component {
@@ -68,8 +67,8 @@ export default class UserLogin extends Component {
                     {"Riassunto Affitti MacBook"}
                 </Row>
                 <Row>
-                    <Jumbotron style={{padding: 50}}>
-                        <Grid>
+                    <Jumbotron style={{padding: 50, width: 330}}>
+                        <Grid style={{ display: "flex", flexDirection: "column", alignItems: "center"}}>
                             <Row>
                                 <Col xs={3} style={{ width: 45, height: 45, padding: 0, marginRight: -2}}>
                                     <Image src={logoGoogle} responsive />
