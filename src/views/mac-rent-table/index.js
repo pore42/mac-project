@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { FormGroup, Table, FormControl, InputGroup, Grid, Col, Row, Checkbox, Image } from "react-bootstrap";
+import { FormGroup, Table, FormControl, InputGroup, Grid, Col, Row, Checkbox, Image, Button } from "react-bootstrap";
 import changeCase from "change-case";
-import GoogleLogout from "react-google-login";
 import moment from "moment";
 import { PropTypes } from "prop-types";
 import { connect } from 'react-redux';
@@ -17,7 +16,7 @@ import { deleteElement } from "../../actions/elements";
 import MacRentInfoRow from "../../components/mac-rent-info-row";
 import SimpleModal from "../../components/simpleModal";
 
-import Button from "antd/lib/button";
+import { Button as aButton } from "antd/lib/button";
 import _ from "lodash";
 
 
@@ -51,16 +50,13 @@ class MacRentTable extends Component {
         deleteError: PropTypes.bool
     };
 
-
     componentDidMount() {
         const { fetchRentInfo } = this.props;
 
         if (fetchRentInfo) {
             fetchRentInfo();
         }
-
     }
-
 
     componentWillReceiveProps(nextProps) {
         if (this.props.elements !== nextProps.elements) {
@@ -77,39 +73,22 @@ class MacRentTable extends Component {
                 showFetchErrorModal: true
             });
         }
-
-
         if (this.props.deleteError !== nextProps.deleteError) {
             this.setState({
                 showDeleteErrorModal: true
             });
         }
-
-
     }
 
     deleteMacRentInformation(iden) {
-
         const { deleteElement } = this.props;
-
-
         var target = this.state.macRentInformations.find((el) => el.realId === iden);
-
-
-        //console.log("this is the target", target);
-
-
         if (deleteElement) {
             deleteElement(iden, target.name, target.code, target.dateFrom, target.dateTo, target.fee, target.serial, target.note, target.owner, target.exist);
-            //console.log("nuovi elementi: ", this.state.macRentInformations);
         }
-        
-
         if (this.props.deleteError) {
             this.setState({ showDeleteErrorModal: true });
         }
-
-
     }
 
 
@@ -117,14 +96,6 @@ class MacRentTable extends Component {
         this.setState({ showCheckColumns: true });
     }
 
-
-
-    logout(response) {
-        localStorage.setItem("googleAccessToken", "no-token");
-        localStorage.setItem("userName", "loggedOutUser");
-        console.log("risposta a logout", response);
-        window.location = "/";
-    }
 
     handleOrderDownButtonPress(parameter, macRentInformations) {
         this.setState({ macRentInformations: _.sortBy(this.state.macRentInformations, [parameter, "code"]) });
@@ -146,7 +117,6 @@ class MacRentTable extends Component {
         );
     }
 
-
     closeFetchErrorModal() {
         this.setState({ showFetchErrorModal: false });
     }
@@ -158,7 +128,7 @@ class MacRentTable extends Component {
     showHistory() {
         this.setState({ showHistory: !this.state.showHistory });
     }
-    
+
     filterTable(elements) {
 
         var newElements = (elements
@@ -180,9 +150,8 @@ class MacRentTable extends Component {
         }
         else {
             return newElements;
-        }    
-    }    
-
+        }
+    }
 
     compareRows(a, b) {
         if (a.serial < b.serial) {
@@ -190,26 +159,39 @@ class MacRentTable extends Component {
         }
         if (a.serial > b.serial) {
             return 1;
-        }    
-        if (a.serial === b.serial){
+        }
+        if (a.serial === b.serial) {
             moment(a.lastTime).diff(moment(b.lastTime));
         }
-
     }
-
 
     renderFetchErrorModal() {
-
         return (<SimpleModal show={this.state.showFetchErrorModal} close={this.closeFetchErrorModal.bind(this)} title="Recupero dati fallito" />);
-
-
     }
 
-
     renderDeleteErrorModal() {
-
-
         return (<SimpleModal show={this.state.showDeleteErrorModal} close={this.closeDeleteErrorModal.bind(this)} title="Cancellazione, o ripristino elemento fallito" />);
+    }
+
+    onSignOut() {
+        var auth2;
+        if (window.gapi !== undefined) {
+            auth2 = window.gapi.auth2.getAuthInstance();
+
+            auth2.signOut().then((res) => {
+                localStorage.setItem("googleAccessToken", "no-token");
+                localStorage.setItem("userName", "loggedOutUser");
+                if (res !== undefined && res.ok) {
+                    alert("disconnesso correttamente");
+                }
+            })
+                .then(function () {
+                    this.props.history.push(`/`, "exitOk");
+                }.bind(this));
+        }
+        else {
+            this.props.history.push(`/`, "exitFail");
+        }
 
     }
 
@@ -230,12 +212,7 @@ class MacRentTable extends Component {
                     <Col lg={3} sm={6} xs={5} id="logoutCol" >
                         <div className="floatRight">
                             <div style={{ right: "0px", margin: "40px" }}>
-                                <GoogleLogout
-                                    id="logoutButton"
-                                    clientId="524088644940-rlsefunif94pvmlhla81d71vcogtvdiq.apps.googleusercontent.com"
-                                    buttonText="Logout"
-                                    onLogoutSuccess={(res) => console.log("onLogoutSuccess", res)}
-                                    onSuccess={this.logout} />
+                                <Button bsStyle="primary" bsSize="large" onClick={this.onSignOut.bind(this)}>Logout</Button>
                             </div>
                         </div>
                     </Col>
@@ -300,48 +277,48 @@ class MacRentTable extends Component {
                             <thead key="thead">
                                 <tr>
                                     <th>{" #"}<br />
-                                        <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("id", this.state.macRentInformations)} />
-                                        <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("id", this.state.macRentInformations)} />
+                                        <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("id", this.state.macRentInformations)} />
+                                        <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("id", this.state.macRentInformations)} />
                                     </th>
                                     {this.state.ownerChecked &&
                                         <th>{"Possessore"}<br />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("owner", this.state.macRentInformations)} />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("owner", this.state.macRentInformations)} />
+                                            <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("owner", this.state.macRentInformations)} />
+                                            <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("owner", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.serialChecked &&
                                         <th>{"Numero di serie"}<br />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("serial", this.state.macRentInformations)} />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("serial", this.state.macRentInformations)} />
+                                            <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("serial", this.state.macRentInformations)} />
+                                            <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("serial", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.dateFromChecked &&
                                         <th>{"Data inizio"}<br />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("dateFrom", this.state.macRentInformations)} />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("dateFrom", this.state.macRentInformations)} />
+                                            <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("dateFrom", this.state.macRentInformations)} />
+                                            <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("dateFrom", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.dateToChecked &&
                                         <th>{"Data termine"}<br />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("dateTo", this.state.macRentInformations)} />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("dateTo", this.state.macRentInformations)} />
+                                            <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("dateTo", this.state.macRentInformations)} />
+                                            <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("dateTo", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.nameChecked &&
                                         <th>{"Nome Mac"}<br />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("name", this.state.macRentInformations)} />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("name", this.state.macRentInformations)} />
+                                            <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("name", this.state.macRentInformations)} />
+                                            <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("name", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.codeChecked &&
                                         <th>{"Codice affitto"}<br />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("code", this.state.macRentInformations)} />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("code", this.state.macRentInformations)} />
+                                            <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("code", this.state.macRentInformations)} />
+                                            <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("code", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.feeChecked &&
                                         <th>{"Rata mensile"}<br />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("fee", this.state.macRentInformations)} />
-                                            <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("fee", this.state.macRentInformations)} />
+                                            <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("fee", this.state.macRentInformations)} />
+                                            <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("fee", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.lastModChecked && <th>
                                         {"Ultima modifica"}<br />
-                                        <Button style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("lastMod", this.state.macRentInformations)} />
-                                        <Button style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("lastMod", this.state.macRentInformations)} />
+                                        <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("lastMod", this.state.macRentInformations)} />
+                                        <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("lastMod", this.state.macRentInformations)} />
                                     </th>}
                                     <th>Note<br /><br /></th>
                                     <th>Cancella<br /><br /></th>
