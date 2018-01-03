@@ -1,5 +1,5 @@
-import React , {Component} from "react";
-import {Jumbotron, Grid, Col, Row, Image} from "react-bootstrap";
+import React, { Component } from "react";
+import { Jumbotron, Grid, Col, Row, Image } from "react-bootstrap";
 import GoogleLogin from "react-google-login";
 import logo from "../../assets/images/mondora.png";
 import logoGoogle from "../../assets/images/google.png";
@@ -9,7 +9,6 @@ export default class UserLogin extends Component {
 
 
     onSignIn(googleUser) {
-
         const { name, email } = googleUser.profileObj;
         if (email.includes("@mondora.com")) {
             localStorage.setItem("googleAccessToken", googleUser.accessToken);
@@ -19,22 +18,22 @@ export default class UserLogin extends Component {
             alert("email non autorizzata");
         }
     }
-    
+
     render() {
         const responseGoogle = (response) => {
             this.onSignIn(response);
         }
         return (
-            <Grid style={{ display: "flex", flexDirection: "column", alignItems: "center"}}>
-                <Row className="show-grid" style={{marginTop: 15, marginBottom: 15}}>
+            <Grid style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <Row className="show-grid" style={{ marginTop: 15, marginBottom: 15 }}>
                     <Image src={logo} responsive />
                 </Row>
                 <Row style={{ fontSize: 30, fontWeight: "heavy", border: 7, marginBottom: 10, fontFamily: "oldMacFont" }}>
                     {"Riassunto Affitti MacBook"}
                 </Row>
                 <Row>
-                    <Jumbotron style={{padding: 50, width: 330}}>
-                        <Grid style={{ display: "flex", flexDirection: "column", alignItems: "center"}}>
+                    <Jumbotron style={{ padding: 50, width: 330 }}>
+                        <Grid style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                             <Row>
                                 <Col xs={3} style={{ width: 45, height: 45, padding: 0, marginRight: -2 }}>
                                     <Image src={logoGoogle} responsive />
