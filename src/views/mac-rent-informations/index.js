@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {FormGroup, FormControl, InputGroup, Grid, Col, Row, Popover, Image, OverlayTrigger} from "react-bootstrap";
+import React, { Component } from "react";
+import { FormGroup, FormControl, InputGroup, Grid, Col, Row, Popover, Image, OverlayTrigger } from "react-bootstrap";
 import moment from "moment";
 import PropTypes from "prop-types";
 
@@ -37,8 +37,8 @@ export class MacRentInformations extends Component {
             exist: undefined,
             importantChange: false,
             showSaveSuccessModal: false,
-            showSaveErrorModal: false, 
-            showFetchErrorModal: false, 
+            showSaveErrorModal: false,
+            showFetchErrorModal: false,
             isSaveButtonClicked: false,
             dateFromOk: true,
             dateToOk: true,
@@ -58,19 +58,19 @@ export class MacRentInformations extends Component {
 
 
     componentDidMount() {
-        
+
         const { fetchRow } = this.props;
-        
-        
-         var id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-                 if (fetchRow && id > 0) { 
-                     fetchRow(id);
-                 }
-                
+
+
+        var id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+        if (fetchRow && id > 0) {
+            fetchRow(id);
+        }
+
         this.setState({
             title: (id > 0) ? "Modifica i dati di affitto id un mac" : "Inserire nuovi dati di affitto MacBook",
         });
-        
+
     }
 
 
@@ -83,7 +83,8 @@ export class MacRentInformations extends Component {
         } else {
             this.setState({
                 showSaveErrorModal: false
-            });}
+            });
+        }
 
         if (this.props.saveSuccess !== nextProps.saveSuccess) {
             this.setState({
@@ -103,7 +104,7 @@ export class MacRentInformations extends Component {
                 serial: nextProps.fetchedElement.serial,
                 fee: nextProps.fetchedElement.fee,
                 exist: nextProps.fetchedElement.exist,
-                });
+            });
         }
 
         //console.log(this.state.showFetchErrorModal);
@@ -117,18 +118,18 @@ export class MacRentInformations extends Component {
             });
         }
 
-        
+
 
     }
 
-    handleChange(date){
+    handleChange(date) {
         message.info("Selected Date: " + date.toString());
         this.setState({ date });
     }
 
-    handleSaveButton(isSaveButtonClicked, userName){
-        this.setState({isSaveButtonClicked: true});
-    
+    handleSaveButton(isSaveButtonClicked, userName) {
+        this.setState({ isSaveButtonClicked: true });
+
         // console.log("qui funzione", this.props.saveElement);
         // console.log("salvato con successo", this.props.saveSuccess);
         // console.log("salvo con delete nello stato uguale a :", this.state.exist);
@@ -136,32 +137,32 @@ export class MacRentInformations extends Component {
         if (this.props.saveSuccess) {
             this.setState({ showSaveSuccessModal: true });
         }
-        
+
         if (this.state.owner && this.state.serial && this.state.dateFromOk && this.state.dateToOk) {
 
             this.props.saveElement(this.state.id, this.state.name, this.state.code, this.state.dateFrom, this.state.dateTo, this.state.fee, this.state.serial, this.state.note, this.state.owner, this.state.exist, this.state.importantChange);
         }
 
-        
+
     }
 
-    handleDateFromChange(date, dateString){
+    handleDateFromChange(date, dateString) {
         this.setState(state => {
-        state.dateFrom= date;
-            }, ()=>{
-                this.setState({ dateFromOk: (this.state.dateFrom ? true : false), importantChange: true  });
-            });
+            state.dateFrom = date;
+        }, () => {
+            this.setState({ dateFromOk: (this.state.dateFrom ? true : false), importantChange: true });
+        });
     }
-    handleDateToChange(date, dateString){
+    handleDateToChange(date, dateString) {
         this.setState(state => {
-        state.dateTo= date;
-            }, ()=>{
-                this.setState({ dateToOk: (this.state.dateTo ? true: false), importantChange: true });
-            });
+            state.dateTo = date;
+        }, () => {
+            this.setState({ dateToOk: (this.state.dateTo ? true : false), importantChange: true });
+        });
     }
 
 
-    closeSaveSuccessModal() { 
+    closeSaveSuccessModal() {
         this.setState({ showSaveSuccessModal: false });
         this.props.history.push(`/results/`);
     }
@@ -169,17 +170,17 @@ export class MacRentInformations extends Component {
     closeSaveErrorModal() {
         this.setState({ showSaveErrorModal: false });
     }
-    
+
     closeFetchErrorModal() {
         this.setState({ showFetchErrorModal: false });
         this.props.history.push(`/results/`);
     }
 
-    renderSaveSuccessModal() { 
+    renderSaveSuccessModal() {
         return (<SimpleModal show={this.state.showSaveSuccessModal} close={this.closeSaveSuccessModal.bind(this)} title="Salvataggio elemento avvenuto con successo" />);
     }
 
-    renderSaveErrorModal() { 
+    renderSaveErrorModal() {
         return (<SimpleModal show={this.state.showSaveErrorModal} close={this.closeSaveErrorModal.bind(this)} title="Salvataggio elemento fallito" />);
     }
 
@@ -187,7 +188,7 @@ export class MacRentInformations extends Component {
         return (<SimpleModal show={this.state.showFetchErrorModal} close={this.closeFetchErrorModal.bind(this)} title="Recupero dati da modificare è fallito" />);
     }
 
-    render () {
+    render() {
         return (
             <form id="formRentInformation">
                 {this.renderSaveSuccessModal()}
@@ -197,70 +198,70 @@ export class MacRentInformations extends Component {
                 <Grid>
                     <Row><Col xs={12} md={12}><center><h2>{this.state.title}</h2></center></Col></Row>
                     <Row>
-                        <Col xs={12} md={12} style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                        <Col xs={12} md={12} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                             <Image src={image} responsive />
-                            </Col>
+                        </Col>
                     </Row>
                     <Row className="show-grid">
-                        <FormGroup validationState={!this.state.owner && this.state.isSaveButtonClicked ? "error": null }>
-                            <Col sm={4} style = {{marginBottom: 5}}>{"Possessore"}</Col>
-                            <Col sm = {7} xs={10}>
+                        <FormGroup validationState={!this.state.owner && this.state.isSaveButtonClicked ? "error" : null}>
+                            <Col sm={4} style={{ marginBottom: 5 }}>{"Possessore"}</Col>
+                            <Col sm={7} xs={10}>
                                 <FormGroup controlId="formBasicText" >
                                     <FormControl type="text"
-                                            placeholder="Inserisci il nome dell'attuale possessore"
-                                            onChange={e => this.setState({ owner: e.target.value, importantChange: true })}
-                                            value={this.state.owner}
-                                        />
-                                        <FormControl.Feedback />
+                                        placeholder="Inserisci il nome dell'attuale possessore"
+                                        onChange={e => this.setState({ owner: e.target.value, importantChange: true })}
+                                        value={this.state.owner}
+                                    />
+                                    <FormControl.Feedback />
                                 </FormGroup>
                             </Col>
-                            <Col sm = {1} xs={1}>
+                            <Col sm={1} xs={1}>
                                 <OverlayTrigger trigger="click" placement="top" overlay={
                                     <Popover id="popover-positioned-right" title="info">
-                                            {"Persona a cui è affidato il Mac"}
+                                        {"Persona a cui è affidato il Mac"}
                                     </Popover>
-                                    }>
+                                }>
                                     <Button shape="circle" icon="info" />
                                 </OverlayTrigger>
                             </Col>
                         </FormGroup>
                     </Row>
                     <Row className="show-grid">
-                        <FormGroup validationState={!this.state.serial && this.state.isSaveButtonClicked ? "error": null }>
-                            <Col sm={4} style = {{marginBottom: 5}}>{"Numero di serie"}</Col>
+                        <FormGroup validationState={!this.state.serial && this.state.isSaveButtonClicked ? "error" : null}>
+                            <Col sm={4} style={{ marginBottom: 5 }}>{"Numero di serie"}</Col>
                             <Col sm={8}>
                                 <FormGroup controlId="formBasicText">
                                     <FormControl type="text"
-                                            placeholder="Inserisci seriale del tuo Mac"
-                                            onChange={e => this.setState({ serial: e.target.value, importantChange: true})}
-                                            value={this.state.serial}
-                                        />
-                                        <FormControl.Feedback />
+                                        placeholder="Inserisci seriale del tuo Mac"
+                                        onChange={e => this.setState({ serial: e.target.value, importantChange: true })}
+                                        value={this.state.serial}
+                                    />
+                                    <FormControl.Feedback />
                                 </FormGroup>
                             </Col>
                         </FormGroup>
                     </Row>
-                    <Row className="show-grid" style ={{marginBottom: 15}}>
-                        <FormGroup validationState={!this.state.dateFromOk && this.state.isSaveButtonClicked ? "error": null }>
-                            <Col sm={4} style = {{marginBottom: 5}}>{"Data inizio contratto"}</Col>
+                    <Row className="show-grid" style={{ marginBottom: 15 }}>
+                        <FormGroup validationState={!this.state.dateFromOk && this.state.isSaveButtonClicked ? "error" : null}>
+                            <Col sm={4} style={{ marginBottom: 5 }}>{"Data inizio contratto"}</Col>
                             <Col sm={8}>
                                 <DatePicker
-                                    allowClear={false}    
+                                    allowClear={false}
                                     size={"large"}
                                     format={"DD/MM/YYYY"}
                                     onChange={this.handleDateFromChange.bind(this)}
                                     value={moment(this.state.dateFrom)}
-                                /> 
+                                />
                             </Col>
                         </FormGroup>
                     </Row>
 
-                    <Row className="show-grid" style ={{marginBottom: 15}}>
-                        <FormGroup validationState={!this.state.dateToOk && this.state.isSaveButtonClicked ? "error": null }>
-                            <Col style = {{marginBottom: 5}} sm={4}>{"Data termine contratto"}</Col>
+                    <Row className="show-grid" style={{ marginBottom: 15 }}>
+                        <FormGroup validationState={!this.state.dateToOk && this.state.isSaveButtonClicked ? "error" : null}>
+                            <Col style={{ marginBottom: 5 }} sm={4}>{"Data termine contratto"}</Col>
                             <Col sm={8}>
-                                <DatePicker 
-                                    allowClear={false}      
+                                <DatePicker
+                                    allowClear={false}
                                     size={"large"}
                                     format={"DD/MM/YYYY"}
                                     onChange={this.handleDateToChange.bind(this)}
@@ -272,7 +273,7 @@ export class MacRentInformations extends Component {
 
                     <Row className="show-grid">
                         <FormGroup validationState={null}>
-                            <Col sm={4} style = {{marginBottom: 5}}>{"Nome mac"}</Col>
+                            <Col sm={4} style={{ marginBottom: 5 }}>{"Nome mac"}</Col>
                             <Col sm={8}>
                                 <FormGroup controlId="formBasicText" >
                                     <FormControl type="text"
@@ -288,13 +289,13 @@ export class MacRentInformations extends Component {
 
                     <Row className="show-grid">
                         <FormGroup validationState={null}>
-                            <Col sm={4}style = {{marginBottom: 5}}>{"Codice Contratto"}</Col>
+                            <Col sm={4} style={{ marginBottom: 5 }}>{"Codice Contratto"}</Col>
                             <Col sm={8}>
                                 <FormGroup controlId="formBasicText">
                                     <FormControl type="text"
                                         placeholder="Inserisci il codice del contratto d'affitto"
                                         onChange={e => this.setState({ code: e.target.value })}
-                                        value={this.state.code}                                    />
+                                        value={this.state.code} />
                                     <FormControl.Feedback />
                                 </FormGroup>
                             </Col>
@@ -303,20 +304,20 @@ export class MacRentInformations extends Component {
 
 
 
-                    
+
                     <Row className="show-grid">
-                        <FormGroup validationState={null }>
-                            <Col sm={4} style = {{marginBottom: 5}}>{"Rata mensile"}</Col>
+                        <FormGroup validationState={null}>
+                            <Col sm={4} style={{ marginBottom: 5 }}>{"Rata mensile"}</Col>
                             <Col sm={8}>
-                                <FormGroup validationState={ typeof (Number(this.state.fee)) !== "number" ? "error" : null}>
+                                <FormGroup validationState={typeof (Number(this.state.fee)) !== "number" ? "error" : null}>
                                     <InputGroup>
-                                        <FormControl 
+                                        <FormControl
                                             placeholder="Inserisci importo rata mensile"
                                             type="number"
                                             onChange={e => this.setState({ fee: e.target.value })}
                                             value={this.state.fee}
-                                            />
-                                            <InputGroup.Addon>€</InputGroup.Addon>
+                                        />
+                                        <InputGroup.Addon>€</InputGroup.Addon>
                                     </InputGroup>
                                 </FormGroup>
                             </Col>
@@ -325,25 +326,25 @@ export class MacRentInformations extends Component {
 
                     <Row className="show-grid">
                         <FormGroup>
-                            <Col sm={4} style = {{marginBottom: 5}}>{"Note"}</Col>
+                            <Col sm={4} style={{ marginBottom: 5 }}>{"Note"}</Col>
                             <Col sm={8}>
                                 <FormGroup controlId="formControlsTextarea">
                                     <FormControl componentClass="textarea"
                                         placeholder="Inserisci eventuali note"
-                                        value={ this.state.note}
-                                        onChange={e => this.setState({ note: e.target.value })}/>
+                                        value={this.state.note}
+                                        onChange={e => this.setState({ note: e.target.value })} />
                                 </FormGroup>
                             </Col>
                         </FormGroup>
                     </Row>
 
                     <Row className="show-grid">
-                            <Col sm={2} smOffset={5} xs={4} xsOffset={1} style = {{marginBottom: 5}}>
-                                <Button onClick={() => this.props.history.push("/results/")}>Annulla</Button>
-                            </Col>
-                            <Col sm={1} xs={1}>
-                                <Button type="primary" onClick={() =>this.handleSaveButton(this.isSaveButtonClicked, this.userName)}> Salva </Button>
-                            </Col>
+                        <Col sm={2} smOffset={5} xs={4} xsOffset={1} style={{ marginBottom: 5 }}>
+                            <Button onClick={() => this.props.history.push("/results/")}>Annulla</Button>
+                        </Col>
+                        <Col sm={1} xs={1}>
+                            <Button type="primary" onClick={() => this.handleSaveButton(this.isSaveButtonClicked, this.userName)}> Salva </Button>
+                        </Col>
                     </Row>
                 </Grid>
             </form>

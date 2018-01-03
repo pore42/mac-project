@@ -52,7 +52,7 @@ export default withRouter(class MacRentInfoRow extends Component {
         var deleteElement = this.props.delete;
 
         confirmAlert({
-            title: this.props.exist ? "Eliminare elemento?": "Ripristinare elemento?",
+            title: this.props.exist ? "Eliminare elemento?" : "Ripristinare elemento?",
             message: "",
             confirmLabel: "OK",
             cancelLabel: "Annulla",
@@ -61,7 +61,7 @@ export default withRouter(class MacRentInfoRow extends Component {
 
     }
 
-    renderDeleteOrRestore() { 
+    renderDeleteOrRestore() {
 
         return ((this.props.exist) ?
             <td className="rowDataFix2"><span className="rowData">  <Button size="small" icon="delete" onClick={this.handleDeleteButton.bind(this)}></Button></span></td> :
@@ -91,7 +91,7 @@ export default withRouter(class MacRentInfoRow extends Component {
         } = this.props
         var momentFrom = moment(dateFrom, "DD/MM/YYYY");
         var momentTo = moment(dateTo, "DD/MM/YYYY");
-        var momentActual = moment(moment(), "DD/MM/YYYY" );
+        var momentActual = moment(moment(), "DD/MM/YYYY");
 
         var diffFrom = momentActual.diff(momentFrom);
         var diffTo = momentActual.diff(momentTo);
@@ -108,15 +108,15 @@ export default withRouter(class MacRentInfoRow extends Component {
                 {displayFee && <td className="card"><span className="rowData">{fee > 0 ? (fee + "€") : "-"}</span></td>}
                 {displayLastMod && <td className="card"><span className="rowData">{lastMod}</span></td>}
                 <td id="rowDataFix">
-                
+
                     <OverlayTrigger trigger="click" placement="left" overlay={
-                    <Popover id="popover-positioned-left">
-                            {note} 
-                    </Popover>
-                }>
+                        <Popover id="popover-positioned-left">
+                            {note}
+                        </Popover>
+                    }>
                         <span className="rowData"><Button size="small" shape="circle" icon="paper-clip" /> </span>
                     </OverlayTrigger>
-                  
+
                 </td>
                 {this.renderDeleteOrRestore()}
                 <td id="rowDataFix3"><span className="rowData">  <Button size="small" type="primary" icon="edit" onClick={this.handleEditButton.bind(this)}></Button></span></td>

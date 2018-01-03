@@ -42,7 +42,7 @@ export default function elements(state = defaultState, { type, payload }) {
             {
                 var clone = Object.assign([], state.data);
                 var targetIndex = clone.findIndex((el) => el.realId === payload);
-                
+
                 clone[targetIndex].exist = !clone[targetIndex].exist;
                 return {
                     ...state,
@@ -78,7 +78,7 @@ export default function elements(state = defaultState, { type, payload }) {
                 ...state,
                 fetchRowError: true,
                 fetchedElement: payload
-            }    
+            }
         default:
             return state;
     }

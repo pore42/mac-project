@@ -27,36 +27,36 @@ export const FETCH_ROW_ERROR = 'FETCH_ROW_ERROR';
 
 export function fetchRentInfo() {
 
-       return async dispatch => {
+    return async dispatch => {
 
-            try {
-                const result = await post(REACT_APP_RENT_INFO + `${localStorage.getItem("googleAccessToken")}`, {
-                    query: {
-                        kind: [
-                            {
-                                name: "mac-rent-information"
-                            }
-                        ]
-                    }
-                });
-            
-                var data = await result.data;
-               // console.log("ho recuperato questo ", data);
-                var elements = data.batch.entityResults !== undefined ? deserializedMacRentInformation(data.batch.entityResults) : [];
+        try {
+            const result = await post(REACT_APP_RENT_INFO + `${localStorage.getItem("googleAccessToken")}`, {
+                query: {
+                    kind: [
+                        {
+                            name: "mac-rent-information"
+                        }
+                    ]
+                }
+            });
+
+            var data = await result.data;
+            // console.log("ho recuperato questo ", data);
+            var elements = data.batch.entityResults !== undefined ? deserializedMacRentInformation(data.batch.entityResults) : [];
 
 
-                dispatch({
-                    type: FETCH_RENT_INFO_SUCCESS,
-                    payload: elements
-                });
+            dispatch({
+                type: FETCH_RENT_INFO_SUCCESS,
+                payload: elements
+            });
 
-         } catch (error) {
-                dispatch({
-                    type: FETCH_RENT_INFO_ERROR,
-                    payload: error
-                });
-            }
-        };
+        } catch (error) {
+            dispatch({
+                type: FETCH_RENT_INFO_ERROR,
+                payload: error
+            });
+        }
+    };
 
 }
 
@@ -64,7 +64,7 @@ export function fetchRentInfo() {
 
 function deserializedMacRentInformation(rowElements) {
 
-   //rowElements.forEach(el => console.log(el.entity.properties.exist.booleanValue) );
+    //rowElements.forEach(el => console.log(el.entity.properties.exist.booleanValue) );
 
 
     const elements = rowElements.map((el, i) =>
@@ -93,77 +93,77 @@ function deserializedMacRentInformation(rowElements) {
 
 export function deleteElement(iden, name, code, dateFrom, dateTo, fee, serial, note, owner, exist) {
     return async dispatch => {
-        
+
         //console.log("questo è l'id", iden);
 
-        try{
-        var modifyElement =
+        try {
+            var modifyElement =
                 {
                     kind: "mac-rent-information",
                     id: iden
                 };
 
-        const result = await post(REACT_APP_RENT_SAVE + `${localStorage.getItem("googleAccessToken")}`, {
-            "mode": "NON_TRANSACTIONAL",
-            "mutations": [
-                {
-                    "update": {
-                        "key": {
-                            "partitionId": {
-                                "projectId": "mac-rent-informations"
+            const result = await post(REACT_APP_RENT_SAVE + `${localStorage.getItem("googleAccessToken")}`, {
+                "mode": "NON_TRANSACTIONAL",
+                "mutations": [
+                    {
+                        "update": {
+                            "key": {
+                                "partitionId": {
+                                    "projectId": "mac-rent-informations"
+                                },
+                                "path": [
+                                    modifyElement
+                                ]
                             },
-                            "path": [
-                                modifyElement
-                            ]
-                        },
-                        "properties": {
+                            "properties": {
 
-                            "name": {
-                                "stringValue": name
-                            },
-                            "code": {
-                                "stringValue": code
-                            },
-                            "dateFrom": {
-                                "timestampValue": dateFrom
-                            },
-                            "dateTo": {
-                                "timestampValue": dateTo
-                            },
-                            "fee": {
-                                "integerValue": fee
-                            },
-                            "serial": {
-                                "stringValue": serial === "" ? "-" : serial
-                            },
-                            "note": {
-                                "stringValue": note === "" ? "-" : note
-                            },
-                            "owner": {
-                                "stringValue": owner === "" ? "-" : owner
-                            },
-                            "lastMod": {
-                                "stringValue": localStorage.getItem("userName")
-                            },
-                            "exist": {
-                                "booleanValue": !exist
-                            },
-                            "lastTime":
-                            {
-                                "timestampValue": moment()
+                                "name": {
+                                    "stringValue": name
+                                },
+                                "code": {
+                                    "stringValue": code
+                                },
+                                "dateFrom": {
+                                    "timestampValue": dateFrom
+                                },
+                                "dateTo": {
+                                    "timestampValue": dateTo
+                                },
+                                "fee": {
+                                    "integerValue": fee
+                                },
+                                "serial": {
+                                    "stringValue": serial === "" ? "-" : serial
+                                },
+                                "note": {
+                                    "stringValue": note === "" ? "-" : note
+                                },
+                                "owner": {
+                                    "stringValue": owner === "" ? "-" : owner
+                                },
+                                "lastMod": {
+                                    "stringValue": localStorage.getItem("userName")
+                                },
+                                "exist": {
+                                    "booleanValue": !exist
+                                },
+                                "lastTime":
+                                {
+                                    "timestampValue": moment()
+                                }
                             }
                         }
                     }
-                }
-            ]
-        });
-
-        if (result !== undefined) {
-            dispatch({
-                type: DELETE_SUCCESS,
-                payload: iden
+                ]
             });
-        }
+
+            if (result !== undefined) {
+                dispatch({
+                    type: DELETE_SUCCESS,
+                    payload: iden
+                });
+            }
 
         } catch (error) {
             dispatch({
@@ -186,14 +186,14 @@ export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note,
         try {
 
             var modifyElement;
-            if (id !== 0 && !importantChange){
+            if (id !== 0 && !importantChange) {
                 modifyElement =
                     {
                         kind: "mac-rent-information",
                         id: id
                     };
-                
-                
+
+
                 const result = await post(REACT_APP_RENT_SAVE + `${localStorage.getItem("googleAccessToken")}`, {
                     "mode": "NON_TRANSACTIONAL",
                     "mutations": [
@@ -248,21 +248,21 @@ export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note,
                         }
                     ]
                 });
-                
+
                 if (result !== undefined) {
                     dispatch({
                         type: SAVE_SUCCESS,
                     });
                 }
-                
-                } else {
-                    exist = id === 0 ? true : exist ;
-                    
+
+            } else {
+                exist = id === 0 ? true : exist;
+
                 modifyElement =
-                {
-                    kind: "mac-rent-information"
-                };
-                
+                    {
+                        kind: "mac-rent-information"
+                    };
+
                 const result = await post(REACT_APP_RENT_SAVE + `${localStorage.getItem("googleAccessToken")}`, {
                     "mode": "NON_TRANSACTIONAL",
                     "mutations": [
@@ -277,7 +277,7 @@ export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note,
                                     ]
                                 },
                                 "properties": {
-    
+
                                     "name": {
                                         "stringValue": name
                                     },
@@ -317,18 +317,18 @@ export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note,
                         }
                     ]
                 });
-                
-            
-            if (result !== undefined) {
+
+
+                if (result !== undefined) {
                     dispatch({
                         type: SAVE_SUCCESS,
                     });
                 }
 
-            } 
-            
-         
-            
+            }
+
+
+
 
         } catch (error) {
             dispatch({
@@ -341,45 +341,45 @@ export function saveElement(id, name, code, dateFrom, dateTo, fee, serial, note,
 
 
 
-export function fetchRow(id) { 
-    
+export function fetchRow(id) {
+
     return async dispatch => {
         try {
             //console.log("questo è l'id", id);
 
-                const result = await post(REACT_APP_FETCH_ELEMENT + `${localStorage.getItem("googleAccessToken")}`, {
-                    "keys": [
-                        {
-                            "path": [
-                                {
-                                    "id": id !== 0 ? id : 0,
-                                    "kind": "mac-rent-information"
-                                }
-                            ]
-                        }
-                    ]
-                });
-               //console.log(result.data);
-                
-                var r = result.data.found[0].entity.properties;
-
-                dispatch({
-                    type: FETCH_ROW_SUCCESS,
-                    payload: {
-                        id: id,
-                        name: (r.name) ? r.name.stringValue : "",
-                        code: (r.code) ? r.code.stringValue : "",
-                        dateFrom: (r.dateFrom) ? moment(r.dateFrom.timestampValue) : moment(),
-                        dateTo: (r.dateTo) ? moment(r.dateTo.timestampValue) : moment(),
-                        fee: (r.fee) ? r.fee.integerValue : "",
-                        serial: (r.serial) ? r.serial.stringValue : "",
-                        note: (r.note) ? r.note.stringValue : "",
-                        owner: (r.owner) ? r.owner.stringValue : "",
-                        exist: (r.exist !== undefined) ? r.exist.booleanValue : undefined,
+            const result = await post(REACT_APP_FETCH_ELEMENT + `${localStorage.getItem("googleAccessToken")}`, {
+                "keys": [
+                    {
+                        "path": [
+                            {
+                                "id": id !== 0 ? id : 0,
+                                "kind": "mac-rent-information"
+                            }
+                        ]
                     }
-                });
+                ]
+            });
+            //console.log(result.data);
 
-        } catch (error) { 
+            var r = result.data.found[0].entity.properties;
+
+            dispatch({
+                type: FETCH_ROW_SUCCESS,
+                payload: {
+                    id: id,
+                    name: (r.name) ? r.name.stringValue : "",
+                    code: (r.code) ? r.code.stringValue : "",
+                    dateFrom: (r.dateFrom) ? moment(r.dateFrom.timestampValue) : moment(),
+                    dateTo: (r.dateTo) ? moment(r.dateTo.timestampValue) : moment(),
+                    fee: (r.fee) ? r.fee.integerValue : "",
+                    serial: (r.serial) ? r.serial.stringValue : "",
+                    note: (r.note) ? r.note.stringValue : "",
+                    owner: (r.owner) ? r.owner.stringValue : "",
+                    exist: (r.exist !== undefined) ? r.exist.booleanValue : undefined,
+                }
+            });
+
+        } catch (error) {
             dispatch({
                 type: FETCH_ROW_ERROR,
                 payload: {

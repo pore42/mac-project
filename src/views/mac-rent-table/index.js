@@ -212,7 +212,7 @@ class MacRentTable extends Component {
                     <Col lg={3} sm={6} xs={5} id="logoutCol" >
                         <div className="floatRight">
                             <div style={{ right: "0px", margin: "40px" }}>
-                                <Button bsStyle="primary" bsSize="large" onClick={this.onSignOut.bind(this)}>Logout</Button>
+                                <Button bsStyle="danger" bsSize="large" onClick={this.onSignOut.bind(this)}>Logout</Button>
                             </div>
                         </div>
                     </Col>
