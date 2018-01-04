@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import enUS from "antd/lib/locale-provider/en_US";
 import "antd/dist/antd.css";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import "./index.css";
@@ -23,7 +23,7 @@ import LocaleProvider from "antd/lib/locale-provider";
 //incapsulo tutto nel provider, che sarebbe lo store dell'applicazione
 ReactDOM.render((
   <Provider store={store}>
-    <BrowserRouter>
+    <HashRouter>
       <LocaleProvider locale={enUS}>
         <Switch>
           <PrivateRoute path="/input/:id" component={MacRentInformations} />
@@ -32,6 +32,6 @@ ReactDOM.render((
           <Route path="/" component={UserLogin} />
         </Switch>
       </LocaleProvider>
-    </BrowserRouter>
+    </HashRouter>
   </Provider>
 ), document.getElementById("root"));
