@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal , Button} from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import { PropTypes } from "prop-types";
 
 export default class SimpleModal extends Component {
@@ -21,6 +21,6 @@ export default class SimpleModal extends Component {
             </Modal.Footer>
 
         </Modal>)
-     }
+    }
 
 }
