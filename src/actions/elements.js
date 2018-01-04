@@ -41,7 +41,7 @@ export function fetchRentInfo() {
                 });
             
                 var data = await result.data;
-               // console.log("ho recuperato questo ", data);
+                console.log("ho recuperato questo ", data);
                 var elements = data.batch.entityResults !== undefined ? deserializedMacRentInformation(data.batch.entityResults) : [];
 
 
