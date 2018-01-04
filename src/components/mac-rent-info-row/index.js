@@ -64,8 +64,8 @@ export default withRouter(class MacRentInfoRow extends Component {
     renderDeleteOrRestore() {
 
         return ((this.props.exist) ?
-            <td className="rowDataFix2"><span className="rowData">  <Button size="small" icon="delete" onClick={this.handleDeleteButton.bind(this)}></Button></span></td> :
-            <td className="rowDataFix2"><span className="rowData">  <Image size="small" width={20} height={20} src={restore_from_trash} onClick={this.handleDeleteButton.bind(this)}></Image></span></td>);
+            <td id="rowDataFix2"><span className="rowData">  <Button size="small" icon="delete" onClick={this.handleDeleteButton.bind(this)}></Button></span></td> :
+            <td id="rowDataFix2"><span className="rowData">  <Image size="small" width={20} height={20} src={restore_from_trash} onClick={this.handleDeleteButton.bind(this)}></Image></span></td>);
     }
 
     render() {
