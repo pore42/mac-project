@@ -10,13 +10,10 @@ export default class UserLogin extends Component {
 
     onSignIn(googleUser) {
         const { name, email } = googleUser.profileObj;
-        if (email.includes("@mondora.com")) {
+        !email.includes("@mondora.com") ? localStorage.setItem("userName", "loggedOutUser") : localStorage.setItem("userName", name);
             localStorage.setItem("googleAccessToken", googleUser.accessToken);
-            localStorage.setItem("userName", name)
             this.props.history.push(`/results/`, "statonuovo");
-        } else {
-            alert("email non autorizzata");
-        }
+
     }
 
     render() {
