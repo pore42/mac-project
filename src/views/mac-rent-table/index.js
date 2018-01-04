@@ -16,7 +16,7 @@ import { deleteElement } from "../../actions/elements";
 import MacRentInfoRow from "../../components/mac-rent-info-row";
 import SimpleModal from "../../components/simpleModal";
 
-import { Button as aButton } from "antd/lib/button";
+import { Button as AntButton } from "antd";
 import _ from "lodash";
 
 
@@ -98,10 +98,15 @@ class MacRentTable extends Component {
 
 
     handleOrderDownButtonPress(parameter, macRentInformations) {
-        this.setState({ macRentInformations: _.sortBy(this.state.macRentInformations, [parameter, "code"]) });
+        this.setState({
+            macRentInformations: _.sortBy(macRentInformations, [parameter, "code"])
+        });
     }
+
     handleOrderUpButtonPress(parameter, macRentInformations) {
-        this.setState({ macRentInformations: _.sortBy(this.state.macRentInformations, [parameter, "code"]).reverse() });
+        this.setState({
+            macRentInformations: _.sortBy(macRentInformations, [parameter, "code"]).reverse()
+        });
     }
 
     filterValues(macRentInformations, filterTerm) {
@@ -133,12 +138,10 @@ class MacRentTable extends Component {
 
         var newElements = (elements
             .filter(element => this.filterValues(element, this.state.filterTerm))
-            .filter(element => element.exist || (!element.exist && this.state.showHistory))
-            .sort((a, b) => this.compareRows(a, b)));
-        if (!this.state.showHistory) {
+            .filter(element => element.exist || (!element.exist && this.state.showHistory)));
 
+        if (!this.state.showHistory) {
             if (newElements.length < 1) return [];
-            newElements = newElements.sort((a, b) => this.compareRows(a, b));
             var onlyLastElements = [newElements[0]];
             for (var i = 1; i < newElements.length; i++) {
                 if (newElements[i].serial !== newElements[i - 1].serial) {
@@ -146,22 +149,9 @@ class MacRentTable extends Component {
                 };
             }
             return onlyLastElements
-            //return newElements;
         }
         else {
             return newElements;
-        }
-    }
-
-    compareRows(a, b) {
-        if (a.serial < b.serial) {
-            return -1;
-        }
-        if (a.serial > b.serial) {
-            return 1;
-        }
-        if (a.serial === b.serial) {
-            moment(a.lastTime).diff(moment(b.lastTime));
         }
     }
 
@@ -277,48 +267,48 @@ class MacRentTable extends Component {
                             <thead key="thead">
                                 <tr>
                                     <th>{" #"}<br />
-                                        <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("id", this.state.macRentInformations)} />
-                                        <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("id", this.state.macRentInformations)} />
+                                        <AntButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("id", this.state.macRentInformations)} />
+                                        <AntButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("id", this.state.macRentInformations)} />
                                     </th>
                                     {this.state.ownerChecked &&
                                         <th>{"Possessore"}<br />
-                                            <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("owner", this.state.macRentInformations)} />
-                                            <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("owner", this.state.macRentInformations)} />
+                                            <AntButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("owner", this.state.macRentInformations)} />
+                                            <AntButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("owner", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.serialChecked &&
                                         <th>{"Numero di serie"}<br />
-                                            <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("serial", this.state.macRentInformations)} />
-                                            <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("serial", this.state.macRentInformations)} />
+                                            <AntButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("serial", this.state.macRentInformations)} />
+                                            <AntButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("serial", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.dateFromChecked &&
                                         <th>{"Data inizio"}<br />
-                                            <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("dateFrom", this.state.macRentInformations)} />
-                                            <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("dateFrom", this.state.macRentInformations)} />
+                                            <AntButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("dateFrom", this.state.macRentInformations)} />
+                                            <AntButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("dateFrom", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.dateToChecked &&
                                         <th>{"Data termine"}<br />
-                                            <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("dateTo", this.state.macRentInformations)} />
-                                            <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("dateTo", this.state.macRentInformations)} />
+                                            <AntButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("dateTo", this.state.macRentInformations)} />
+                                            <AntButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("dateTo", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.nameChecked &&
                                         <th>{"Nome Mac"}<br />
-                                            <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("name", this.state.macRentInformations)} />
-                                            <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("name", this.state.macRentInformations)} />
+                                            <AntButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("name", this.state.macRentInformations)} />
+                                            <AntButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("name", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.codeChecked &&
                                         <th>{"Codice affitto"}<br />
-                                            <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("code", this.state.macRentInformations)} />
-                                            <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("code", this.state.macRentInformations)} />
+                                            <AntButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("code", this.state.macRentInformations)} />
+                                            <AntButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("code", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.feeChecked &&
                                         <th>{"Rata mensile"}<br />
-                                            <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("fee", this.state.macRentInformations)} />
-                                            <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("fee", this.state.macRentInformations)} />
+                                            <AntButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("fee", this.state.macRentInformations)} />
+                                            <AntButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("fee", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.lastModChecked && <th>
                                         {"Ultima modifica"}<br />
-                                        <aButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("lastMod", this.state.macRentInformations)} />
-                                        <aButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("lastMod", this.state.macRentInformations)} />
+                                        <AntButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("lastMod", this.state.macRentInformations)} />
+                                        <AntButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("lastMod", this.state.macRentInformations)} />
                                     </th>}
                                     <th>Note<br /><br /></th>
                                     <th>Cancella<br /><br /></th>
