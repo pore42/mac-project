@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Popover, OverlayTrigger } from "react-bootstrap";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { confirmAlert } from "react-confirm-alert";
@@ -44,9 +44,6 @@ export default withRouter(class MacRentInfoRow extends Component {
         displayLastMod: PropTypes.bool,
     }
 
-    handleEditButton() {
-        this.props.history.push(`/input/${this.props.realId}`);
-    }
     handleDeleteButton() {
 
         var deleteElement = this.props.delete;
@@ -119,7 +116,7 @@ export default withRouter(class MacRentInfoRow extends Component {
 
                 </td>
                 {this.renderDeleteOrRestore()}
-                <td id="rowDataFix3"><span className="rowData">  <Button size="small" type="primary" icon="edit" onClick={this.handleEditButton.bind(this)}></Button></span></td>
+                <td id="rowDataFix3"><span className="rowData"><Link to={`/input/${this.props.realId}`}><Button size="small" type="primary" icon="edit" ></Button></Link></span></td>
             </tr>
         );
     }
