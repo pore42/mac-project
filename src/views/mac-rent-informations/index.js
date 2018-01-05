@@ -40,8 +40,8 @@ export class MacRentInformations extends Component {
             showSaveErrorModal: false,
             showFetchErrorModal: false,
             isSaveButtonClicked: false,
-            dateFromOk: true,
-            dateToOk: true,
+            dateFromOk: false,
+            dateToOk: false,
             userName: localStorage.getItem("userName"),
             title: "",
             macRentInformations: [],
@@ -138,8 +138,7 @@ export class MacRentInformations extends Component {
             this.setState({ showSaveSuccessModal: true });
         }
 
-        if (this.state.owner && this.state.serial && this.state.dateFromOk && this.state.dateToOk) {
-
+        if (this.state.owner !== "" && this.state.serial !== "" && this.state.dateFromOk && this.state.dateToOk ) {
             this.props.saveElement(this.state.id, this.state.name, this.state.code, this.state.dateFrom, this.state.dateTo, this.state.fee, this.state.serial, this.state.note, this.state.owner, this.state.exist, this.state.importantChange);
         }
 
@@ -147,20 +146,20 @@ export class MacRentInformations extends Component {
     }
 
     handleDateFromChange(date, dateString) {
-        this.setState(state => {
-            state.dateFrom = date;
-        }, () => {
-            this.setState({ dateFromOk: (this.state.dateFrom ? true : false), importantChange: true });
-        });
-    }
-    handleDateToChange(date, dateString) {
-        this.setState(state => {
-            state.dateTo = date;
-        }, () => {
-            this.setState({ dateToOk: (this.state.dateTo ? true : false), importantChange: true });
+        this.setState({
+            dateFrom : date,
+            importantChange: true,
+            dateFromOk: true,
         });
     }
 
+    handleDateToChange(date, dateString) {
+    this.setState({
+        dateTo: date,
+        importantChange: true,
+        dateToOk: true
+        });
+    }
 
     closeSaveSuccessModal() {
         this.setState({ showSaveSuccessModal: false });
@@ -204,7 +203,7 @@ export class MacRentInformations extends Component {
                     </Row>
                     <Row className="show-grid">
                         <FormGroup validationState={!this.state.owner && this.state.isSaveButtonClicked ? "error" : null}>
-                            <Col sm={4} style={{ marginBottom: 5 }}>{"Possessore"}</Col>
+                            <Col sm={4} style={{ marginBottom: 5 }}>{"Possessore*"}</Col>
                             <Col sm={7} xs={10}>
                                 <FormGroup controlId="formBasicText" >
                                     <FormControl type="text"
@@ -228,7 +227,7 @@ export class MacRentInformations extends Component {
                     </Row>
                     <Row className="show-grid">
                         <FormGroup validationState={!this.state.serial && this.state.isSaveButtonClicked ? "error" : null}>
-                            <Col sm={4} style={{ marginBottom: 5 }}>{"Numero di serie"}</Col>
+                            <Col sm={4} style={{ marginBottom: 5 }}>{"Numero di serie*"}</Col>
                             <Col sm={8}>
                                 <FormGroup controlId="formBasicText">
                                     <FormControl type="text"
@@ -243,7 +242,7 @@ export class MacRentInformations extends Component {
                     </Row>
                     <Row className="show-grid" style={{ marginBottom: 15 }}>
                         <FormGroup validationState={!this.state.dateFromOk && this.state.isSaveButtonClicked ? "error" : null}>
-                            <Col sm={4} style={{ marginBottom: 5 }}>{"Data inizio contratto"}</Col>
+                            <Col sm={4} style={{ marginBottom: 5 }}>{"Data inizio contratto*"}</Col>
                             <Col sm={8}>
                                 <DatePicker
                                     allowClear={false}
@@ -258,7 +257,7 @@ export class MacRentInformations extends Component {
 
                     <Row className="show-grid" style={{ marginBottom: 15 }}>
                         <FormGroup validationState={!this.state.dateToOk && this.state.isSaveButtonClicked ? "error" : null}>
-                            <Col style={{ marginBottom: 5 }} sm={4}>{"Data termine contratto"}</Col>
+                            <Col style={{ marginBottom: 5 }} sm={4}>{"Data termine contratto*"}</Col>
                             <Col sm={8}>
                                 <DatePicker
                                     allowClear={false}
