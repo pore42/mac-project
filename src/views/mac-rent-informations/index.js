@@ -32,7 +32,7 @@ export class MacRentInformations extends Component {
             name: "",
             code: "",
             serial: "",
-            owner: "",
+            owner: localStorage.getItem("userName"),
             fee: 0,
             exist: undefined,
             importantChange: false,
@@ -146,8 +146,11 @@ export class MacRentInformations extends Component {
     }
 
     handleDateFromChange(date, dateString) {
+        var dateTo = this.state.dateFromOk ? this.state.dateTo : moment(date + 31536000000);
+        console.log(dateTo);
         this.setState({
-            dateFrom : date,
+            dateFrom: date,
+            dateTo: dateTo,
             importantChange: true,
             dateFromOk: true,
         });
