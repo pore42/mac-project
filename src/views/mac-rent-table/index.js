@@ -268,7 +268,7 @@ class MacRentTable extends Component {
                         <Table id="resTable" style={{ fontSize: 13 }} striped bordered responsive>
                             <thead key="thead">
                                 <tr>
-                                    <th style={{minWidth: 78}}>{" #"}<br />
+                                    <th style={{minWidth: 80}}>{" #"}<br />
                                         <AntButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("id", this.state.macRentInformations)} />
                                         <AntButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("id", this.state.macRentInformations)} />
                                     </th>
