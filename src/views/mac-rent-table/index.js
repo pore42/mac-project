@@ -29,7 +29,7 @@ class MacRentTable extends Component {
             dateToChecked: true,
             serialChecked: true,
             ownerChecked: true,
-            feeChecked: false,
+            feeChecked: true,
             lastModChecked: true,
             showCheckColumns: true,
             showFetchErrorModal: false,
