@@ -68,7 +68,7 @@ export class MacRentInformations extends Component {
         }
 
         this.setState({
-            title: (id > 0) ? "Modifica i dati di affitto id un mac" : "Inserire nuovi dati di affitto MacBook",
+            title: (id > 0) ? "Modifica i dati di affitto di un mac" : "Inserire nuovi dati di affitto MacBook",
         });
 
     }
