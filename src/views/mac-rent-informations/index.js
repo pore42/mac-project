@@ -146,7 +146,7 @@ export class MacRentInformations extends Component {
     }
 
     handleDateFromChange(date, dateString) {
-        var dateTo = this.state.dateFromOk ? this.state.dateTo : moment(date + 31536000000);
+        var dateTo = this.state.dateFromOk ? this.state.dateTo : moment(date + (31536000000 * 2));
         console.log(dateTo);
         this.setState({
             dateFrom: date,
