@@ -24,15 +24,15 @@ class MacRentTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            nameChecked: false,
-            codeChecked: false,
+            nameChecked: true,
+            codeChecked: true,
             dateFromChecked: true,
             dateToChecked: true,
             serialChecked: true,
             ownerChecked: true,
             feeChecked: false,
-            lastModChecked: false,
-            showCheckColumns: false,
+            lastModChecked: true,
+            showCheckColumns: true,
             showFetchErrorModal: false,
             showDeleteErrorModal: false,
             showHistory: false,
@@ -221,8 +221,8 @@ class MacRentTable extends Component {
                         </center>
                     </Col>
                 </Row>
-                <Row style={{ marginTop: 20, marginBottom: 30 }}>
-                    <Col lgOffset={1} lg={4} sm={3} xs={12} style={{ margin: 20 }}>
+                <Row style={{ marginTop: 20, marginBottom: 0 }}>
+                    <Col lgOffset={1} lg={6} sm={6} xs={12} style={{ margin: 20 }}>
                         <InputGroup style={{ width: 340 }}>
                             <FormControl
                                 id="filter"
@@ -232,12 +232,7 @@ class MacRentTable extends Component {
                                 type="text"
                             />
                         </InputGroup>
-                    </Col>
-                    <Col lg={7} sm={6} xs={12} id="checkCol">
-                        <Col lg={3} xs={3} ><Image hidden={this.state.showCheckColumns} id="showMoreIcon" src={showMoreIcon} onClick={this.showCheck.bind(this)} title={"Clicca per mostrare altri dettagli"} /> </Col>
-                        <Col lg={3} xs={3} xsOffset={1}><Image id="addDocIcon" src={addIcon} onClick={() => this.props.history.push(`/input/`)} title={"Clicca per aggiungere i tuoi dati"} /></Col>
-                        <Col lg={4} xs={4}><center><span className="labelHistory">Mostra storico:  </span><Button id="showHistoryButton" style={{ background: this.state.showHistory ? "lightgreen" : "yellow" }} value={this.state.showHistory} onClick={() => this.showHistory()}>{this.state.showHistory ? "SI" : "NO"}</Button></center></Col>
-                        <FormGroup id="checkGroup" hidden={!this.state.showCheckColumns} >
+                        <FormGroup style={{ marginTop: 10, marginBottom: 20 }} id="checkGroup" hidden={!this.state.showCheckColumns} >
                             <Checkbox onClick={() => this.setState({ ownerChecked: !this.state.ownerChecked })} defaultChecked inline>
                                 {"Possessore"}
                             </Checkbox>
@@ -250,19 +245,26 @@ class MacRentTable extends Component {
                             <Checkbox onClick={() => this.setState({ dateToChecked: !this.state.dateToChecked })} defaultChecked inline>
                                 {"Termine"}
                             </Checkbox>
-                            <Checkbox onClick={() => this.setState({ nameChecked: !this.state.nameChecked })} inline>
+                            <Checkbox onClick={() => this.setState({ nameChecked: !this.state.nameChecked })} defaultChecked inline>
                                 {"Nome mac"}
                             </Checkbox>
-                            <Checkbox onClick={() => this.setState({ codeChecked: !this.state.codeChecked })} inline>
+                            <Checkbox onClick={() => this.setState({ codeChecked: !this.state.codeChecked })} defaultChecked inline>
                                 {"Codice affitto"}
                             </Checkbox>
-                            <Checkbox onClick={() => this.setState({ feeChecked: !this.state.feeChecked })} inline>
+                            <Checkbox onClick={() => this.setState({ feeChecked: !this.state.feeChecked })} defaultChecked inline>
                                 {"Rata"}
                             </Checkbox>
-                            <Checkbox onClick={() => this.setState({ lastModChecked: !this.state.lastModChecked })} inline>
+                            <Checkbox onClick={() => this.setState({ lastModChecked: !this.state.lastModChecked })} defaultChecked inline>
                                 {"Ultima modifica"}
                             </Checkbox>
                         </FormGroup>
+                    </Col>
+                    <Col lg={3} xs={3} xsOffset={1}>
+                        <Image id="addDocIcon" src={addIcon} onClick={() => this.props.history.push(`/input/`)} title={"Clicca per aggiungere i tuoi dati"} />
+                    </Col>
+                    <Col lg={4} xs={4}><center><span className="labelHistory">Mostra storico:  </span><Button id="showHistoryButton" style={{ background: this.state.showHistory ? "lightgreen" : "yellow" }} value={this.state.showHistory} onClick={() => this.showHistory()}>{this.state.showHistory ? "SI" : "NO"}</Button></center></Col>
+                    <Col lg={7} sm={6} xs={12} id="checkCol">
+                        
                     </Col>
                 </Row>
                 <Row>
