@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import logo from "../../assets/images/mondora.png";
-import showMoreIcon from "../../assets/images/showMore.png";
 import addIcon from "../../assets/images/addDocIcon.png";
 
 import { fetchRentInfo } from "../../actions/elements";
@@ -191,19 +190,17 @@ class MacRentTable extends Component {
                 {this.renderFetchErrorModal()}
                 {this.renderDeleteErrorModal()}
                 <Row className="show-grid" >
-                    <Col lg={3} sm={6} xs={6} style={{ marginTop: 15, marginLeft: 30 }}>
+                    <Col lg={3} md={3} sm={3} xs={5} style={{ marginTop: 15, marginLeft: 30 }}>
                         <Image src={logo} bsSize="small" rounded />
                     </Col>
-                    <Col lg={5} xs={0}>
-                        <h1 id="tableTitle" className="title">
+                    <Col lg={5} md={5} sm={5} xs={0}>
+                        <h1 style={{textalign: 'center'}}id="tableTitle" className="title">
                             Tabella affitto MacBook
                         </h1>
                     </Col>
-                    <Col lg={3} sm={6} xs={5} id="logoutCol" >
-                        <div className="floatRight">
-                            <div style={{ right: "0px", margin: "40px" }}>
-                                <Button bsStyle="danger" bsSize="large" onClick={this.onSignOut.bind(this)}>Logout</Button>
-                            </div>
+                    <Col lg={3} md={3} sm={3} xs={5} id="logoutCol" >
+                        <div className="floatRight" style={{marginTop: 40}}>
+                            <center><Button bsStyle="danger" bsSize="large" onClick={this.onSignOut.bind(this)}>Logout</Button></center>
                         </div>
                     </Col>
                 </Row>
@@ -217,9 +214,9 @@ class MacRentTable extends Component {
                         </center>
                     </Col>
                 </Row>
-                <Row style={{ marginTop: 20, marginBottom: 0 }}>
-                    <Col lgOffset={1} lg={6} sm={6} xs={12} style={{ margin: 20 }}>
-                        <InputGroup style={{ width: 340 }}>
+                <Row >
+                    <Col xsOffset={1} lg={6} sm={12} md={6} xs={12} style={{ margintop: 20, marginBottom: 20 }}>
+                        <InputGroup style={{ width: '100%', maxwidth: '500px' }}>
                             <FormControl
                                 id="filter"
                                 onChange={e => this.setState({ filterTerm: e.target.value })}
@@ -228,7 +225,7 @@ class MacRentTable extends Component {
                                 type="text"
                             />
                         </InputGroup>
-                        <FormGroup style={{ marginTop: 10, marginBottom: 20 }} id="checkGroup" hidden={!this.state.showCheckColumns} >
+                        <FormGroup style={{ marginTop: 10 }} id="checkGroup" hidden={!this.state.showCheckColumns} >
                             <Checkbox onClick={() => this.setState({ ownerChecked: !this.state.ownerChecked })} defaultChecked inline>
                                 {"Possessore"}
                             </Checkbox>
@@ -255,12 +252,11 @@ class MacRentTable extends Component {
                             </Checkbox>
                         </FormGroup>
                     </Col>
-                    <Col lg={3} xs={3} xsOffset={1}>
+                    <Col style={{marginTop: 20, marginBottom: 20}} lg={1} md={1} xs={5} sm={5} xsOffset={1}>
                         <Image id="addDocIcon" src={addIcon} onClick={() => this.props.history.push(`/input/`)} title={"Clicca per aggiungere i tuoi dati"} />
                     </Col>
-                    <Col lg={4} xs={4}><center><span className="labelHistory">Mostra storico:  </span><Button id="showHistoryButton" style={{ background: this.state.showHistory ? "lightgreen" : "yellow" }} value={this.state.showHistory} onClick={() => this.showHistory()}>{this.state.showHistory ? "SI" : "NO"}</Button></center></Col>
-                    <Col lg={7} sm={6} xs={12} id="checkCol">
-                        
+                    <Col style={{marginTop: 20}}  lg={2} md={2} xs={5} sm={5}>
+                        <center><span className="labelHistory">Mostra storico:  </span><Button id="showHistoryButton" style={{ background: this.state.showHistory ? "lightgreen" : "yellow" }} value={this.state.showHistory} onClick={() => this.showHistory()}>{this.state.showHistory ? "SI" : "NO"}</Button></center>
                     </Col>
                 </Row>
                 <Row>
