@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import { FormGroup, FormControl, InputGroup, Grid, Col, Row, Popover, Image, OverlayTrigger } from "react-bootstrap";
 import moment from "moment";
 import PropTypes from "prop-types";
-
-import SimpleModal from "../../components/simpleModal"
-
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -56,6 +55,38 @@ export class MacRentInformations extends Component {
         fetchedElement: PropTypes.object,
     }
 
+
+    componentDidUpdate(){
+            if(this.state.showSaveSuccessModal){
+                confirmAlert({
+                    title: "",
+                    message: "Salvataggio avvenuto con successo",
+                    cancelLabel: "",
+                    confirmLabel: "OK",
+                    onConfirm: () => this.closeSaveSuccessModal.bind(this),
+                });
+            }
+            if(this.state.showSaveErrorModal){
+                confirmAlert({
+                    title: "",
+                    message: "Salvataggio elemento fallito",
+                    cancelLabel: "",
+                    confirmLabel: "OK",
+                    onConfirm: () => this.closeSaveErrorModal.bind(this),
+                })
+            }
+    
+            if(this.state.showFetchErrorModal){
+                confirmAlert({
+                    title: "",
+                    message: "Recupero dati fallito",
+                    cancelLabel: "",
+                    confirmLabel: "OK",
+                    onConfirm: () => this.closeFetchErrorModal.bind(this),
+                })
+            }
+
+    }
 
     componentDidMount() {
 
@@ -136,6 +167,7 @@ export class MacRentInformations extends Component {
 
         if (this.props.saveSuccess) {
             this.setState({ showSaveSuccessModal: true });
+            
         }
 
         if (this.state.owner !== "" && this.state.serial !== "" && this.state.dateFromOk && this.state.dateToOk ) {
@@ -147,7 +179,7 @@ export class MacRentInformations extends Component {
 
     handleDateFromChange(date, dateString) {
         var dateTo = this.state.dateFromOk ? this.state.dateTo : moment(date + (31536000000 * 2));
-        console.log(dateTo);
+        // console.log(dateTo);
         this.setState({
             dateFrom: date,
             dateTo: dateTo,
@@ -178,24 +210,11 @@ export class MacRentInformations extends Component {
         this.props.history.push(`/results/`);
     }
 
-    renderSaveSuccessModal() {
-        return (<SimpleModal show={this.state.showSaveSuccessModal} close={this.closeSaveSuccessModal.bind(this)} title="Salvataggio elemento avvenuto con successo" />);
-    }
-
-    renderSaveErrorModal() {
-        return (<SimpleModal show={this.state.showSaveErrorModal} close={this.closeSaveErrorModal.bind(this)} title="Salvataggio elemento fallito" />);
-    }
-
-    renderFetchErrorModal() {
-        return (<SimpleModal show={this.state.showFetchErrorModal} close={this.closeFetchErrorModal.bind(this)} title="Recupero dati da modificare è fallito" />);
-    }
+   
 
     render() {
         return (
             <form id="formRentInformation">
-                {this.renderSaveSuccessModal()}
-                {this.renderSaveErrorModal()}
-                {this.renderFetchErrorModal()}
                 {/*console.log("fetchedel", this.props.fetchedElement, "delete", this.state.exist)*/}
                 <Grid>
                     <Row><Col xs={12} md={12}><center><h2>{this.state.title}</h2></center></Col></Row>
