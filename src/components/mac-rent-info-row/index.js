@@ -61,8 +61,8 @@ export default withRouter(class MacRentInfoRow extends Component {
     renderDeleteOrRestore() {
 
         return ((this.props.exist) ?
-            <td id="rowDataFix2"><span className="rowData">  <Button size="small" icon="delete" onClick={this.handleDeleteButton.bind(this)}></Button></span></td> :
-            <td id="rowDataFix2"><span className="rowData">  <Image size="small" width={20} height={20} src={restore_from_trash} onClick={this.handleDeleteButton.bind(this)}></Image></span></td>);
+            <td id="rowDataFix2"><span className="rowData">  <center><Button size="small" icon="delete" onClick={this.handleDeleteButton.bind(this)}></Button></center></span></td> :
+            <td id="rowDataFix2"><span className="rowData">  <center><Image size="small" width={20} height={20} src={restore_from_trash} onClick={this.handleDeleteButton.bind(this)}></Image></center></span></td>);
     }
 
     render() {
@@ -111,12 +111,14 @@ export default withRouter(class MacRentInfoRow extends Component {
                             {note}
                         </Popover>
                     }>
-                        <span className="rowData"><Button size="small" shape="circle" icon="paper-clip" /> </span>
+                        <span className="rowData"><center><Button size="small" shape="circle" icon="paper-clip" /></center></span>
                     </OverlayTrigger>
 
                 </td>
                 {this.renderDeleteOrRestore()}
-                <td id="rowDataFix3"><span className="rowData"><Link to={`/input/${this.props.realId}`}><Button size="small" type="primary" icon="edit" ></Button></Link></span></td>
+                <td id="rowDataFix3"><span className="rowData"><Link to={`/input/${this.props.realId}`}>
+                        <center> <Button size="small" type="primary" icon="edit" ></Button></center> 
+                    </Link></span></td>
             </tr>
         );
     }
