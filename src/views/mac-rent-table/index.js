@@ -219,7 +219,7 @@ class MacRentTable extends Component {
                     </Col>
                 </Row>
                 <Row >
-                    <Col xsOffset={1} lg={6} sm={12} md={6} xs={12} style={{ margintop: 20, marginBottom: 20 }}>
+                    <Col xsOffset={1} lg={6} sm={11} md={6} xs={12} style={{ margintop: 20, marginBottom: 20 }}>
                         <InputGroup style={{ width: '100%', maxwidth: '500px' }}>
                             <FormControl
                                 id="filter"
@@ -268,7 +268,7 @@ class MacRentTable extends Component {
                         <Table id="resTable" style={{ fontSize: 13 }} striped bordered responsive>
                             <thead key="thead">
                                 <tr>
-                                    <th>{" #"}<br />
+                                    <th style={{minWidth: 78}}>{" #"}<br />
                                         <AntButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("id", this.state.macRentInformations)} />
                                         <AntButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("id", this.state.macRentInformations)} />
                                     </th>
@@ -298,7 +298,7 @@ class MacRentTable extends Component {
                                             <AntButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("name", this.state.macRentInformations)} />
                                         </th>}
                                     {this.state.codeChecked &&
-                                        <th>{"Codice affitto"}<br />
+                                        <th style={{minWidth: 80}}>{"Codice affitto"}<br />
                                             <AntButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("code", this.state.macRentInformations)} />
                                             <AntButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("code", this.state.macRentInformations)} />
                                         </th>}
@@ -312,9 +312,9 @@ class MacRentTable extends Component {
                                         <AntButton style={{ margin: 3 }} shape="circle" icon="down" size="small" onClick={() => this.handleOrderDownButtonPress("lastMod", this.state.macRentInformations)} />
                                         <AntButton style={{ margin: 3 }} shape="circle" icon="up" size="small" onClick={() => this.handleOrderUpButtonPress("lastMod", this.state.macRentInformations)} />
                                     </th>}
-                                    <th>Note<br /><br /></th>
-                                    <th>Cancella<br /><br /></th>
-                                    <th>Modifica<br /><br /></th>
+                                    <th><div style={{position: 'relative', top: '50%', transform: 'translateY(-50%)'}}>Note</div></th>
+                                    <th><div style={{position: 'relative', top: '50%', transform: 'translateY(-50%)'}}>Cancella</div></th>
+                                    <th ><div style={{position: 'relative', top: '50%', transform: 'translateY(-50%)'}}>Modifica</div></th>
                                 </tr>
                             </thead>
                             <tbody key="tbody">
