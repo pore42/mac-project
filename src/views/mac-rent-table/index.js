@@ -5,6 +5,8 @@ import moment from "moment";
 import { PropTypes } from "prop-types";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 import logo from "../../assets/images/mondora.png";
 import addIcon from "../../assets/images/addDocIcon.png";
@@ -13,7 +15,6 @@ import { fetchRentInfo } from "../../actions/elements";
 import { deleteElement } from "../../actions/elements";
 
 import MacRentInfoRow from "../../components/mac-rent-info-row";
-import SimpleModal from "../../components/simpleModal";
 
 import { Button as AntButton } from "antd";
 import _ from "lodash";
@@ -54,6 +55,28 @@ class MacRentTable extends Component {
 
         if (fetchRentInfo) {
             fetchRentInfo();
+        }
+    }
+
+    componentDidUpdate(){
+
+        if(this.state.showFetchErrorModal){
+            confirmAlert({
+                title: "",
+                message: "Recupero dati fallito",
+                cancelLabel: "",
+                confirmLabel: "OK",
+                onConfirm: () => this.closeFetchErrorModal.bind(this),
+            });
+        }
+        if(this.state.showDeleteErrorModal){
+            confirmAlert({
+                title: "",
+                message: "Cancellazione, o ripristino elemento fallito",
+                cancelLabel: "",
+                confirmLabel: "OK",
+                onConfirm: () => this.closeDeleteErrorModal.bind(this),
+            })
         }
     }
 
@@ -154,14 +177,6 @@ class MacRentTable extends Component {
         }
     }
 
-    renderFetchErrorModal() {
-        return (<SimpleModal show={this.state.showFetchErrorModal} close={this.closeFetchErrorModal.bind(this)} title="Recupero dati fallito" />);
-    }
-
-    renderDeleteErrorModal() {
-        return (<SimpleModal show={this.state.showDeleteErrorModal} close={this.closeDeleteErrorModal.bind(this)} title="Cancellazione, o ripristino elemento fallito" />);
-    }
-
     onSignOut() {
         var auth2;
         if (window.gapi !== undefined) {
@@ -187,8 +202,6 @@ class MacRentTable extends Component {
     render() {
         return (
             <Grid fluid={true} style={{ marginTop: 20, margin: 0 }}>
-                {this.renderFetchErrorModal()}
-                {this.renderDeleteErrorModal()}
                 <Row className="show-grid" >
                     <Col lg={3} md={3} sm={3} xs={5} style={{ marginTop: 15, marginLeft: 30 }}>
                         <Image src={logo} bsSize="small" rounded />
