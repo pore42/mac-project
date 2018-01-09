@@ -41,7 +41,7 @@ export function fetchRentInfo() {
             });
 
             var data = await result.data;
-            // console.log("ho recuperato questo ", data);
+            console.log("ho recuperato questo ", data);
             var elements = data.batch.entityResults !== undefined ? deserializedMacRentInformation(data.batch.entityResults) : [];
 
 
@@ -81,6 +81,7 @@ function deserializedMacRentInformation(rowElements) {
             lastMod: el.entity.properties.lastMod.stringValue,
             note: el.entity.properties.note.stringValue,
             exist: el.entity.properties.exist.booleanValue,
+            lastTime: moment(el.entity.properties.lastTime.timestampValue),
         }));
 
     return elements;

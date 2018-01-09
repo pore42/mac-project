@@ -65,6 +65,7 @@ export class MacRentInformations extends Component {
         var id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
         if (fetchRow && id > 0) {
             fetchRow(id);
+            this.setState({dateFromOk: true, dateToOk: true})
         }
 
         this.setState({
@@ -78,17 +79,13 @@ export class MacRentInformations extends Component {
 
         if (this.props.saveError !== nextProps.saveError) {
             this.setState({
-                showSaveErrorModal: true
-            });
-        } else {
-            this.setState({
-                showSaveErrorModal: false
+                showSaveErrorModal: nextProps.saveError
             });
         }
 
         if (this.props.saveSuccess !== nextProps.saveSuccess) {
             this.setState({
-                showSaveSuccessModal: true
+                showSaveSuccessModal: nextProps.saveSuccess
             });
         }
 

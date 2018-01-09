@@ -142,6 +142,10 @@ class MacRentTable extends Component {
 
         if (!this.state.showHistory) {
             if (newElements.length < 1) return [];
+            newElements = _.sortBy(_.sortBy(newElements, ["serial"]), ["lastTime"]).reverse();
+            newElements.forEach(el => {
+                console.log(el);
+            });
             var onlyLastElements = [newElements[0]];
             for (var i = 1; i < newElements.length; i++) {
                 if (newElements[i].serial !== newElements[i - 1].serial) {
