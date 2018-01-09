@@ -167,7 +167,7 @@ export class MacRentInformations extends Component {
             
         }
 
-        if (this.state.owner !== "" && this.state.serial !== "" && this.state.dateFromOk && this.state.dateToOk ) {
+        if (this.state.owner !== "" && this.state.serial !== "" && this.state.dateFromOk && (this.state.dateToOk || this.state.id > 0 )) {
             this.props.saveElement(this.state.id, this.state.name, this.state.code, this.state.dateFrom, this.state.dateTo, this.state.fee, this.state.serial, this.state.note, this.state.owner, this.state.exist, this.state.importantChange);
         }
 
