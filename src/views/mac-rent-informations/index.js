@@ -63,7 +63,7 @@ export class MacRentInformations extends Component {
                     message: "Salvataggio avvenuto con successo",
                     cancelLabel: "",
                     confirmLabel: "OK",
-                    onConfirm: () => this.closeSaveSuccessModal.bind(this),
+                    onConfirm: this.closeSaveSuccessModal.bind(this),
                 });
             }
             if(this.state.showSaveErrorModal){
@@ -72,7 +72,7 @@ export class MacRentInformations extends Component {
                     message: "Salvataggio elemento fallito",
                     cancelLabel: "",
                     confirmLabel: "OK",
-                    onConfirm: () => this.closeSaveErrorModal.bind(this),
+                    onConfirm:  this.closeSaveErrorModal.bind(this),
                 })
             }
     
@@ -82,7 +82,7 @@ export class MacRentInformations extends Component {
                     message: "Recupero dati fallito",
                     cancelLabel: "",
                     confirmLabel: "OK",
-                    onConfirm: () => this.closeFetchErrorModal.bind(this),
+                    onConfirm: this.closeFetchErrorModal.bind(this),
                 })
             }
 
