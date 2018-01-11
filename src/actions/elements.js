@@ -1,5 +1,6 @@
 
 import { post } from "axios";
+import _ from "lodash";
 
 import { REACT_APP_RENT_INFO } from '../config';
 import moment from "moment";
@@ -69,7 +70,6 @@ function deserializedMacRentInformation(rowElements) {
 
     const elements = rowElements.map((el, i) =>
         ({
-            id: i,
             realId: Number(el.entity.key.path[0].id),
             name: el.entity.properties.name.stringValue,
             code: el.entity.properties.code.stringValue,
@@ -83,8 +83,15 @@ function deserializedMacRentInformation(rowElements) {
             exist: el.entity.properties.exist.booleanValue,
             lastTime: moment(el.entity.properties.lastTime.timestampValue),
         }));
+    
+    
+    var sortedElements = _.sortBy(_.sortBy(elements, ["serial"]), ["lastTime"]).reverse();
+    sortedElements.forEach((el, i) => el.id = i);
+     
+    //console.log("elementi puri: ", elements);
 
-    return elements;
+
+    return sortedElements;
 
 }
 

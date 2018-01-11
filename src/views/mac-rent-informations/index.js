@@ -164,7 +164,6 @@ export class MacRentInformations extends Component {
 
         if (this.props.saveSuccess) {
             this.setState({ showSaveSuccessModal: true });
-            
         }
 
         if (this.state.owner !== "" && this.state.serial !== "" && this.state.dateFromOk && (this.state.dateToOk || this.state.id > 0 )) {
