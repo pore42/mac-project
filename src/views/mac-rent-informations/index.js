@@ -56,7 +56,7 @@ export class MacRentInformations extends Component {
     }
 
 
-    componentDidUpdate(){
+    renderAlert(){
             if(this.state.showSaveSuccessModal){
                 confirmAlert({
                     title: "",
@@ -85,7 +85,7 @@ export class MacRentInformations extends Component {
                     onConfirm: this.closeFetchErrorModal.bind(this),
                 })
             }
-
+        
     }
 
     componentDidMount() {
@@ -110,13 +110,15 @@ export class MacRentInformations extends Component {
 
         if (this.props.saveError !== nextProps.saveError) {
             this.setState({
-                showSaveErrorModal: nextProps.saveError
+                showSaveErrorModal: nextProps.saveError,
+                showSaveSuccessModal: !nextProps.saveError
             });
         }
 
         if (this.props.saveSuccess !== nextProps.saveSuccess) {
             this.setState({
-                showSaveSuccessModal: nextProps.saveSuccess
+                showSaveSuccessModal: nextProps.saveSuccess,
+                showSaveErrorModal: !nextProps.saveSuccess,
             });
         }
 
@@ -158,16 +160,13 @@ export class MacRentInformations extends Component {
     handleSaveButton(isSaveButtonClicked, userName) {
         this.setState({ isSaveButtonClicked: true });
 
-        // console.log("qui funzione", this.props.saveElement);
-        // console.log("salvato con successo", this.props.saveSuccess);
-        // console.log("salvo con delete nello stato uguale a :", this.state.exist);
-
-        if (this.props.saveSuccess) {
-            this.setState({ showSaveSuccessModal: true });
-        }
 
         if (this.state.owner !== "" && this.state.serial !== "" && this.state.dateFromOk && (this.state.dateToOk || this.state.id > 0 )) {
             this.props.saveElement(this.state.id, this.state.name, this.state.code, this.state.dateFrom, this.state.dateTo, this.state.fee, this.state.serial, this.state.note, this.state.owner, this.state.exist, this.state.importantChange);
+            this.setState({
+                showSaveSuccessModal: this.props.saveSuccess,
+                showSaveErrorModal: this.props.saveError
+            })
         }
 
 
@@ -193,6 +192,8 @@ export class MacRentInformations extends Component {
     }
 
     closeSaveSuccessModal() {
+        console.log("successmodal  ", this.state.showSaveSuccessModal);
+
         this.setState({ showSaveSuccessModal: false });
         this.props.history.push(`/results/`);
     }
@@ -211,7 +212,7 @@ export class MacRentInformations extends Component {
     render() {
         return (
             <form id="formRentInformation">
-                {/*console.log("fetchedel", this.props.fetchedElement, "delete", this.state.exist)*/}
+                {this.renderAlert()}
                 <Grid>
                     <Row><Col xs={12} md={12}><center><h2>{this.state.title}</h2></center></Col></Row>
                     <Row>
