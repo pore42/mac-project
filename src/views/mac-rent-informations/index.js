@@ -75,7 +75,7 @@ export class MacRentInformations extends Component {
                     onConfirm:  this.closeSaveErrorModal.bind(this),
                 })
             }
-    
+        
             if(this.state.showFetchErrorModal){
                 confirmAlert({
                     title: "",
@@ -180,6 +180,7 @@ export class MacRentInformations extends Component {
             dateTo: dateTo,
             importantChange: true,
             dateFromOk: true,
+            dateToOk: true,
         });
     }
 
